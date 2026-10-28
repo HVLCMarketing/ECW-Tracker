@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eCW Implementation Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6f8;--surface:#fff;--ink:#14212b;--muted:#5b6b78;--line:#dfe5ea;--soft:#eef2f5;
+  --brand:#0f4c5c;--brand-2:#13798c;--accent:#e8f3f5;
+  --ok:#1e7a4c;--ok-bg:#e5f4ec;--warn:#9a5b00;--warn-bg:#fdf1dc;--bad:#b42318;--bad-bg:#fde8e6;--info:#2456a6;--info-bg:#e6eefb;--na:#5b6b78;--na-bg:#eef1f4;
+  --r:10px;--shadow:0 1px 2px rgba(16,32,48,.06),0 2px 8px rgba(16,32,48,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 "Public Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--brand-2)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+header.top{background:var(--brand);color:#fff}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+header.top h1{font-size:16px;font-weight:600;margin:0;flex:1;min-width:200px}
+header.top h1 small{display:block;font-weight:400;opacity:.8;font-size:12.5px}
+.sync{font-size:12px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.14);white-space:nowrap}
+.sync.err{background:#fde8e6;color:var(--bad)}
+.tbtn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:13px}
+.tbtn:hover{background:rgba(255,255,255,.22)}
+.banner{background:var(--warn-bg);color:var(--warn);border-bottom:1px solid #f3d9a8;font-size:13px}
+.banner .wrap{padding-top:8px;padding-bottom:8px}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.kpi .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.kpi .val{font-size:26px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:12.5px;color:var(--muted)}
+.kpi input[type=date]{border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:13px;margin-top:4px;max-width:100%}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:8px}
+.bar>i{display:block;height:100%;background:var(--brand-2);border-radius:99px}
+nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 12px;cursor:pointer;color:var(--muted);font-weight:500;white-space:nowrap}
+nav.tabs button[aria-selected=true]{color:var(--brand);border-color:var(--brand);font-weight:600}
+nav.tabs .count{font-size:11px;background:var(--soft);border-radius:99px;padding:1px 7px;margin-left:4px}
+main{padding:18px 0 60px}
+.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;min-width:0}
+.card h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.card h2 .hint{font-weight:400;color:var(--muted);font-size:12.5px}
+.ws-row{display:grid;grid-template-columns:minmax(0,1fr) 110px 54px;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--soft);cursor:pointer}
+.ws-row:first-of-type{border-top:0}
+.ws-row:hover .ws-name{color:var(--brand-2)}
+.ws-name{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-name small{color:var(--bad);font-weight:600;margin-left:6px}
+.ws-row .bar{margin:0}
+.ws-row .pct{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.list{display:flex;flex-direction:column}
+.li{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--soft);align-items:flex-start}
+.li:first-child{border-top:0}
+.li .d{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12.5px;min-width:56px;padding-top:1px}
+.li .t{flex:1;min-width:0}
+.li .t b{font-weight:600}
+.li .t .n{color:var(--muted);font-size:12.5px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap;background:var(--na-bg);color:var(--na)}
+.s-ok{background:var(--ok-bg);color:var(--ok)}.s-warn{background:var(--warn-bg);color:var(--warn)}.s-bad{background:var(--bad-bg);color:var(--bad)}.s-info{background:var(--info-bg);color:var(--info)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar input[type=search],.toolbar select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 10px;min-width:0}
+.toolbar input[type=search]{flex:2;min-width:180px}
+.toolbar select{max-width:230px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:500}
+.btn:hover{border-color:#b9c6cf}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:#0c3e4b}
+.btn.danger{color:var(--bad)}
+.spacer{flex:1}
+.tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:9px 12px;border-top:1px solid var(--soft);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;border-top:0;background:#fafbfc;position:sticky;top:0}
+tr.grp td{background:var(--accent);font-weight:600;color:var(--brand);border-top:1px solid var(--line)}
+tr.grp td .gp{font-weight:500;color:var(--muted);margin-left:8px;font-size:12.5px}
+tbody tr.row{cursor:pointer}
+tbody tr.row:hover td{background:#fafcfd}
+td.notes{color:var(--muted);font-size:13px;max-width:380px}
+td.date{white-space:nowrap;font-variant-numeric:tabular-nums}
+td.date.overdue{color:var(--bad);font-weight:600}
+select.st{border:0;border-radius:99px;padding:2px 8px;font-size:12px;font-weight:600;cursor:pointer;appearance:none;-webkit-appearance:none}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+dialog{border:0;border-radius:12px;padding:0;width:min(560px,calc(100vw - 32px));box-shadow:0 20px 60px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(15,30,40,.45)}
+dialog form{padding:20px}
+dialog h3{margin:0 0 14px;font-size:16px}
+.fld{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.fld label{font-size:12.5px;font-weight:600;color:var(--muted)}
+.fld input,.fld select,.fld textarea{border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.fld textarea{min-height:80px;resize:vertical}
+.fld2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dlg-actions{display:flex;gap:8px;margin-top:6px}
+.callout{background:var(--info-bg);color:#1b3f78;border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+.log td{font-size:13px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#14212b;color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media (max-width:520px){.fld2{grid-template-columns:1fr}.kpi .val{font-size:22px}.ws-row{grid-template-columns:minmax(0,1fr) 70px 44px}}
+@media print{header.top .tbtn,nav.tabs,.toolbar,.banner{display:none}body{background:#fff}.card,.tablewrap,.kpi{box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1 id="projTitle">eClinicalWorks Implementation<small>Vascular Health Partners</small></h1>
+  <span class="sync" id="sync">Loading…</span>
+  <button class="tbtn" id="whoBtn" title="Change your name">Me</button>
+  <button class="tbtn" id="exportBtn">Export</button>
+  <button class="tbtn" id="importBtn">Import</button>
+  <input type="file" id="importFile" accept="application/json" hidden>
+</div></header>
+<div class="banner" id="banner" hidden><div class="wrap" id="bannerText"></div></div>
+
+<div class="wrap">
+  <section class="kpis" id="kpis"></section>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <main id="view"></main>
+</div>
+
+<dialog id="dlg"><form method="dialog" id="dlgForm"></form></dialog>
+<div class="toast" id="toast"></div>
+
+<script id="seed" type="application/json">{"project": "eClinicalWorks Implementation — Vascular Health Partners", "goLive": "2026-12-31", "tasks": [{"id": "t1", "ws": "Kick-off", "name": "Kick-off Call with eClinicalWorks Project Manager", "status": "Complete", "duration": "60 min", "start": "2026-07-07", "finish": "2026-07-07", "owner": "eCW, Practice implementation team", "notes": ""}, {"id": "t2", "ws": "Kick-off", "name": "Web enable Customer", "status": "Complete", "duration": "", "start": "2026-07-07", "finish": "2026-07-07", "owner": "eCW", "notes": ""}, {"id": "t3", "ws": "Kick-off", "name": "Business Analyst Kick-Off call", "status": "Complete", "duration": "60 min", "start": "2026-07-13", "finish": "2026-07-13", "owner": "BA, Practice Implementation team", "notes": ""}, {"id": "t4", "ws": "Kick-off", "name": "Data Migration Discovery Call", "status": "Complete", "duration": "60 min", "start": "2026-07-13", "finish": "2026-07-13", "owner": "eCW, Practice implementation team", "notes": ""}, {"id": "t5", "ws": "Kick-off", "name": "Billing Discovery Call", "status": "Complete", "duration": "60 min", "start": "2026-07-28", "finish": "2026-07-28", "owner": "Billing Implementation Specialist", "notes": ""}, {"id": "t6", "ws": "Cloud & Environment", "name": "Cloud Server Setup- Production environment", "status": "Complete", "duration": "", "start": "2026-07-10", "finish": "2026-07-10", "owner": "eCW Install team, practice IT", "notes": ""}, {"id": "t7", "ws": "Cloud & Environment", "name": "Production environment", "status": "Complete", "duration": "", "start": "2026-07-14", "finish": "2026-07-14", "owner": "eCW Install team, practice IT", "notes": ""}, {"id": "t8", "ws": "Labcorp Interface", "name": "Purchase Order approval", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Kindly reach out to Labcorp Rep to understand delay in receiving the purchase order"}, {"id": "t9", "ws": "Labcorp Interface", "name": "Assign interface project manager", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t10", "ws": "Labcorp Interface", "name": "Receive installation files from vendor", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t11", "ws": "Labcorp Interface", "name": "Configure installation files", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t12", "ws": "Labcorp Interface", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t13", "ws": "Labcorp Interface", "name": "Go live", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t14", "ws": "Quest Interface", "name": "Purchase Order approval", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Kindly reach out to Quest Rep to understand delay in receiving the purchase order"}, {"id": "t15", "ws": "Quest Interface", "name": "Assign interface project manager", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t16", "ws": "Quest Interface", "name": "Receive installation files from vendor", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t17", "ws": "Quest Interface", "name": "Configure installation files", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t18", "ws": "Quest Interface", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t19", "ws": "Quest Interface", "name": "Go live", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t20", "ws": "Core Sound / Studycast PACS", "name": "Assign interface project manager", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Kick off call completed with Celine and Melissa"}, {"id": "t21", "ws": "Core Sound / Studycast PACS", "name": "Configure installation files", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Compendium pending- Melissa will provide this"}, {"id": "t22", "ws": "Core Sound / Studycast PACS", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t23", "ws": "Core Sound / Studycast PACS", "name": "Go live", "status": "Pending", "duration": "", "start": "2026-11-03", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t24", "ws": "Olympus Device Integration", "name": "Gastroscopes- GIFs HQ-190, PCF-H190 and CF- H190. Motherboard-EVIS-EXera III, Printer-OEP-6", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "", "notes": "The following devices will need connectivity to eCW. No intervention needed at this time"}, {"id": "t25", "ws": "Olympus Device Integration", "name": "Assign interface project manager", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t26", "ws": "Olympus Device Integration", "name": "Configure installation files in Compendium", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t27", "ws": "Olympus Device Integration", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t28", "ws": "Olympus Device Integration", "name": "Go live", "status": "Pending", "duration": "", "start": "2026-11-03", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t29", "ws": "Fax Solution", "name": "Practice would like 15 digital fax numbers", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Rasmeen Ali", "notes": "Rasmeen will provide you with the 15 fax numbers once generated"}, {"id": "t30", "ws": "healow", "name": "Televisit set up call", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t31", "ws": "healow", "name": "Patient Portal Default set up", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t32", "ws": "healow", "name": "Kiosk Default set up", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t33", "ws": "healow", "name": "Messenger default set up", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t34", "ws": "healow", "name": "Healow e-checkin default setup", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t35", "ws": "healow", "name": "Healow Payment Services", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": "I will check to see if you have opted for this feature"}, {"id": "t36", "ws": "Data Migration", "name": "TASK NAME", "status": "Pending", "duration": "DURATION", "start": "", "finish": "", "owner": "TASK OWNERS", "notes": "NOTES"}, {"id": "t37", "ws": "Data Migration", "name": "Data migration discovery call", "status": "Complete", "duration": "", "start": "2026-07-13", "finish": "2026-07-13", "owner": "Practice/Data Migration", "notes": ""}, {"id": "t38", "ws": "Data Migration", "name": "Data migration discovery call form sign off", "status": "Complete", "duration": "", "start": "2026-07-14", "finish": "2026-07-14", "owner": "Practice", "notes": ""}, {"id": "t39", "ws": "Data Migration", "name": "Provide initial cut of PM data to eCW", "status": "Complete", "duration": "", "start": "2026-07-21", "finish": "2026-07-21", "owner": "Practice", "notes": ""}, {"id": "t40", "ws": "Data Migration", "name": "Data download", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t41", "ws": "Data Migration", "name": "Data Extraction", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t42", "ws": "Data Migration", "name": "Generate Master Data Dictionary and upload on the support portal", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t43", "ws": "Data Migration", "name": "Generate Mapping file for PM and EMR", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t44", "ws": "Data Migration", "name": "Data Migration Call to Discuss Statement of Work (SOW)/ Process document and Mapping file", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-10-05", "owner": "Practice/Data Migration", "notes": ""}, {"id": "t45", "ws": "Data Migration", "name": "Return signed SOW/ Process document and Mapping file", "status": "Complete", "duration": "", "start": "2026-10-05", "finish": "2026-10-05", "owner": "Practice", "notes": ""}, {"id": "t46", "ws": "Data Migration", "name": "Test Migration and Client to receive Exception Report", "status": "Complete", "duration": "", "start": "2025-08-03", "finish": "2025-08-07", "owner": "Data Migration", "notes": "Dates in the source plan read Aug 3–7, 2025 — likely a typo for 2026. Confirm with eCW."}, {"id": "t47", "ws": "Data Migration", "name": "Data Migration Validation Call", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice/Data Migration", "notes": "Stephanie your BA will schedule this call with you to validate the data"}, {"id": "t48", "ws": "Data Migration", "name": "Data Migration Feedback Call", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": ""}, {"id": "t49", "ws": "Data Migration", "name": "Sign off on Test Migration", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": "Practice will need to validate the data, provide feedback and sign off on the test migration."}, {"id": "t50", "ws": "Data Migration", "name": "Provide final cut of PM and EMR data to eCW", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": ""}, {"id": "t51", "ws": "Data Migration", "name": "Final Migration and Client to receive Exception Report", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Data Migration", "notes": ""}, {"id": "t52", "ws": "Data Migration", "name": "Sign off on Final Migration", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Data Migration", "notes": ""}, {"id": "t53", "ws": "System Build & Training", "name": "TASK NAME", "status": "Pending", "duration": "DURATION", "start": "", "finish": "", "owner": "TASK OWNERS", "notes": "NOTES"}, {"id": "t54", "ws": "System Build & Training", "name": "Assign Business Analyst", "status": "Complete", "duration": "1 hr", "start": "2026-07-13", "finish": "2026-07-14", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t55", "ws": "System Build & Training", "name": "BA Kick-Off and Introduction", "status": "Complete", "duration": "1 hr", "start": "2026-07-13", "finish": "2026-07-13", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t56", "ws": "System Build & Training", "name": "BA Discovery Call(s) Core", "status": "Complete", "duration": "1 hr Calls with various staff", "start": "2026-07-13", "finish": "2026-07-13", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t57", "ws": "System Build & Training", "name": "Weekly System Build Calls", "status": "Pending", "duration": "Weekly 2 hr Calls", "start": "2026-07-22", "finish": "2026-09-30", "owner": "eCW BA, Practice Implementation team", "notes": "Stephanie will schedule the system build calls with you once she is back in office."}, {"id": "t58", "ws": "System Build & Training", "name": "Practice to complete system build", "status": "Pending", "duration": "", "start": "2026-09-30", "finish": "2026-09-30", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t59", "ws": "System Build & Training", "name": "Training agenda and planning", "status": "Pending", "duration": "", "start": "2026-09-22", "finish": "2026-09-28", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t60", "ws": "System Build & Training", "name": "Go-live date", "status": "Pending", "duration": "", "start": "2026-11-03", "finish": "2026-11-03", "owner": "eCW trainers, Practice end users", "notes": ""}, {"id": "t61", "ws": "Billing", "name": "TASK NAME", "status": "Pending", "duration": "DURATION", "start": "", "finish": "", "owner": "TASK OWNERS", "notes": "NOTES"}, {"id": "t62", "ws": "Billing", "name": "BIS introduction call", "status": "Complete", "duration": "", "start": "2026-07-28", "finish": "2026-07-28", "owner": "eCW BIS, practice biller", "notes": ""}, {"id": "t63", "ws": "Billing", "name": "Billing discovery call", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": ""}, {"id": "t64", "ws": "Billing", "name": "Master data dictionary call", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": ""}, {"id": "t65", "ws": "Billing", "name": "Master data dictionary submission", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": ""}, {"id": "t66", "ws": "Billing", "name": "Billing set-up call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "This call will be scheduled once Credentials are received from the clearinghouse of your choice"}, {"id": "t67", "ws": "Billing", "name": "ASC setup call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "Dependent on the clearing house"}, {"id": "t68", "ws": "Billing", "name": "UB4 setup call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "Dependent on the clearing house"}, {"id": "t69", "ws": "Billing", "name": "Enterprise directory setup call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "Waiting on the signed Enterprise Directory addendum."}, {"id": "t70", "ws": "Billing", "name": "Enterprise directory maintenance call", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": ""}], "actions": [{"id": "a1", "item": "ID.ME", "status": "Open", "owner": "Dr. Kumar", "due": "", "notes": "Sandra will work with Dr. Kumar to complete this task. Melissa will provide Sanda and Dr. Kumar the log in credentials to the support portal."}, {"id": "a2", "item": "Core Sound Imaging Compendium", "status": "Open", "owner": "Melissa", "due": "", "notes": "Melissa will provide Celine the compendium. Project will proceed further once this is received."}, {"id": "a3", "item": "Clearinghouse Decision", "status": "Open", "owner": "Practice", "due": "", "notes": "I have emailed Angelica and added an additional rep to email thread in hopes of getting a response. Kindly continue your outreach to Angelica via phone number."}, {"id": "a4", "item": "Enterprise Directory Addendum", "status": "Open", "owner": "Melissa", "due": "", "notes": "I have submitted a support case to have an addendum sent to you to ADD the enterprise directory to your contract. Once we receive the signed addenedum, the project will be initiiated."}, {"id": "a5", "item": "ASC Appointments Criteria List", "status": "Open", "owner": "Navneet/Melissa", "due": "", "notes": "Navneet will provide the criteria needed for the ASC appointments such as the facility/visit type associated to the appointment."}, {"id": "a6", "item": "Missing Documents Excel sheet", "status": "Open", "owner": "Navneet/Melissa", "due": "", "notes": "Melissa will send the Excel sheet of missing documents to the legacy system team to retrieve the missing data."}, {"id": "a7", "item": "Quest Purchase Order", "status": "Open", "owner": "Melissa", "due": "", "notes": "Reach out to the quest rep/customer service number to inquire on when ecw will receive the purchase order (not mandatory)"}, {"id": "a8", "item": "Labcorp Purchase Order", "status": "Open", "owner": "Melissa", "due": "", "notes": "Reach out to the Labcorp rep/customer service number to inquire on when ecw will receive the purchase order (not mandatory)"}, {"id": "a9", "item": "EBO Reporting Access for Navneet", "status": "Open", "owner": "Rasmeen", "due": "", "notes": "I will put in a support case to have a teach reach out to you as you are unable to see the EBO reports"}], "milestones": [{"id": "m1", "date": "2026-11-04", "name": "Confirm new go-live date (12/31) and revised timeline with eCW PM", "owner": "Practice / Rasmeen Ali", "status": "Not started", "notes": "The plan still shows 11/3 go-live; build and training planning are not done, so that date has slipped. (Proposed — confirm with eCW PM)"}, {"id": "m2", "date": "2026-11-06", "name": "Clearinghouse decision made and credentials requested", "owner": "Practice", "status": "Not started", "notes": "Gates the billing, ASC and UB-04 setup calls. Payer ERA/EFT enrollment can take weeks — start as soon as the clearinghouse is chosen. (Proposed — confirm with eCW PM)"}, {"id": "m3", "date": "2026-11-06", "name": "Enterprise Directory addendum signed and returned", "owner": "Melissa", "status": "Not started", "notes": "Gates the enterprise directory setup calls. (Proposed — confirm with eCW PM)"}, {"id": "m4", "date": "2026-11-06", "name": "Core Sound compendium delivered to Celine", "owner": "Melissa", "status": "Not started", "notes": "Gates PACS configuration and testing. (Proposed — confirm with eCW PM)"}, {"id": "m5", "date": "2026-11-06", "name": "ID.me identity proofing completed for Dr. Kumar", "owner": "Dr. Kumar / Sandra", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m6", "date": "2026-11-09", "name": "Weekly system build calls resumed (twice weekly recommended)", "owner": "Stephanie (BA) / Practice", "status": "Not started", "notes": "Build was due 9/30 and is still pending. (Proposed — confirm with eCW PM)"}, {"id": "m7", "date": "2026-11-13", "name": "Data migration validation call held", "owner": "Stephanie (BA) / Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m8", "date": "2026-11-13", "name": "Lab interface go/no-go for 12/31 (Labcorp, Quest)", "owner": "Melissa / Celine", "status": "Not started", "notes": "Purchase orders are still not received. If they are not in hand by now, plan to go live without lab interfaces and use the lab portals or fax until they are ready. (Proposed — confirm with eCW PM)"}, {"id": "m9", "date": "2026-11-20", "name": "Billing setup call completed; payer enrollment submitted", "owner": "Claudia Jimenez / Practice biller", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m10", "date": "2026-11-25", "name": "Test migration signed off", "owner": "Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m11", "date": "2026-12-04", "name": "System build complete; training agenda and schedule final", "owner": "Stephanie (BA) / Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m12", "date": "2026-12-11", "name": "PACS and Olympus interface testing complete", "owner": "Celine / Practice IT", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m13", "date": "2026-12-18", "name": "End-user training complete for all roles", "owner": "eCW trainers / Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m14", "date": "2026-12-18", "name": "Go / no-go decision", "owner": "Practice leadership / Rasmeen Ali", "status": "Not started", "notes": "Check: build complete, test migration signed off, billing live with clearinghouse, staff trained, fax numbers active. (Proposed — confirm with eCW PM)"}, {"id": "m15", "date": "2026-12-21", "name": "Final data cut provided; final migration run", "owner": "Practice / Data Migration", "status": "Not started", "notes": "eCW sets the exact cutover window — confirm with Vijaya. (Proposed — confirm with eCW PM)"}, {"id": "m16", "date": "2026-12-30", "name": "Final migration signed off; go-live dress rehearsal", "owner": "Practice / Data Migration", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m17", "date": "2026-12-31", "name": "Go-live", "owner": "All", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}], "training": [{"id": "tr1", "session": "Super-user / train-the-trainer", "audience": "Super users from each department", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Train these first so they can support colleagues at go-live."}, {"id": "tr2", "session": "Providers — charting, orders, e-prescribing", "audience": "Physicians, APPs", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "EPCS requires the ID.me step to be complete."}, {"id": "tr3", "session": "Clinical staff — rooming, vitals, orders, results", "audience": "MAs, nurses, techs", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": ""}, {"id": "tr4", "session": "Front desk — scheduling, registration, healow check-in & kiosk", "audience": "Front desk, schedulers", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": ""}, {"id": "tr5", "session": "ASC scheduling", "audience": "ASC staff", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Depends on the ASC appointment criteria list."}, {"id": "tr6", "session": "Billing & revenue cycle", "audience": "Billers, coders", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Depends on the clearinghouse and billing setup."}, {"id": "tr7", "session": "Reports & administration (EBO)", "audience": "Practice admin, managers", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Depends on EBO reporting access."}, {"id": "tr8", "session": "Go-live refresher / Q&A", "audience": "All staff", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": ""}], "contacts": [{"id": "c1", "role": "Resources", "name": "Names", "email": "Email addresses", "phone": "Phone number", "notes": ""}, {"id": "c2", "role": "Project Manager", "name": "Rasmeen Ali", "email": "rasmeen.ali@eclinicalwork.com", "phone": "508-863-3768", "notes": "Source plan spells the domain \"eclinicalwork.com\" (no s) — confirm the address."}, {"id": "c3", "role": "Business Analyst", "name": "Stephanie", "email": "stephanie.ranis@eclinicalworks.com", "phone": "508-439-1131", "notes": ""}, {"id": "c4", "role": "Billing implementation specialist", "name": "Claudia Jimenez", "email": "claudia.jimenez@eclinicalworks.com", "phone": "508-475-0450 ext 23932", "notes": ""}, {"id": "c5", "role": "Healow account manager", "name": "Sayantan Dutta", "email": "sayantan.d@healow.com", "phone": "", "notes": "Phone can be provided by HPM."}, {"id": "c6", "role": "Data migration programmer", "name": "Vijaya V. Surneddy", "email": "vijaya.surneddy@eclinicalworks.com", "phone": "", "notes": ""}, {"id": "c7", "role": "Interface Project Manager", "name": "Celine M", "email": "celine.m@eclinicalworks.com", "phone": "", "notes": ""}, {"id": "c8", "role": "Trizetto Rep", "name": "Angelica Rinderer", "email": "Angelica.Rinderer@cognizant.com", "phone": "(800) 969-3666 Ext. 1453", "notes": ""}, {"id": "c9", "role": "Additional Trizetto Rep", "name": "Support/Sales", "email": "TeameCWImplementation@cognizant.com", "phone": "", "notes": ""}, {"id": "c10", "role": "Labcorp Rep if your rep is unresponsive", "name": "Marberry, Chantelle", "email": "Marberc@labcorp.com", "phone": "", "notes": ""}]}</script>
+<script>
+"use strict";
+const SEED = JSON.parse(document.getElementById("seed").textContent);
+const API = "/api/plan";
+const LS = { name:"ecwt.name", key:"ecwt.key", local:"ecwt.localPlan", tab:"ecwt.tab", filt:"ecwt.filters" };
+const ls = {
+  get(k){ try{ return localStorage.getItem(k); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch{} },
+  del(k){ try{ localStorage.removeItem(k); }catch{} }
+};
+
+/* ---------- schema ---------- */
+const STATUS = {
+  tasks:["Pending","In progress","Blocked","Complete","N/A"],
+  actions:["Open","In progress","Done"],
+  milestones:["Not started","In progress","At risk","Done"],
+  training:["Not scheduled","Scheduled","Completed"]
+};
+const TONE = {"Complete":"s-ok","Done":"s-ok","Completed":"s-ok","In progress":"s-info","Scheduled":"s-info","Blocked":"s-bad","At risk":"s-bad","Pending":"s-warn","Open":"s-warn","Not scheduled":"s-warn","Not started":"","N/A":""};
+const DONE = new Set(["Complete","Done","Completed","N/A"]);
+const COLL = {
+  tasks:{label:"Task",title:"name",fields:[
+    {k:"ws",l:"Workstream",t:"list"},{k:"name",l:"Task",t:"text",req:1},
+    {k:"status",l:"Status",t:"status",half:1},{k:"owner",l:"Owner / resource",t:"text",half:1},
+    {k:"start",l:"Start",t:"date",half:1},{k:"finish",l:"Finish",t:"date",half:1},
+    {k:"duration",l:"Duration",t:"text"},{k:"notes",l:"Notes",t:"area"}]},
+  actions:{label:"Action item",title:"item",fields:[
+    {k:"item",l:"Action item",t:"text",req:1},{k:"status",l:"Status",t:"status",half:1},{k:"owner",l:"Owner",t:"text",half:1},
+    {k:"due",l:"Due date",t:"date",half:1},{k:"notes",l:"Notes",t:"area"}]},
+  milestones:{label:"Milestone",title:"name",fields:[
+    {k:"name",l:"Milestone",t:"text",req:1},{k:"date",l:"Target date",t:"date",half:1},{k:"status",l:"Status",t:"status",half:1},
+    {k:"owner",l:"Owner",t:"text"},{k:"notes",l:"Notes",t:"area"}]},
+  training:{label:"Training session",title:"session",fields:[
+    {k:"session",l:"Session",t:"text",req:1},{k:"audience",l:"Audience",t:"text"},
+    {k:"date",l:"Date",t:"date",half:1},{k:"status",l:"Status",t:"status",half:1},
+    {k:"trainer",l:"Trainer",t:"text",half:1},{k:"attendees",l:"Attendees / headcount",t:"text",half:1},{k:"notes",l:"Notes",t:"area"}]},
+  contacts:{label:"Contact",title:"name",fields:[
+    {k:"role",l:"Role",t:"text",req:1},{k:"name",l:"Name",t:"text"},{k:"email",l:"Email",t:"text",half:1},{k:"phone",l:"Phone",t:"text",half:1},{k:"notes",l:"Notes",t:"area"}]}
+};
+
+/* ---------- state ---------- */
+let plan = null, version = 0, log = [], mode = "loading", editKeyRequired = false;
+let pending = [];           // ops not yet saved
+let saving = false, saveTimer = null;
+let tab = ls.get(LS.tab) || "overview";
+let filters = (()=>{ try{ return JSON.parse(ls.get(LS.filt)) || {}; }catch{ return {}; } })();
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todayISO = () => { const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10); };
+const fmt = iso => { if(!iso) return ""; const [y,m,d]=iso.split("-").map(Number); return new Date(y,m-1,d).toLocaleDateString(undefined,{month:"short",day:"numeric",year: y!==new Date().getFullYear()?"numeric":undefined}); };
+const daysUntil = iso => { if(!iso) return null; const [y,m,d]=iso.split("-").map(Number); const t=new Date(); t.setHours(0,0,0,0); return Math.round((new Date(y,m-1,d)-t)/864e5); };
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const clone = o => JSON.parse(JSON.stringify(o));
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),2600); }
+
+/* ---------- ops (so concurrent edits merge instead of overwrite) ---------- */
+function applyOp(data, op){
+  if(op.type==="set"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r) r[op.field]=op.value; }
+  else if(op.type==="add"){ if(!data[op.coll].some(x=>x.id===op.row.id)) data[op.coll].push(clone(op.row)); }
+  else if(op.type==="del"){ data[op.coll]=data[op.coll].filter(x=>x.id!==op.id); }
+  else if(op.type==="meta"){ data[op.field]=op.value; }
+  else if(op.type==="replace"){ Object.keys(data).forEach(k=>delete data[k]); Object.assign(data, clone(op.data)); }
+}
+function describe(op){
+  const name = r => r ? (r[COLL[op.coll]?.title] || r.id) : op.id;
+  if(op.type==="set"){ const f=COLL[op.coll].fields.find(f=>f.k===op.field); return `${COLL[op.coll].label} “${op.label}”: ${f?f.l:op.field} → ${op.value===""?"(blank)":op.value}`; }
+  if(op.type==="add") return `Added ${COLL[op.coll].label.toLowerCase()} “${name(op.row)}”`;
+  if(op.type==="del") return `Deleted ${COLL[op.coll].label.toLowerCase()} “${op.label}”`;
+  if(op.type==="meta") return `Go-live date → ${op.value}`;
+  if(op.type==="replace") return "Imported a full plan backup";
+  return "Edit";
+}
+function commit(ops){
+  ops = Array.isArray(ops) ? ops : [ops];
+  if(!ops.length) return;
+  if(!ensureName(()=>commit(ops))) { render(); return; }
+  ops.forEach(op=>{ applyOp(plan, op); op.desc = describe(op); pending.push(op); });
+  render();
+  scheduleSave();
+}
+
+/* ---------- sync ---------- */
+function setSync(text, err){ const s=$("#sync"); s.textContent=text; s.classList.toggle("err",!!err); }
+async function load(){
+  try{
+    const r = await fetch(API, {cache:"no-store"});
+    if(!r.ok) throw new Error(r.status);
+    const doc = await r.json();
+    editKeyRequired = !!doc.editKeyRequired;
+    mode = "shared";
+    if(!doc.data){ // first run: initialise shared copy from the plan
+      plan = clone(SEED); version = doc.version || 0; log = doc.log || [];
+      pending.push({type:"replace", data:clone(SEED), desc:"Loaded the implementation plan (initial setup)"});
+      render(); setSync("Setting up…");
+      if(!editKeyRequired || ls.get(LS.key)) scheduleSave(0);
+      else { setSync("Not saved yet"); showBanner("First-time setup: make any edit and enter the edit passcode to save this plan for everyone."); }
+      return;
+    }
+    plan = doc.data; version = doc.version; log = doc.log || [];
+    setSync("All changes saved");
+  }catch(e){
+    mode = "local";
+    let saved=null; try{ saved=JSON.parse(ls.get(LS.local)); }catch{}
+    plan = saved || clone(SEED);
+    showBanner("Preview mode — the shared database isn’t reachable here, so changes are saved only in this browser. Once deployed on Netlify, everyone shares one plan.");
+    setSync("Saved in this browser");
+  }
+  render();
+}
+function showBanner(t){ $("#bannerText").textContent=t; $("#banner").hidden=false; }
+
+function scheduleSave(delay=700){ clearTimeout(saveTimer); saveTimer=setTimeout(save, delay); setSync("Saving…"); }
+async function save(){
+  if(!pending.length) return;
+  if(mode==="local"){ ls.set(LS.local, JSON.stringify(plan)); log = [...pending.map(o=>({at:new Date().toISOString(),by:ls.get(LS.name)||"Me",what:o.desc}))].reverse().concat(log).slice(0,500); pending=[]; setSync("Saved in this browser"); if(tab==="activity") render(); return; }
+  if(saving){ scheduleSave(); return; }
+  if(editKeyRequired && !ls.get(LS.key)){ askKey(); return; }
+  saving = true;
+  const batch = pending.slice();
+  let retry = false;
+  try{
+    const r = await fetch(API, {method:"PUT", headers:{"content-type":"application/json","x-edit-key":ls.get(LS.key)||""},
+      body: JSON.stringify({data:plan, baseVersion:version, editor: ls.get(LS.name)||"Unknown", changes: batch.map(o=>o.desc)})});
+    const doc = await r.json().catch(()=>({}));
+    if(r.status===409){ // someone else saved first: replay my edits on top of theirs
+      const fresh = doc.data ? clone(doc.data) : clone(SEED);
+      pending.forEach(op=>applyOp(fresh, op));
+      plan = fresh; version = doc.version; log = doc.log||[];
+      render(); retry = true; return;
+    }
+    if(r.status===401){ ls.del(LS.key); saving=false; setSync("Passcode needed", true); askKey(doc.error); return; }
+    if(!r.ok) throw new Error(doc.error || r.status);
+    version = doc.version; log = doc.log||[];
+    pending = pending.slice(batch.length);
+    $("#banner").hidden = true;
+    setSync(pending.length ? "Saving…" : "All changes saved");
+    if(tab==="activity") render();
+  }catch(e){
+    setSync("Not saved — retrying", true);
+    saveTimer = setTimeout(save, 5000);
+  }finally{ saving=false; if(retry) setTimeout(save, 0); }
+}
+async function poll(){
+  if(mode!=="shared" || pending.length || saving || document.hidden || $("#dlg").open) return;
+  try{
+    const r = await fetch(API,{cache:"no-store"}); if(!r.ok) return;
+    const doc = await r.json();
+    if(doc.data && doc.version!==version){ plan=doc.data; version=doc.version; log=doc.log||[]; render(); toast("Updated with the latest changes from your team"); }
+  }catch{}
+}
+setInterval(poll, 20000);
+document.addEventListener("visibilitychange", poll);
+window.addEventListener("beforeunload", e=>{ if(pending.length && mode==="shared"){ e.preventDefault(); e.returnValue=""; } });
+
+/* ---------- name & passcode ---------- */
+function ensureName(then){
+  const needName=!ls.get(LS.name), needKey=editKeyRequired && mode==="shared" && !ls.get(LS.key);
+  if(!needName && !needKey) return true;
+  openDialog(`<h3>${needName?"Who’s making changes?":"Edit passcode"}</h3><p style="margin:0 0 12px;color:var(--muted)">${needName?"Your name appears in the activity log next to your updates.":""}${needKey?" Your administrator set a passcode for editing; enter it once on this device.":""}</p>
+    ${needName?`<div class="fld"><label for="nm">Your name</label><input id="nm" required autocomplete="name"></div>`:""}
+    ${needKey?`<div class="fld"><label for="pk">Edit passcode</label><input id="pk" type="password" required></div>`:""}
+    <div class="dlg-actions"><span class="spacer"></span><button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok">Continue</button></div>`,
+    f=>{ const nm=f.querySelector("#nm"), pk=f.querySelector("#pk");
+      if(nm){ const v=nm.value.trim(); if(!v) return false; ls.set(LS.name,v); }
+      if(pk){ if(!pk.value) return false; ls.set(LS.key,pk.value); }
+      updateWho(); then&&setTimeout(then); }, ()=>render());
+  return false;
+}
+function askKey(msg){
+  openDialog(`<h3>Edit passcode</h3>${msg?`<div class="callout">${esc(msg)}</div>`:""}<p style="margin:0 0 12px;color:var(--muted)">Your administrator set a passcode for editing. Enter it once on this device.</p>
+    <div class="fld"><label for="pk">Passcode</label><input id="pk" type="password" required></div>
+    <div class="dlg-actions"><span class="spacer"></span><button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok">Save</button></div>`,
+    f=>{ const v=f.querySelector("#pk").value; if(!v) return false; ls.set(LS.key,v); scheduleSave(0); },
+    ()=>setSync(pending.length?"Not saved — passcode needed":"All changes saved", !!pending.length));
+}
+function updateWho(){ $("#whoBtn").textContent = ls.get(LS.name) ? "👤 " + ls.get(LS.name) : "Set your name"; }
+$("#whoBtn").onclick = ()=>{ ls.del(LS.name); ensureName(); };
+
+/* ---------- dialog ---------- */
+function openDialog(html, onOk, onCancel){
+  const d=$("#dlg"), f=$("#dlgForm"); if(d.open) d.close(); f.innerHTML=html;
+  f.onsubmit = e => { const v=e.submitter?.value; if(v==="ok"){ if(onOk(f)===false){ e.preventDefault(); return; } } else if(v==="delete"){ return; } else onCancel&&onCancel(); };
+  d.onclose = null; d.showModal(); setTimeout(()=>f.querySelector("input,select,textarea")?.focus(),30);
+}
+function editRow(coll, id, preset){
+  const isNew = !id; const def = COLL[coll];
+  const row = isNew ? {id:uid(coll[0]), ...preset} : plan[coll].find(r=>r.id===id);
+  if(!row) return;
+  const wsList = [...new Set(plan.tasks.map(t=>t.ws))];
+  const field = f => {
+    const v = row[f.k] ?? "";
+    let inp;
+    if(f.t==="status") inp = `<select id="f_${f.k}">${STATUS[coll].map(s=>`<option ${s===v?"selected":""}>${esc(s)}</option>`).join("")}</select>`;
+    else if(f.t==="area") inp = `<textarea id="f_${f.k}">${esc(v)}</textarea>`;
+    else if(f.t==="date") inp = `<input type="date" id="f_${f.k}" value="${esc(v)}">`;
+    else if(f.t==="list") inp = `<input id="f_${f.k}" list="wsl" value="${esc(v)}"><datalist id="wsl">${wsList.map(w=>`<option value="${esc(w)}">`).join("")}</datalist>`;
+    else inp = `<input id="f_${f.k}" value="${esc(v)}" ${f.req?"required":""}>`;
+    return `<div class="fld"><label for="f_${f.k}">${esc(f.l)}</label>${inp}</div>`;
+  };
+  let body="", buf=[];
+  def.fields.forEach(f=>{ if(f.half){ buf.push(field(f)); if(buf.length===2){ body+=`<div class="fld2">${buf.join("")}</div>`; buf=[]; } } else { if(buf.length){ body+=`<div class="fld2">${buf.join("")}</div>`; buf=[]; } body+=field(f); } });
+  if(buf.length) body+=`<div class="fld2">${buf.join("")}</div>`;
+  openDialog(`<h3>${isNew?"Add":"Edit"} ${def.label.toLowerCase()}</h3>${body}
+    <div class="dlg-actions">${isNew?"":`<button class="btn danger" value="delete" id="delBtn" formnovalidate>Delete</button>`}<span class="spacer"></span>
+    <button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok">${isNew?"Add":"Save"}</button></div>`,
+    f=>{
+      const vals={}; def.fields.forEach(x=>vals[x.k]=f.querySelector("#f_"+x.k).value.trim());
+      if(isNew){ setTimeout(()=>commit({type:"add",coll,row:{...row,...vals}})); return; }
+      const ops=def.fields.filter(x=>(row[x.k]??"")!==vals[x.k]).map(x=>({type:"set",coll,id,field:x.k,value:vals[x.k],label:row[def.title]||vals[def.title]}));
+      setTimeout(()=>commit(ops));
+    });
+  const del=$("#delBtn"); if(del) del.onclick=()=>{ if(confirm(`Delete this ${def.label.toLowerCase()}?`)) setTimeout(()=>commit({type:"del",coll,id,label:row[def.title]})); };
+}
+
+/* ---------- metrics ---------- */
+const isOverdue = (date,status) => date && !DONE.has(status) && date < todayISO();
+function wsStats(){
+  const m = new Map();
+  plan.tasks.forEach(t=>{ const s=m.get(t.ws)||{ws:t.ws,total:0,done:0,blocked:0,overdue:0}; s.total++; if(DONE.has(t.status)) s.done++; if(t.status==="Blocked") s.blocked++; if(isOverdue(t.finish,t.status)) s.overdue++; m.set(t.ws,s); });
+  return [...m.values()];
+}
+
+/* ---------- render ---------- */
+function pill(s){ return `<span class="pill ${TONE[s]||""}">${esc(s)}</span>`; }
+function stSelect(coll,id,v){ return `<select class="st pill ${TONE[v]||""}" data-coll="${coll}" data-id="${id}" aria-label="Status">${STATUS[coll].map(s=>`<option ${s===v?"selected":""}>${esc(s)}</option>`).join("")}</select>`; }
+
+function renderKPIs(){
+  const t=plan.tasks, done=t.filter(x=>DONE.has(x.status)).length, pct=t.length?Math.round(done/t.length*100):0;
+  const blocked=t.filter(x=>x.status==="Blocked").length;
+  const openA=plan.actions.filter(a=>!DONE.has(a.status)).length;
+  const dl=daysUntil(plan.goLive);
+  const trDone=plan.training.filter(x=>x.status==="Completed").length, trSched=plan.training.filter(x=>x.status!=="Not scheduled").length;
+  $("#kpis").innerHTML = `
+   <div class="kpi"><div class="lbl">Target go-live</div><div class="val">${dl===null?"—":dl<0?"Passed":dl+" days"}</div>
+     <input type="date" id="goLive" value="${esc(plan.goLive)}" aria-label="Target go-live date"></div>
+   <div class="kpi"><div class="lbl">Tasks complete</div><div class="val">${pct}%</div><div class="sub">${done} of ${t.length}</div><div class="bar"><i style="width:${pct}%"></i></div></div>
+   <div class="kpi"><div class="lbl">Blocked tasks</div><div class="val" style="color:${blocked?"var(--bad)":"inherit"}">${blocked}</div><div class="sub">waiting on a decision or document</div></div>
+   <div class="kpi"><div class="lbl">Open action items</div><div class="val" style="color:${openA?"var(--warn)":"inherit"}">${openA}</div><div class="sub">of ${plan.actions.length}</div></div>
+   <div class="kpi"><div class="lbl">Training</div><div class="val">${trSched}/${plan.training.length}</div><div class="sub">scheduled · ${trDone} completed</div></div>`;
+  $("#goLive").onchange = e => commit({type:"meta",field:"goLive",value:e.target.value});
+}
+
+const TABS = [["overview","Overview"],["tasks","Project plan"],["actions","Action items"],["milestones","Road to go-live"],["training","Training"],["contacts","Contacts"],["activity","Activity"]];
+function renderTabs(){
+  const cnt = {tasks:plan.tasks.filter(t=>!DONE.has(t.status)).length, actions:plan.actions.filter(a=>!DONE.has(a.status)).length};
+  $("#tabs").innerHTML = TABS.map(([k,l])=>`<button role="tab" data-tab="${k}" aria-selected="${tab===k}">${l}${cnt[k]?`<span class="count">${cnt[k]}</span>`:""}</button>`).join("");
+}
+
+function vOverview(){
+  const ws = wsStats();
+  const today=todayISO();
+  const upcoming = plan.milestones.filter(m=>!DONE.has(m.status)).sort((a,b)=>(a.date||"9").localeCompare(b.date||"9")).slice(0,6);
+  const blockers = plan.tasks.filter(t=>t.status==="Blocked");
+  const openA = plan.actions.filter(a=>!DONE.has(a.status));
+  const overdue = [...plan.tasks.filter(t=>isOverdue(t.finish,t.status)).map(t=>({t:t.name,ws:t.ws,d:t.finish,coll:"tasks",id:t.id})),
+                   ...plan.milestones.filter(m=>isOverdue(m.date,m.status)).map(m=>({t:m.name,ws:"Road to go-live",d:m.date,coll:"milestones",id:m.id})),
+                   ...plan.actions.filter(a=>isOverdue(a.due,a.status)).map(a=>({t:a.item,ws:"Action item",d:a.due,coll:"actions",id:a.id}))].sort((a,b)=>a.d.localeCompare(b.d));
+  return `<div class="grid2">
+   <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+    <div class="card"><h2>Workstreams <span class="hint">click one to open its tasks</span></h2>
+     ${ws.map(s=>{const p=Math.round(s.done/s.total*100);return `<div class="ws-row" data-ws="${esc(s.ws)}"><div class="ws-name">${esc(s.ws)}${s.blocked?`<small>${s.blocked} blocked</small>`:""}${s.overdue?`<small>${s.overdue} overdue</small>`:""}</div><div class="bar"><i style="width:${p}%;background:${p===100?"var(--ok)":"var(--brand-2)"}"></i></div><div class="pct">${s.done}/${s.total}</div></div>`;}).join("")}
+    </div>
+    <div class="card"><h2>Overdue <span class="hint">past their date and not done</span></h2>
+     ${overdue.length?`<div class="list">${overdue.map(o=>`<div class="li"><div class="d" style="color:var(--bad)">${fmt(o.d)}</div><div class="t"><b>${esc(o.t)}</b><div class="n">${esc(o.ws)}</div></div><button class="btn" data-edit="${o.coll}:${o.id}">Update</button></div>`).join("")}</div>`:`<div class="empty">Nothing overdue.</div>`}
+    </div>
+   </div>
+   <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+    <div class="card"><h2>Next milestones</h2>
+     ${upcoming.length?`<div class="list">${upcoming.map(m=>`<div class="li"><div class="d"${isOverdue(m.date,m.status)?' style="color:var(--bad)"':""}>${fmt(m.date)}</div><div class="t"><b>${esc(m.name)}</b><div class="n">${esc(m.owner)}</div></div>${pill(m.status)}</div>`).join("")}</div>`:`<div class="empty">All milestones done.</div>`}
+    </div>
+    <div class="card"><h2>Blocked</h2>
+     ${blockers.length?`<div class="list">${blockers.map(t=>`<div class="li"><div class="t"><b>${esc(t.name)}</b><div class="n">${esc(t.ws)}${t.notes?" — "+esc(t.notes):""}</div></div><button class="btn" data-edit="tasks:${t.id}">Update</button></div>`).join("")}</div>`:`<div class="empty">Nothing blocked.</div>`}
+    </div>
+    <div class="card"><h2>Open action items</h2>
+     ${openA.length?`<div class="list">${openA.map(a=>`<div class="li"><div class="t"><b>${esc(a.item)}</b><div class="n">${esc(a.owner)}${a.due?" · due "+fmt(a.due):""}</div></div>${stSelect("actions",a.id,a.status)}</div>`).join("")}</div>`:`<div class="empty">No open action items.</div>`}
+    </div>
+   </div></div>`;
+}
+
+function vTasks(){
+  const wsAll=[...new Set(plan.tasks.map(t=>t.ws))];
+  const owners=[...new Set(plan.tasks.map(t=>t.owner).filter(Boolean))].sort();
+  const q=(filters.q||"").toLowerCase();
+  const rows=plan.tasks.filter(t=>(!filters.ws||t.ws===filters.ws)&&(!filters.st||(filters.st==="open"?!DONE.has(t.status):t.status===filters.st))&&(!filters.ow||t.owner===filters.ow)&&(!q||[t.name,t.notes,t.owner,t.ws].join(" ").toLowerCase().includes(q)));
+  const groups=wsAll.map(w=>[w,rows.filter(r=>r.ws===w)]).filter(g=>g[1].length);
+  return `<div class="toolbar">
+    <input type="search" id="fq" placeholder="Search tasks, notes, owners" value="${esc(filters.q||"")}">
+    <select id="fws"><option value="">All workstreams</option>${wsAll.map(w=>`<option ${filters.ws===w?"selected":""}>${esc(w)}</option>`).join("")}</select>
+    <select id="fst"><option value="">All statuses</option><option value="open" ${filters.st==="open"?"selected":""}>Not done</option>${STATUS.tasks.map(s=>`<option ${filters.st===s?"selected":""}>${s}</option>`).join("")}</select>
+    <select id="fow"><option value="">All owners</option>${owners.map(o=>`<option ${filters.ow===o?"selected":""}>${esc(o)}</option>`).join("")}</select>
+    <span class="spacer"></span><button class="btn" data-csv="tasks">Download CSV</button><button class="btn primary" data-add="tasks">+ Add task</button></div>
+   <div class="tablewrap"><table><thead><tr><th style="width:34%">Task</th><th>Status</th><th>Start</th><th>Finish</th><th>Owner</th><th>Notes</th></tr></thead><tbody>
+   ${groups.length?groups.map(([w,rs])=>{const all=plan.tasks.filter(t=>t.ws===w),d=all.filter(t=>DONE.has(t.status)).length;return `<tr class="grp"><td colspan="6">${esc(w)}<span class="gp">${d}/${all.length} done</span></td></tr>`+rs.map(t=>`<tr class="row" data-edit="tasks:${t.id}"><td>${esc(t.name)}${t.duration?`<div class="n" style="color:var(--muted);font-size:12px">${esc(t.duration)}</div>`:""}</td><td>${stSelect("tasks",t.id,t.status)}</td><td class="date">${t.start?fmt(t.start):'<span style="color:var(--muted)">TBD</span>'}</td><td class="date ${isOverdue(t.finish,t.status)?"overdue":""}">${t.finish?fmt(t.finish):'<span style="color:var(--muted)">TBD</span>'}</td><td>${esc(t.owner)}</td><td class="notes">${esc(t.notes)}</td></tr>`).join("");}).join(""):`<tr><td colspan="6" class="empty">No tasks match these filters.</td></tr>`}
+   </tbody></table></div>`;
+}
+
+function vSimple(coll, cols, opts={}){
+  const rows = opts.sort ? plan[coll].slice().sort(opts.sort) : plan[coll];
+  return `${opts.intro||""}<div class="toolbar"><span class="spacer"></span><button class="btn" data-csv="${coll}">Download CSV</button><button class="btn primary" data-add="${coll}">+ Add ${COLL[coll].label.toLowerCase()}</button></div>
+   <div class="tablewrap"><table><thead><tr>${cols.map(c=>`<th>${c[1]}</th>`).join("")}</tr></thead><tbody>
+   ${rows.length?rows.map(r=>`<tr class="row" data-edit="${coll}:${r.id}">${cols.map(([k])=>{const v=r[k]??"";
+     if(k==="status") return `<td>${stSelect(coll,r.id,v)}</td>`;
+     if(["date","due"].includes(k)) return `<td class="date ${isOverdue(v,r.status)?"overdue":""}">${v?fmt(v):'<span style="color:var(--muted)">—</span>'}</td>`;
+     if(k==="notes") return `<td class="notes">${esc(v)}</td>`;
+     if(k==="email") return `<td>${v?`<a href="mailto:${esc(v)}" onclick="event.stopPropagation()">${esc(v)}</a>`:""}</td>`;
+     if(k==="phone") return `<td style="white-space:nowrap">${v?`<a href="tel:${esc(v.replace(/[^\d+,]/g,""))}" onclick="event.stopPropagation()">${esc(v)}</a>`:""}</td>`;
+     return `<td>${esc(v)}</td>`;}).join("")}</tr>`).join(""):`<tr><td colspan="${cols.length}" class="empty">Nothing here yet.</td></tr>`}
+   </tbody></table></div>`;
+}
+
+function vActivity(){
+  return `<div class="tablewrap log"><table><thead><tr><th style="width:170px">When</th><th style="width:160px">Who</th><th>Change</th></tr></thead><tbody>
+   ${log.length?log.map(e=>`<tr><td class="date">${esc(new Date(e.at).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}))}</td><td>${esc(e.by)}</td><td>${esc(e.what)}</td></tr>`).join(""):`<tr><td colspan="3" class="empty">No changes recorded yet.</td></tr>`}
+   </tbody></table></div>`;
+}
+
+function render(){
+  if(!plan) return;
+  renderKPIs(); renderTabs();
+  const byDate=(a,b)=>(a.date||"9").localeCompare(b.date||"9");
+  const v = {
+    overview: vOverview,
+    tasks: vTasks,
+    actions: ()=>vSimple("actions",[["item","Action item"],["status","Status"],["owner","Owner"],["due","Due"],["notes","Notes"]]),
+    milestones: ()=>vSimple("milestones",[["date","Target"],["name","Milestone"],["status","Status"],["owner","Owner"],["notes","Notes"]],{sort:byDate,intro:`<div class="callout">A working schedule counted back from the target go-live. These dates are proposals to confirm with the eCW project manager — edit them as dates are agreed.</div>`}),
+    training: ()=>vSimple("training",[["session","Session"],["audience","Audience"],["date","Date"],["status","Status"],["trainer","Trainer"],["attendees","Attendees"],["notes","Notes"]],{sort:byDate,intro:`<div class="callout">Plan role-based training for the two weeks before go-live, with super users trained first. Add dates and headcounts as eCW confirms trainers.</div>`}),
+    contacts: ()=>vSimple("contacts",[["role","Role"],["name","Name"],["email","Email"],["phone","Phone"],["notes","Notes"]]),
+    activity: vActivity
+  }[tab] || vOverview;
+  $("#view").innerHTML = v();
+  bindFilters();
+}
+
+/* ---------- events ---------- */
+function bindFilters(){
+  const set=(k,v)=>{ filters[k]=v; ls.set(LS.filt,JSON.stringify(filters)); render(); };
+  const fq=$("#fq"); if(fq){ fq.oninput=e=>{ filters.q=e.target.value; ls.set(LS.filt,JSON.stringify(filters)); clearTimeout(fq._t); fq._t=setTimeout(()=>{ const pos=e.target.selectionStart; render(); const n=$("#fq"); n.focus(); n.setSelectionRange(pos,pos); },200); }; }
+  [["#fws","ws"],["#fst","st"],["#fow","ow"]].forEach(([s,k])=>{ const el=$(s); if(el) el.onchange=e=>set(k,e.target.value); });
+}
+document.addEventListener("click", e=>{
+  const tb=e.target.closest("[data-tab]"); if(tb){ tab=tb.dataset.tab; ls.set(LS.tab,tab); render(); return; }
+  if(e.target.closest("select.st")) return;
+  const wr=e.target.closest("[data-ws]"); if(wr){ filters={ws:wr.dataset.ws}; ls.set(LS.filt,JSON.stringify(filters)); tab="tasks"; ls.set(LS.tab,tab); render(); window.scrollTo({top:0}); return; }
+  const ed=e.target.closest("[data-edit]"); if(ed){ const [c,id]=ed.dataset.edit.split(":"); editRow(c,id); return; }
+  const ad=e.target.closest("[data-add]"); if(ad){ const c=ad.dataset.add; const preset={status:STATUS[c]?.[0]}; if(c==="tasks"&&filters.ws) preset.ws=filters.ws; editRow(c,null,preset); return; }
+  const cv=e.target.closest("[data-csv]"); if(cv){ downloadCSV(cv.dataset.csv); return; }
+});
+document.addEventListener("change", e=>{
+  const s=e.target.closest("select.st"); if(!s) return;
+  const {coll,id}=s.dataset; const r=plan[coll].find(x=>x.id===id);
+  if(r && r.status!==s.value) commit({type:"set",coll,id,field:"status",value:s.value,label:r[COLL[coll].title]});
+});
+
+/* ---------- export / import ---------- */
+function dl(name, text, type){ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+function downloadCSV(coll){
+  const f=COLL[coll].fields; const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).join(","), ...plan[coll].map(r=>f.map(x=>q(r[x.k])).join(","))].join("\r\n"), "text/csv");
+}
+$("#exportBtn").onclick=()=>dl(`ecw-plan-backup-${todayISO()}.json`, JSON.stringify(plan,null,1), "application/json");
+$("#importBtn").onclick=()=>$("#importFile").click();
+$("#importFile").onchange=async e=>{
+  const file=e.target.files[0]; e.target.value=""; if(!file) return;
+  try{ const d=JSON.parse(await file.text()); if(!Array.isArray(d.tasks)||!Array.isArray(d.actions)) throw 0;
+    ["milestones","training","contacts"].forEach(k=>{ if(!Array.isArray(d[k])) d[k]=[]; });
+    if(confirm("Replace the whole plan with this backup? Everyone will see the imported version.")) commit({type:"replace",data:d});
+  }catch{ toast("That file isn’t a tracker backup."); }
+};
+
+updateWho();
+load();
+</script>
+</body>
+</html>
