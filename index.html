@@ -101,6 +101,33 @@ dialog h3{margin:0 0 14px;font-size:16px}
 .toast.on{opacity:1}
 @media (max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
 @media (max-width:520px){.fld2{grid-template-columns:1fr}.kpi .val{font-size:22px}.ws-row{grid-template-columns:minmax(0,1fr) 70px 44px}}
+.tablewrap.flat{box-shadow:none}
+.set-card{margin-bottom:16px}
+.set-tbl{min-width:1080px}
+.set-tbl td:first-child select{min-width:9.5em}
+.set-tbl td{padding:4px 6px;vertical-align:middle}
+.sx{border:1px solid transparent;background:transparent;border-radius:6px;padding:5px 7px;width:100%;min-width:0}
+.sx:hover{border-color:var(--line)}
+.sx:focus{border-color:var(--brand-2);background:#fff;outline:none}
+select.sx{border-color:var(--line);background:var(--surface)}
+.w4{width:4.5em}.w8{width:9em}.w10{width:10em}
+.sx.grow{flex:1;min-width:240px;border:1px solid var(--line);background:var(--surface)}
+.hint{color:var(--muted);font-size:12.5px;font-weight:400}
+.bulk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--soft)}
+.bulk select,.bulk input{border:1px solid var(--line);border-radius:8px;padding:6px 9px;min-width:0;max-width:260px}
+.btn.sm{padding:3px 9px;font-size:12.5px}
+a.btn{text-decoration:none;color:inherit;display:inline-block}
+.mtgs{display:flex;flex-direction:column;gap:12px}
+.mtg-h{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
+.mtg h2{margin:2px 0 4px}
+.mtg-d{color:var(--muted);font-size:12.5px;font-weight:600}
+.mtg-b{display:flex;gap:6px;flex-wrap:wrap}
+.mtg h4{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:14px 0 4px}
+.mtg p{margin:0}
+.n{color:var(--muted);font-size:12.5px}
+.flist{margin:0;padding-left:18px}
+.callout.warn{background:var(--warn-bg);color:var(--warn)}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;margin:4px 0 10px}
 @media print{header.top .tbtn,nav.tabs,.toolbar,.banner{display:none}body{background:#fff}.card,.tablewrap,.kpi{box-shadow:none}}
 </style>
 </head>
@@ -125,6 +152,7 @@ dialog h3{margin:0 0 14px;font-size:16px}
 <div class="toast" id="toast"></div>
 
 <script id="seed" type="application/json">{"project": "eClinicalWorks Implementation — Vascular Health Partners", "goLive": "2026-12-31", "tasks": [{"id": "t1", "ws": "Kick-off", "name": "Kick-off Call with eClinicalWorks Project Manager", "status": "Complete", "duration": "60 min", "start": "2026-07-07", "finish": "2026-07-07", "owner": "eCW, Practice implementation team", "notes": ""}, {"id": "t2", "ws": "Kick-off", "name": "Web enable Customer", "status": "Complete", "duration": "", "start": "2026-07-07", "finish": "2026-07-07", "owner": "eCW", "notes": ""}, {"id": "t3", "ws": "Kick-off", "name": "Business Analyst Kick-Off call", "status": "Complete", "duration": "60 min", "start": "2026-07-13", "finish": "2026-07-13", "owner": "BA, Practice Implementation team", "notes": ""}, {"id": "t4", "ws": "Kick-off", "name": "Data Migration Discovery Call", "status": "Complete", "duration": "60 min", "start": "2026-07-13", "finish": "2026-07-13", "owner": "eCW, Practice implementation team", "notes": ""}, {"id": "t5", "ws": "Kick-off", "name": "Billing Discovery Call", "status": "Complete", "duration": "60 min", "start": "2026-07-28", "finish": "2026-07-28", "owner": "Billing Implementation Specialist", "notes": ""}, {"id": "t6", "ws": "Cloud & Environment", "name": "Cloud Server Setup- Production environment", "status": "Complete", "duration": "", "start": "2026-07-10", "finish": "2026-07-10", "owner": "eCW Install team, practice IT", "notes": ""}, {"id": "t7", "ws": "Cloud & Environment", "name": "Production environment", "status": "Complete", "duration": "", "start": "2026-07-14", "finish": "2026-07-14", "owner": "eCW Install team, practice IT", "notes": ""}, {"id": "t8", "ws": "Labcorp Interface", "name": "Purchase Order approval", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Kindly reach out to Labcorp Rep to understand delay in receiving the purchase order"}, {"id": "t9", "ws": "Labcorp Interface", "name": "Assign interface project manager", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t10", "ws": "Labcorp Interface", "name": "Receive installation files from vendor", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t11", "ws": "Labcorp Interface", "name": "Configure installation files", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t12", "ws": "Labcorp Interface", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t13", "ws": "Labcorp Interface", "name": "Go live", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t14", "ws": "Quest Interface", "name": "Purchase Order approval", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Kindly reach out to Quest Rep to understand delay in receiving the purchase order"}, {"id": "t15", "ws": "Quest Interface", "name": "Assign interface project manager", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t16", "ws": "Quest Interface", "name": "Receive installation files from vendor", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t17", "ws": "Quest Interface", "name": "Configure installation files", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t18", "ws": "Quest Interface", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t19", "ws": "Quest Interface", "name": "Go live", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t20", "ws": "Core Sound / Studycast PACS", "name": "Assign interface project manager", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Kick off call completed with Celine and Melissa"}, {"id": "t21", "ws": "Core Sound / Studycast PACS", "name": "Configure installation files", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": "Compendium pending- Melissa will provide this"}, {"id": "t22", "ws": "Core Sound / Studycast PACS", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t23", "ws": "Core Sound / Studycast PACS", "name": "Go live", "status": "Pending", "duration": "", "start": "2026-11-03", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t24", "ws": "Olympus Device Integration", "name": "Gastroscopes- GIFs HQ-190, PCF-H190 and CF- H190. Motherboard-EVIS-EXera III, Printer-OEP-6", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "", "notes": "The following devices will need connectivity to eCW. No intervention needed at this time"}, {"id": "t25", "ws": "Olympus Device Integration", "name": "Assign interface project manager", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t26", "ws": "Olympus Device Integration", "name": "Configure installation files in Compendium", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t27", "ws": "Olympus Device Integration", "name": "Perform testing", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t28", "ws": "Olympus Device Integration", "name": "Go live", "status": "Pending", "duration": "", "start": "2026-11-03", "finish": "", "owner": "eCW Install team, practice IT, Vendor", "notes": ""}, {"id": "t29", "ws": "Fax Solution", "name": "Practice would like 15 digital fax numbers", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Rasmeen Ali", "notes": "Rasmeen will provide you with the 15 fax numbers once generated"}, {"id": "t30", "ws": "healow", "name": "Televisit set up call", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t31", "ws": "healow", "name": "Patient Portal Default set up", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t32", "ws": "healow", "name": "Kiosk Default set up", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t33", "ws": "healow", "name": "Messenger default set up", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t34", "ws": "healow", "name": "Healow e-checkin default setup", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": ""}, {"id": "t35", "ws": "healow", "name": "Healow Payment Services", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Sayantan Dutta", "notes": "I will check to see if you have opted for this feature"}, {"id": "t36", "ws": "Data Migration", "name": "TASK NAME", "status": "Pending", "duration": "DURATION", "start": "", "finish": "", "owner": "TASK OWNERS", "notes": "NOTES"}, {"id": "t37", "ws": "Data Migration", "name": "Data migration discovery call", "status": "Complete", "duration": "", "start": "2026-07-13", "finish": "2026-07-13", "owner": "Practice/Data Migration", "notes": ""}, {"id": "t38", "ws": "Data Migration", "name": "Data migration discovery call form sign off", "status": "Complete", "duration": "", "start": "2026-07-14", "finish": "2026-07-14", "owner": "Practice", "notes": ""}, {"id": "t39", "ws": "Data Migration", "name": "Provide initial cut of PM data to eCW", "status": "Complete", "duration": "", "start": "2026-07-21", "finish": "2026-07-21", "owner": "Practice", "notes": ""}, {"id": "t40", "ws": "Data Migration", "name": "Data download", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t41", "ws": "Data Migration", "name": "Data Extraction", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t42", "ws": "Data Migration", "name": "Generate Master Data Dictionary and upload on the support portal", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t43", "ws": "Data Migration", "name": "Generate Mapping file for PM and EMR", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-08-05", "owner": "Data Migration", "notes": ""}, {"id": "t44", "ws": "Data Migration", "name": "Data Migration Call to Discuss Statement of Work (SOW)/ Process document and Mapping file", "status": "Complete", "duration": "", "start": "2026-08-05", "finish": "2026-10-05", "owner": "Practice/Data Migration", "notes": ""}, {"id": "t45", "ws": "Data Migration", "name": "Return signed SOW/ Process document and Mapping file", "status": "Complete", "duration": "", "start": "2026-10-05", "finish": "2026-10-05", "owner": "Practice", "notes": ""}, {"id": "t46", "ws": "Data Migration", "name": "Test Migration and Client to receive Exception Report", "status": "Complete", "duration": "", "start": "2025-08-03", "finish": "2025-08-07", "owner": "Data Migration", "notes": "Dates in the source plan read Aug 3–7, 2025 — likely a typo for 2026. Confirm with eCW."}, {"id": "t47", "ws": "Data Migration", "name": "Data Migration Validation Call", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice/Data Migration", "notes": "Stephanie your BA will schedule this call with you to validate the data"}, {"id": "t48", "ws": "Data Migration", "name": "Data Migration Feedback Call", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": ""}, {"id": "t49", "ws": "Data Migration", "name": "Sign off on Test Migration", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": "Practice will need to validate the data, provide feedback and sign off on the test migration."}, {"id": "t50", "ws": "Data Migration", "name": "Provide final cut of PM and EMR data to eCW", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": ""}, {"id": "t51", "ws": "Data Migration", "name": "Final Migration and Client to receive Exception Report", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Data Migration", "notes": ""}, {"id": "t52", "ws": "Data Migration", "name": "Sign off on Final Migration", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "Data Migration", "notes": ""}, {"id": "t53", "ws": "System Build & Training", "name": "TASK NAME", "status": "Pending", "duration": "DURATION", "start": "", "finish": "", "owner": "TASK OWNERS", "notes": "NOTES"}, {"id": "t54", "ws": "System Build & Training", "name": "Assign Business Analyst", "status": "Complete", "duration": "1 hr", "start": "2026-07-13", "finish": "2026-07-14", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t55", "ws": "System Build & Training", "name": "BA Kick-Off and Introduction", "status": "Complete", "duration": "1 hr", "start": "2026-07-13", "finish": "2026-07-13", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t56", "ws": "System Build & Training", "name": "BA Discovery Call(s) Core", "status": "Complete", "duration": "1 hr Calls with various staff", "start": "2026-07-13", "finish": "2026-07-13", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t57", "ws": "System Build & Training", "name": "Weekly System Build Calls", "status": "Pending", "duration": "Weekly 2 hr Calls", "start": "2026-07-22", "finish": "2026-09-30", "owner": "eCW BA, Practice Implementation team", "notes": "Stephanie will schedule the system build calls with you once she is back in office."}, {"id": "t58", "ws": "System Build & Training", "name": "Practice to complete system build", "status": "Pending", "duration": "", "start": "2026-09-30", "finish": "2026-09-30", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t59", "ws": "System Build & Training", "name": "Training agenda and planning", "status": "Pending", "duration": "", "start": "2026-09-22", "finish": "2026-09-28", "owner": "eCW BA, Practice Implementation team", "notes": ""}, {"id": "t60", "ws": "System Build & Training", "name": "Go-live date", "status": "Pending", "duration": "", "start": "2026-11-03", "finish": "2026-11-03", "owner": "eCW trainers, Practice end users", "notes": ""}, {"id": "t61", "ws": "Billing", "name": "TASK NAME", "status": "Pending", "duration": "DURATION", "start": "", "finish": "", "owner": "TASK OWNERS", "notes": "NOTES"}, {"id": "t62", "ws": "Billing", "name": "BIS introduction call", "status": "Complete", "duration": "", "start": "2026-07-28", "finish": "2026-07-28", "owner": "eCW BIS, practice biller", "notes": ""}, {"id": "t63", "ws": "Billing", "name": "Billing discovery call", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": ""}, {"id": "t64", "ws": "Billing", "name": "Master data dictionary call", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": ""}, {"id": "t65", "ws": "Billing", "name": "Master data dictionary submission", "status": "Complete", "duration": "", "start": "", "finish": "", "owner": "Practice", "notes": ""}, {"id": "t66", "ws": "Billing", "name": "Billing set-up call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "This call will be scheduled once Credentials are received from the clearinghouse of your choice"}, {"id": "t67", "ws": "Billing", "name": "ASC setup call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "Dependent on the clearing house"}, {"id": "t68", "ws": "Billing", "name": "UB4 setup call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "Dependent on the clearing house"}, {"id": "t69", "ws": "Billing", "name": "Enterprise directory setup call", "status": "Blocked", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": "Waiting on the signed Enterprise Directory addendum."}, {"id": "t70", "ws": "Billing", "name": "Enterprise directory maintenance call", "status": "Pending", "duration": "", "start": "", "finish": "", "owner": "eCW BIS, practice biller", "notes": ""}], "actions": [{"id": "a1", "item": "ID.ME", "status": "Open", "owner": "Dr. Kumar", "due": "", "notes": "Sandra will work with Dr. Kumar to complete this task. Melissa will provide Sanda and Dr. Kumar the log in credentials to the support portal."}, {"id": "a2", "item": "Core Sound Imaging Compendium", "status": "Open", "owner": "Melissa", "due": "", "notes": "Melissa will provide Celine the compendium. Project will proceed further once this is received."}, {"id": "a3", "item": "Clearinghouse Decision", "status": "Open", "owner": "Practice", "due": "", "notes": "I have emailed Angelica and added an additional rep to email thread in hopes of getting a response. Kindly continue your outreach to Angelica via phone number."}, {"id": "a4", "item": "Enterprise Directory Addendum", "status": "Open", "owner": "Melissa", "due": "", "notes": "I have submitted a support case to have an addendum sent to you to ADD the enterprise directory to your contract. Once we receive the signed addenedum, the project will be initiiated."}, {"id": "a5", "item": "ASC Appointments Criteria List", "status": "Open", "owner": "Navneet/Melissa", "due": "", "notes": "Navneet will provide the criteria needed for the ASC appointments such as the facility/visit type associated to the appointment."}, {"id": "a6", "item": "Missing Documents Excel sheet", "status": "Open", "owner": "Navneet/Melissa", "due": "", "notes": "Melissa will send the Excel sheet of missing documents to the legacy system team to retrieve the missing data."}, {"id": "a7", "item": "Quest Purchase Order", "status": "Open", "owner": "Melissa", "due": "", "notes": "Reach out to the quest rep/customer service number to inquire on when ecw will receive the purchase order (not mandatory)"}, {"id": "a8", "item": "Labcorp Purchase Order", "status": "Open", "owner": "Melissa", "due": "", "notes": "Reach out to the Labcorp rep/customer service number to inquire on when ecw will receive the purchase order (not mandatory)"}, {"id": "a9", "item": "EBO Reporting Access for Navneet", "status": "Open", "owner": "Rasmeen", "due": "", "notes": "I will put in a support case to have a teach reach out to you as you are unable to see the EBO reports"}], "milestones": [{"id": "m1", "date": "2026-11-04", "name": "Confirm new go-live date (12/31) and revised timeline with eCW PM", "owner": "Practice / Rasmeen Ali", "status": "Not started", "notes": "The plan still shows 11/3 go-live; build and training planning are not done, so that date has slipped. (Proposed — confirm with eCW PM)"}, {"id": "m2", "date": "2026-11-06", "name": "Clearinghouse decision made and credentials requested", "owner": "Practice", "status": "Not started", "notes": "Gates the billing, ASC and UB-04 setup calls. Payer ERA/EFT enrollment can take weeks — start as soon as the clearinghouse is chosen. (Proposed — confirm with eCW PM)"}, {"id": "m3", "date": "2026-11-06", "name": "Enterprise Directory addendum signed and returned", "owner": "Melissa", "status": "Not started", "notes": "Gates the enterprise directory setup calls. (Proposed — confirm with eCW PM)"}, {"id": "m4", "date": "2026-11-06", "name": "Core Sound compendium delivered to Celine", "owner": "Melissa", "status": "Not started", "notes": "Gates PACS configuration and testing. (Proposed — confirm with eCW PM)"}, {"id": "m5", "date": "2026-11-06", "name": "ID.me identity proofing completed for Dr. Kumar", "owner": "Dr. Kumar / Sandra", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m6", "date": "2026-11-09", "name": "Weekly system build calls resumed (twice weekly recommended)", "owner": "Stephanie (BA) / Practice", "status": "Not started", "notes": "Build was due 9/30 and is still pending. (Proposed — confirm with eCW PM)"}, {"id": "m7", "date": "2026-11-13", "name": "Data migration validation call held", "owner": "Stephanie (BA) / Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m8", "date": "2026-11-13", "name": "Lab interface go/no-go for 12/31 (Labcorp, Quest)", "owner": "Melissa / Celine", "status": "Not started", "notes": "Purchase orders are still not received. If they are not in hand by now, plan to go live without lab interfaces and use the lab portals or fax until they are ready. (Proposed — confirm with eCW PM)"}, {"id": "m9", "date": "2026-11-20", "name": "Billing setup call completed; payer enrollment submitted", "owner": "Claudia Jimenez / Practice biller", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m10", "date": "2026-11-25", "name": "Test migration signed off", "owner": "Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m11", "date": "2026-12-04", "name": "System build complete; training agenda and schedule final", "owner": "Stephanie (BA) / Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m12", "date": "2026-12-11", "name": "PACS and Olympus interface testing complete", "owner": "Celine / Practice IT", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m13", "date": "2026-12-18", "name": "End-user training complete for all roles", "owner": "eCW trainers / Practice", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m14", "date": "2026-12-18", "name": "Go / no-go decision", "owner": "Practice leadership / Rasmeen Ali", "status": "Not started", "notes": "Check: build complete, test migration signed off, billing live with clearinghouse, staff trained, fax numbers active. (Proposed — confirm with eCW PM)"}, {"id": "m15", "date": "2026-12-21", "name": "Final data cut provided; final migration run", "owner": "Practice / Data Migration", "status": "Not started", "notes": "eCW sets the exact cutover window — confirm with Vijaya. (Proposed — confirm with eCW PM)"}, {"id": "m16", "date": "2026-12-30", "name": "Final migration signed off; go-live dress rehearsal", "owner": "Practice / Data Migration", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}, {"id": "m17", "date": "2026-12-31", "name": "Go-live", "owner": "All", "status": "Not started", "notes": "(Proposed — confirm with eCW PM)"}], "training": [{"id": "tr1", "session": "Super-user / train-the-trainer", "audience": "Super users from each department", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Train these first so they can support colleagues at go-live."}, {"id": "tr2", "session": "Providers — charting, orders, e-prescribing", "audience": "Physicians, APPs", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "EPCS requires the ID.me step to be complete."}, {"id": "tr3", "session": "Clinical staff — rooming, vitals, orders, results", "audience": "MAs, nurses, techs", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": ""}, {"id": "tr4", "session": "Front desk — scheduling, registration, healow check-in & kiosk", "audience": "Front desk, schedulers", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": ""}, {"id": "tr5", "session": "ASC scheduling", "audience": "ASC staff", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Depends on the ASC appointment criteria list."}, {"id": "tr6", "session": "Billing & revenue cycle", "audience": "Billers, coders", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Depends on the clearinghouse and billing setup."}, {"id": "tr7", "session": "Reports & administration (EBO)", "audience": "Practice admin, managers", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": "Depends on EBO reporting access."}, {"id": "tr8", "session": "Go-live refresher / Q&A", "audience": "All staff", "date": "", "trainer": "eCW trainer", "status": "Not scheduled", "attendees": "", "notes": ""}], "contacts": [{"id": "c1", "role": "Resources", "name": "Names", "email": "Email addresses", "phone": "Phone number", "notes": ""}, {"id": "c2", "role": "Project Manager", "name": "Rasmeen Ali", "email": "rasmeen.ali@eclinicalwork.com", "phone": "508-863-3768", "notes": "Source plan spells the domain \"eclinicalwork.com\" (no s) — confirm the address."}, {"id": "c3", "role": "Business Analyst", "name": "Stephanie", "email": "stephanie.ranis@eclinicalworks.com", "phone": "508-439-1131", "notes": ""}, {"id": "c4", "role": "Billing implementation specialist", "name": "Claudia Jimenez", "email": "claudia.jimenez@eclinicalworks.com", "phone": "508-475-0450 ext 23932", "notes": ""}, {"id": "c5", "role": "Healow account manager", "name": "Sayantan Dutta", "email": "sayantan.d@healow.com", "phone": "", "notes": "Phone can be provided by HPM."}, {"id": "c6", "role": "Data migration programmer", "name": "Vijaya V. Surneddy", "email": "vijaya.surneddy@eclinicalworks.com", "phone": "", "notes": ""}, {"id": "c7", "role": "Interface Project Manager", "name": "Celine M", "email": "celine.m@eclinicalworks.com", "phone": "", "notes": ""}, {"id": "c8", "role": "Trizetto Rep", "name": "Angelica Rinderer", "email": "Angelica.Rinderer@cognizant.com", "phone": "(800) 969-3666 Ext. 1453", "notes": ""}, {"id": "c9", "role": "Additional Trizetto Rep", "name": "Support/Sales", "email": "TeameCWImplementation@cognizant.com", "phone": "", "notes": ""}, {"id": "c10", "role": "Labcorp Rep if your rep is unresponsive", "name": "Marberry, Chantelle", "email": "Marberc@labcorp.com", "phone": "", "notes": ""}]}</script>
+<script id="leadsSeed" type="application/json">[{"id": "l1", "group": "Appointments", "area": "Patient access and call centers", "abbrev": "Pt Access", "role": "Patient Access lead (front desk and all call centers)", "lead": "", "team": "", "email": "", "folder": "08 Patient Access and Call Centers", "notes": ""}, {"id": "l2", "group": "Appointments", "area": "Call center 1", "abbrev": "Call Ctr 1", "role": "Call center 1 lead", "lead": "", "team": "", "email": "", "folder": "08 Patient Access and Call Centers", "notes": ""}, {"id": "l3", "group": "Appointments", "area": "Call center 2", "abbrev": "Call Ctr 2", "role": "Call center 2 lead", "lead": "", "team": "", "email": "", "folder": "08 Patient Access and Call Centers", "notes": ""}, {"id": "l4", "group": "Appointments", "area": "Insurance verification and authorizations", "abbrev": "IV/Auth", "role": "IV/Auth manager", "lead": "Navneet", "team": "", "email": "", "folder": "09 Insurance Verification and Authorizations", "notes": ""}, {"id": "l5", "group": "Clinical", "area": "Clinical", "abbrev": "Clinical", "role": "Medical director / clinical lead", "lead": "Sandra", "team": "10", "email": "", "folder": "07 Clinical Team", "notes": ""}, {"id": "l6", "group": "Clinical", "area": "Clinical 2", "abbrev": "Clinical 2", "role": "Clinical lead (second team)", "lead": "Krista", "team": "5", "email": "", "folder": "07 Clinical Team", "notes": ""}, {"id": "l7", "group": "Clinical", "area": "Medical assistants", "abbrev": "MAs", "role": "MA lead", "lead": "", "team": "", "email": "", "folder": "07 Clinical Team", "notes": ""}, {"id": "l8", "group": "Clinical", "area": "Scribes", "abbrev": "Scribes", "role": "Scribe lead", "lead": "", "team": "", "email": "", "folder": "07 Clinical Team", "notes": ""}, {"id": "l9", "group": "Clinical", "area": "Chart prep", "abbrev": "Chart Prep", "role": "Chart prep lead", "lead": "Glady", "team": "", "email": "", "folder": "07 Clinical Team", "notes": ""}, {"id": "l10", "group": "Clinical", "area": "Main clinic A", "abbrev": "Clinic A", "role": "Clinic A director", "lead": "", "team": "", "email": "", "folder": "01 Main Clinic A", "notes": ""}, {"id": "l11", "group": "Clinical", "area": "Main clinic B and satellites", "abbrev": "Clinic B+Sat", "role": "Clinic B director", "lead": "", "team": "", "email": "", "folder": "02 Main Clinic B and Satellites", "notes": ""}, {"id": "l12", "group": "Clinical", "area": "Wound center and HBOT", "abbrev": "Wound", "role": "Wound center director", "lead": "", "team": "", "email": "", "folder": "06 Wound Center and HBOT", "notes": ""}, {"id": "l13", "group": "Testing", "area": "Diagnostic testing", "abbrev": "Dx Testing", "role": "Diagnostic testing director", "lead": "", "team": "", "email": "", "folder": "05 Diagnostic Testing", "notes": ""}, {"id": "l14", "group": "OBL", "area": "OBL", "abbrev": "OBL", "role": "OBL director", "lead": "Chanda", "team": "", "email": "", "folder": "04 OBL", "notes": ""}, {"id": "l15", "group": "ASC", "area": "ASC 1 - Endoscopy", "abbrev": "ASC 1 Endo", "role": "ASC 1 lead: endoscopy procedures (colonoscopy and EGD)", "lead": "Julie", "team": "", "email": "", "folder": "03 Endoscopy Center", "notes": "Procedures: colonoscopy and EGD"}, {"id": "l16", "group": "ASC", "area": "ASC 2 - Vascular", "abbrev": "ASC 2 Vasc", "role": "ASC 2 lead: vascular procedures", "lead": "", "team": "", "email": "", "folder": "04 OBL", "notes": "Procedures: vascular"}, {"id": "l17", "group": "Billing", "area": "Billing team 1 - PAD billing", "abbrev": "Billing 1 PAD", "role": "Billing team 1 lead: PAD (peripheral artery disease) billing", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l18", "group": "Billing", "area": "Billing team 2 - Regular billing", "abbrev": "Billing 2 Reg", "role": "Billing team 2 lead: regular billing", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l19", "group": "Billing", "area": "Coding", "abbrev": "Coding", "role": "Coding lead", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l20", "group": "Billing", "area": "Charge entry", "abbrev": "Charge Entry", "role": "Charge entry lead", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l21", "group": "Billing", "area": "Payment posting", "abbrev": "Pmt Posting", "role": "Payment posting lead", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l22", "group": "Billing", "area": "Denials", "abbrev": "Denials", "role": "Denial management lead", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l23", "group": "Billing", "area": "A/R follow-up", "abbrev": "A/R", "role": "A/R follow-up lead (primary and secondary)", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l24", "group": "Billing", "area": "PAD desk", "abbrev": "PAD Desk", "role": "PAD (peripheral artery disease) desk lead", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l25", "group": "Billing", "area": "Revenue cycle", "abbrev": "RCM", "role": "Revenue Cycle lead", "lead": "Ishan", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l26", "group": "Billing", "area": "India back office", "abbrev": "India BO", "role": "India back-office manager", "lead": "", "team": "", "email": "", "folder": "10 Revenue Cycle and India Back Office", "notes": ""}, {"id": "l27", "group": "Support", "area": "Leadership", "abbrev": "COO", "role": "Executive sponsor", "lead": "Melissa", "team": "1", "email": "", "folder": "00 Leadership (COO)", "notes": ""}, {"id": "l28", "group": "Support", "area": "Implementation", "abbrev": "Impl.", "role": "Practice implementation contact", "lead": "Melissa", "team": "", "email": "", "folder": "00 Leadership (COO)", "notes": ""}, {"id": "l29", "group": "Support", "area": "IT and data", "abbrev": "IT/Data", "role": "IT and data lead", "lead": "", "team": "", "email": "", "folder": "11 IT and Data", "notes": ""}, {"id": "l30", "group": "Support", "area": "eCW", "abbrev": "eCW PM", "role": "eCW project manager", "lead": "Rasmeen Ali", "team": "6", "email": "", "folder": "00 Leadership (COO)", "notes": "PM, BA, billing specialist, Healow mgr, data migration, interface PM"}]</script>
 <script>
 "use strict";
 const SEED = JSON.parse(document.getElementById("seed").textContent);
@@ -184,7 +212,8 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on
 /* ---------- ops (so concurrent edits merge instead of overwrite) ---------- */
 function applyOp(data, op){
   if(op.type==="set"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r) r[op.field]=op.value; }
-  else if(op.type==="add"){ if(!data[op.coll].some(x=>x.id===op.row.id)) data[op.coll].push(clone(op.row)); }
+  else if(op.type==="init"){ if(!data[op.coll]) data[op.coll]=clone(op.rows); }
+  else if(op.type==="add"){ if(!data[op.coll]) data[op.coll]=[]; if(!data[op.coll].some(x=>x.id===op.row.id)) data[op.coll].push(clone(op.row)); }
   else if(op.type==="del"){ data[op.coll]=data[op.coll].filter(x=>x.id!==op.id); }
   else if(op.type==="meta"){ data[op.field]=op.value; }
   else if(op.type==="replace"){ Object.keys(data).forEach(k=>delete data[k]); Object.assign(data, clone(op.data)); }
@@ -194,13 +223,15 @@ function describe(op){
   if(op.type==="set"){ const f=COLL[op.coll].fields.find(f=>f.k===op.field); return `${COLL[op.coll].label} “${op.label}”: ${f?f.l:op.field} → ${op.value===""?"(blank)":op.value}`; }
   if(op.type==="add") return `Added ${COLL[op.coll].label.toLowerCase()} “${name(op.row)}”`;
   if(op.type==="del") return `Deleted ${COLL[op.coll].label.toLowerCase()} “${op.label}”`;
-  if(op.type==="meta") return `Go-live date → ${op.value}`;
+  if(op.type==="meta") return op.field==="goLive" ? `Go-live date → ${op.value}` : op.field==="uploadUrl" ? "Changed the document uploads address" : `${op.field} → ${op.value}`;
+  if(op.type==="init") return "Set up the areas and leads list";
   if(op.type==="replace") return "Imported a full plan backup";
   return "Edit";
 }
 function commit(ops){
   ops = Array.isArray(ops) ? ops : [ops];
   if(!ops.length) return;
+  if(!plan.leads && ops.some(o=>o.coll==="leads" && o.type!=="init")) ops=[{type:"init",coll:"leads",rows:DEFAULT_LEADS}, ...ops];
   if(!ensureName(()=>commit(ops))) { render(); return; }
   ops.forEach(op=>{ applyOp(plan, op); op.desc = describe(op); pending.push(op); });
   render();
@@ -270,6 +301,7 @@ async function save(){
 }
 async function poll(){
   if(mode!=="shared" || pending.length || saving || document.hidden || $("#dlg").open) return;
+  const ae=document.activeElement; if(ae && ae.closest && ae.closest("#view") && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;
   try{
     const r = await fetch(API,{cache:"no-store"}); if(!r.ok) return;
     const doc = await r.json();
@@ -312,7 +344,7 @@ function openDialog(html, onOk, onCancel){
 }
 function editRow(coll, id, preset){
   const isNew = !id; const def = COLL[coll];
-  const row = isNew ? {id:uid(coll[0]), ...preset} : plan[coll].find(r=>r.id===id);
+  const row = isNew ? {id:uid(coll[0]), ...preset} : (coll==="leads"?leads():(plan[coll]||[])).find(r=>r.id===id);
   if(!row) return;
   const wsList = [...new Set(plan.tasks.map(t=>t.ws))];
   const field = f => {
@@ -321,6 +353,7 @@ function editRow(coll, id, preset){
     if(f.t==="status") inp = `<select id="f_${f.k}">${STATUS[coll].map(s=>`<option ${s===v?"selected":""}>${esc(s)}</option>`).join("")}</select>`;
     else if(f.t==="area") inp = `<textarea id="f_${f.k}">${esc(v)}</textarea>`;
     else if(f.t==="date") inp = `<input type="date" id="f_${f.k}" value="${esc(v)}">`;
+    else if(f.t==="pick"){ const o=f.opts(); inp = `<select id="f_${f.k}"><option value=""></option>${o.concat(v&&!o.includes(v)?[v]:[]).map(x=>`<option ${x===v?"selected":""}>${esc(x)}</option>`).join("")}</select>`; }
     else if(f.t==="list") inp = `<input id="f_${f.k}" list="wsl" value="${esc(v)}"><datalist id="wsl">${wsList.map(w=>`<option value="${esc(w)}">`).join("")}</datalist>`;
     else inp = `<input id="f_${f.k}" value="${esc(v)}" ${f.req?"required":""}>`;
     return `<div class="fld"><label for="f_${f.k}">${esc(f.l)}</label>${inp}</div>`;
@@ -368,7 +401,7 @@ function renderKPIs(){
   $("#goLive").onchange = e => commit({type:"meta",field:"goLive",value:e.target.value});
 }
 
-const TABS = [["overview","Overview"],["tasks","Project plan"],["actions","Action items"],["milestones","Road to go-live"],["training","Training"],["contacts","Contacts"],["activity","Activity"]];
+const TABS = [["overview","Overview"],["tasks","Project plan"],["actions","Action items"],["milestones","Road to go-live"],["training","Training"],["meetings","Meetings"],["documents","Documents"],["contacts","Contacts"],["settings","Settings"],["activity","Activity"]];
 function renderTabs(){
   const cnt = {tasks:plan.tasks.filter(t=>!DONE.has(t.status)).length, actions:plan.actions.filter(a=>!DONE.has(a.status)).length};
   $("#tabs").innerHTML = TABS.map(([k,l])=>`<button role="tab" data-tab="${k}" aria-selected="${tab===k}">${l}${cnt[k]?`<span class="count">${cnt[k]}</span>`:""}</button>`).join("");
@@ -452,6 +485,9 @@ function render(){
     actions: ()=>vSimple("actions",[["item","Action item"],["status","Status"],["owner","Owner"],["due","Due"],["notes","Notes"]]),
     milestones: ()=>vSimple("milestones",[["date","Target"],["name","Milestone"],["status","Status"],["owner","Owner"],["notes","Notes"]],{sort:byDate,intro:`<div class="callout">A working schedule counted back from the target go-live. These dates are proposals to confirm with the eCW project manager — edit them as dates are agreed.</div>`}),
     training: ()=>vSimple("training",[["session","Session"],["audience","Audience"],["date","Date"],["status","Status"],["trainer","Trainer"],["attendees","Attendees"],["notes","Notes"]],{sort:byDate,intro:`<div class="callout">Plan role-based training for the two weeks before go-live, with super users trained first. Add dates and headcounts as eCW confirms trainers.</div>`}),
+    meetings: vMeetings,
+    documents: vDocuments,
+    settings: vSettings,
     contacts: ()=>vSimple("contacts",[["role","Role"],["name","Name"],["email","Email"],["phone","Phone"],["notes","Notes"]]),
     activity: vActivity
   }[tab] || vOverview;
@@ -459,21 +495,213 @@ function render(){
   bindFilters();
 }
 
+
+/* ---------- areas, meetings, documents, settings ---------- */
+const DEFAULT_LEADS = JSON.parse(document.getElementById("leadsSeed").textContent);
+const FOLDERS = ["00 Leadership (COO)","01 Main Clinic A","02 Main Clinic B and Satellites","03 Endoscopy Center","04 OBL","05 Diagnostic Testing","06 Wound Center and HBOT","07 Clinical Team","08 Patient Access and Call Centers","09 Insurance Verification and Authorizations","10 Revenue Cycle and India Back Office","11 IT and Data"];
+const GROUPS = ["Appointments","Clinical","Testing","OBL","ASC","Billing","Support"];
+const MEETING_SUB = "Meeting notes and screenshots";
+const MAX_UPLOAD = 25 * 1024 * 1024;
+const leads = () => plan.leads || DEFAULT_LEADS;
+const areaNames = () => leads().map(l => l.abbrev).filter(Boolean);
+const leadFor = abbrev => leads().find(l => l.abbrev === abbrev);
+const folderFor = abbrev => (leadFor(abbrev) || {}).folder || "";
+const DRIVE_ROOT = "https://drive.google.com/drive/folders/1y0bLJei-e_XztH4C59VPspFH-s3ahphM";
+
+Object.assign(COLL, {
+  meetings:{label:"Meeting note",title:"title",fields:[
+    {k:"date",l:"Date",t:"date",half:1},{k:"area",l:"Team / area",t:"pick",opts:()=>areaNames(),half:1},
+    {k:"title",l:"Meeting",t:"text",req:1},{k:"attendees",l:"Attendees",t:"text"},
+    {k:"notes",l:"Notes",t:"area"},{k:"decisions",l:"Decisions",t:"area"},
+    {k:"followups",l:"Follow-ups (who does what, by when)",t:"area"}]},
+  leads:{label:"Area",title:"abbrev",fields:[
+    {k:"group",l:"Group",t:"pick",opts:()=>GROUPS,half:1},{k:"abbrev",l:"Short name",t:"text",req:1,half:1},
+    {k:"area",l:"Area",t:"text"},{k:"role",l:"Lead's role",t:"text"},
+    {k:"lead",l:"Lead",t:"text",half:1},{k:"team",l:"Team size",t:"text",half:1},
+    {k:"email",l:"Lead email",t:"text",half:1},{k:"folder",l:"Drive folder",t:"pick",opts:()=>FOLDERS,half:1},
+    {k:"notes",l:"Notes",t:"area"}]},
+  files:{label:"Document",title:"name",fields:[
+    {k:"name",l:"File"},{k:"area",l:"Area"},{k:"path",l:"Drive folder"},{k:"url",l:"Link"},
+    {k:"meetingTitle",l:"Meeting"},{k:"by",l:"Uploaded by"},{k:"at",l:"Uploaded"},{k:"note",l:"Note"}]}
+});
+
+const multiline = s => esc(s).replace(/\n/g,"<br>");
+const opt = (v, cur, label) => `<option value="${esc(v)}" ${v===cur?"selected":""}>${esc(label ?? v)}</option>`;
+
+function vMeetings(){
+  const q=(filters.mq||"").toLowerCase();
+  const all=(plan.meetings||[]).slice().sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  const rows=all.filter(m=>(!filters.ma||m.area===filters.ma)&&(!q||[m.title,m.attendees,m.notes,m.decisions,m.followups].join(" ").toLowerCase().includes(q)));
+  const files=plan.files||[];
+  return `<div class="toolbar">
+    <input type="search" id="mq" placeholder="Search meeting notes" value="${esc(filters.mq||"")}">
+    <select id="fma"><option value="">All teams</option>${areaNames().map(a=>opt(a,filters.ma)).join("")}</select>
+    <span class="spacer"></span><button class="btn" data-csv="meetings">Download CSV</button><button class="btn primary" data-add="meetings">+ Add meeting notes</button></div>
+   ${rows.length?`<div class="mtgs">${rows.map(m=>{const att=files.filter(f=>f.meeting===m.id);return `<article class="card mtg" id="mtg-${esc(m.id)}">
+     <div class="mtg-h"><div><div class="mtg-d">${m.date?fmt(m.date):"No date"}${m.area?` · ${esc(m.area)}`:""}</div><h2>${esc(m.title)}</h2>${m.attendees?`<div class="n">Attendees: ${esc(m.attendees)}</div>`:""}</div>
+       <div class="mtg-b"><button class="btn" data-upload="meeting:${esc(m.id)}">Attach file</button><button class="btn" data-mkaction="${esc(m.id)}">+ Action item</button><button class="btn" data-edit="meetings:${esc(m.id)}">Edit</button></div></div>
+     ${m.notes?`<h4>Notes</h4><p>${multiline(m.notes)}</p>`:""}
+     ${m.decisions?`<h4>Decisions</h4><p>${multiline(m.decisions)}</p>`:""}
+     ${m.followups?`<h4>Follow-ups</h4><p>${multiline(m.followups)}</p>`:""}
+     ${att.length?`<h4>Files</h4><ul class="flist">${att.map(f=>`<li><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a> <span class="n">${esc(f.path||"")}</span></li>`).join("")}</ul>`:""}
+   </article>`;}).join("")}</div>`:`<div class="card empty">${all.length?"No meeting notes match.":"No meeting notes yet. Click <b>+ Add meeting notes</b> after each team meeting."}</div>`}`;
+}
+
+function vDocuments(){
+  const q=(filters.dq||"").toLowerCase();
+  const all=(plan.files||[]).slice().sort((a,b)=>(b.at||"").localeCompare(a.at||""));
+  const rows=all.filter(f=>(!filters.da||f.area===filters.da)&&(!q||[f.name,f.note,f.by,f.path,f.meetingTitle].join(" ").toLowerCase().includes(q)));
+  return `${plan.uploadUrl?"":`<div class="callout">Uploads aren’t connected yet. Paste the ECW Uploads address in <a href="#" data-tab="settings">Settings</a>.</div>`}
+   <div class="callout warn">Don’t upload anything with patient information (including eCW screenshots that show patients). These folders are in a personal Google account, which isn’t covered by a HIPAA agreement.</div>
+   <div class="toolbar">
+    <input type="search" id="dq" placeholder="Search files and notes" value="${esc(filters.dq||"")}">
+    <select id="fda"><option value="">All teams</option>${areaNames().map(a=>opt(a,filters.da)).join("")}</select>
+    <span class="spacer"></span><a class="btn" href="${DRIVE_ROOT}" target="_blank" rel="noopener">Open team folders</a><button class="btn primary" data-upload="doc">Upload files</button></div>
+   <div class="tablewrap"><table><thead><tr><th>File</th><th>Team</th><th>Drive folder</th><th>Meeting</th><th>Uploaded by</th><th>When</th><th>Note</th><th></th></tr></thead><tbody>
+   ${rows.length?rows.map(f=>`<tr><td><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a></td><td>${esc(f.area)}</td><td class="notes">${esc(f.path)}</td>
+     <td>${f.meeting?`<a href="#" data-gomtg="${esc(f.meeting)}">${esc(f.meetingTitle||"Meeting")}</a>`:""}</td><td>${esc(f.by)}</td>
+     <td class="date">${f.at?esc(new Date(f.at).toLocaleDateString(undefined,{month:"short",day:"numeric"})):""}</td><td class="notes">${esc(f.note)}</td>
+     <td><button class="btn sm" data-rmfile="${esc(f.id)}" title="Remove from this list (the file stays in Drive)">Remove</button></td></tr>`).join(""):`<tr><td colspan="8" class="empty">${all.length?"No files match.":"No files uploaded yet."}</td></tr>`}
+   </tbody></table></div>`;
+}
+
+function ownerSuggestions(){
+  const s=new Set();
+  leads().forEach(l=>{ if(l.lead) s.add(l.lead); });
+  ["tasks","actions","milestones"].forEach(c=>(plan[c]||[]).forEach(r=>{ if(r.owner) s.add(r.owner); }));
+  return [...s].sort((a,b)=>a.localeCompare(b));
+}
+
+function vSettings(){
+  const L=leads();
+  const oc=filters.oc||"tasks";
+  const q=(filters.oq||"").toLowerCase();
+  const items=(plan[oc]||[]).filter(r=>{const t=r[COLL[oc].title]||""; return (!filters.ows||oc!=="tasks"||r.ws===filters.ows)&&(!q||[t,r.owner,r.ws].join(" ").toLowerCase().includes(q));});
+  const owners=ownerSuggestions();
+  const usedOwners=[...new Set(["tasks","actions","milestones"].flatMap(c=>(plan[c]||[]).map(r=>r.owner)).filter(Boolean))].sort();
+  const wsAll=[...new Set(plan.tasks.map(t=>t.ws))];
+  return `<datalist id="ownerlist">${owners.map(o=>`<option value="${esc(o)}">`).join("")}</datalist>
+  <div class="card set-card" id="set-leads"><h2>Areas and leads <span class="hint">type to change; saves for everyone when you leave the box</span></h2>
+   <div class="tablewrap flat"><table class="set-tbl"><thead><tr><th>Group</th><th>Short name</th><th>Area</th><th>Lead</th><th>Team</th><th>Lead email</th><th>Drive folder</th><th></th></tr></thead><tbody>
+   ${L.map(l=>`<tr>
+     <td><select class="sx" data-coll="leads" data-id="${esc(l.id)}" data-field="group">${GROUPS.concat(GROUPS.includes(l.group)?[]:[l.group||""]).map(g=>opt(g,l.group)).join("")}</select></td>
+     <td><input class="sx w8" data-coll="leads" data-id="${esc(l.id)}" data-field="abbrev" value="${esc(l.abbrev)}" aria-label="Short name"></td>
+     <td><input class="sx" data-coll="leads" data-id="${esc(l.id)}" data-field="area" value="${esc(l.area)}" aria-label="Area"></td>
+     <td><input class="sx w10" data-coll="leads" data-id="${esc(l.id)}" data-field="lead" value="${esc(l.lead)}" placeholder="TBD" aria-label="Lead for ${esc(l.abbrev)}"></td>
+     <td><input class="sx w4" data-coll="leads" data-id="${esc(l.id)}" data-field="team" value="${esc(l.team)}" inputmode="numeric" aria-label="Team size"></td>
+     <td><input class="sx" type="email" data-coll="leads" data-id="${esc(l.id)}" data-field="email" value="${esc(l.email)}" aria-label="Lead email"></td>
+     <td><select class="sx" data-coll="leads" data-id="${esc(l.id)}" data-field="folder">${[""].concat(FOLDERS).map(f=>opt(f,l.folder,f||"(none)")).join("")}</select></td>
+     <td><button class="btn sm danger" data-rmlead="${esc(l.id)}" title="Remove this area">✕</button></td></tr>`).join("")}
+   </tbody></table></div>
+   <div class="toolbar" style="margin:10px 0 0"><span class="hint">${L.filter(l=>!l.lead).length} of ${L.length} areas still need a lead.</span><span class="spacer"></span><button class="btn" data-csv="leads">Download CSV</button><button class="btn primary" data-add="leads">+ Add area</button></div>
+  </div>
+
+  <div class="card set-card" id="set-owners"><h2>Owners <span class="hint">pick a list, then change any owner</span></h2>
+   <div class="toolbar">
+    <select id="foc">${[["tasks","Project plan tasks"],["actions","Action items"],["milestones","Road to go-live"]].map(([k,l])=>opt(k,oc,l)).join("")}</select>
+    ${oc==="tasks"?`<select id="fows"><option value="">All workstreams</option>${wsAll.map(w=>opt(w,filters.ows)).join("")}</select>`:""}
+    <input type="search" id="oq" placeholder="Search" value="${esc(filters.oq||"")}"></div>
+   <div class="tablewrap flat"><table class="set-tbl"><thead><tr>${oc==="tasks"?"<th>Workstream</th>":""}<th style="width:45%">${esc(COLL[oc].label)}</th><th>Status</th><th>Owner</th></tr></thead><tbody>
+   ${items.length?items.map(r=>`<tr>${oc==="tasks"?`<td class="notes">${esc(r.ws)}</td>`:""}<td>${esc(r[COLL[oc].title])}</td><td>${pill(r.status)}</td>
+     <td><input class="sx" list="ownerlist" data-coll="${oc}" data-id="${esc(r.id)}" data-field="owner" value="${esc(r.owner)}" placeholder="Unassigned" aria-label="Owner"></td></tr>`).join(""):`<tr><td colspan="4" class="empty">Nothing matches.</td></tr>`}
+   </tbody></table></div>
+   <div class="bulk"><b>Replace an owner everywhere</b>
+    <select id="bulkFrom"><option value="">Owner to replace…</option>${usedOwners.map(o=>opt(o,"")).join("")}</select>
+    <span>with</span><input id="bulkTo" list="ownerlist" placeholder="New owner">
+    <button class="btn" data-bulk="1">Replace</button>
+    <span class="hint">Changes every task, action item and milestone with that exact owner.</span></div>
+  </div>
+
+  <div class="card set-card" id="set-uploads"><h2>Document uploads</h2>
+   <p class="hint" style="margin:0 0 10px">Files go to the team folders under <a href="${DRIVE_ROOT}" target="_blank" rel="noopener">ECW Team Workspaces</a>, using each area’s Drive folder above. Paste the address of the <b>ECW Uploads</b> Google Apps Script web app (it ends in <code>/exec</code>).</p>
+   <div class="toolbar" style="margin:0"><input class="sx grow" data-meta="uploadUrl" value="${esc(plan.uploadUrl||"")}" placeholder="https://script.google.com/macros/s/…/exec" aria-label="Uploads address">
+    <button class="btn" data-testup="1">Test connection</button><span id="uptest" class="hint"></span></div>
+  </div>`;
+}
+
+/* ---------- uploads ---------- */
+function fileToBase64(file){
+  return new Promise((res, rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(",")[1]||""); r.onerror=()=>rej(r.error); r.readAsDataURL(file); });
+}
+function openUpload(ctx){
+  if(!plan.uploadUrl){ toast("Uploads aren’t connected yet — add the address in Settings."); tab="settings"; ls.set(LS.tab,tab); render(); return; }
+  if(!ensureName(()=>openUpload(ctx))) return;
+  const m = ctx.meeting ? (plan.meetings||[]).find(x=>x.id===ctx.meeting) : null;
+  const area0 = (m && m.area) || filters.da || "";
+  openDialog(`<h3>${m?`Attach files to “${esc(m.title)}”`:"Upload files to a team folder"}</h3>
+    <div class="fld2"><div class="fld"><label for="u_area">Team / area</label><select id="u_area" required><option value=""></option>${areaNames().map(a=>opt(a,area0)).join("")}</select></div>
+    <div class="fld"><label for="u_sub">Put in</label><select id="u_sub">${opt("meeting",m?"meeting":"", MEETING_SUB)}${opt("",m?"meeting":"","Team folder (top level)")}</select></div></div>
+    <div class="callout" id="u_dest" style="margin-top:-4px"></div>
+    <div class="fld"><label for="u_files">Files (up to 25 MB each)</label><input type="file" id="u_files" multiple required></div>
+    <div class="fld"><label for="u_note">Note (optional)</label><input id="u_note" placeholder="What this is"></div>
+    <label class="chk"><input type="checkbox" id="u_phi" required> These files contain no patient information.</label>
+    <div class="dlg-actions"><span class="spacer"></span><button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok">Upload</button></div>`,
+    f=>{
+      const area=f.querySelector("#u_area").value, sub=f.querySelector("#u_sub").value, files=[...f.querySelector("#u_files").files], note=f.querySelector("#u_note").value.trim();
+      const folder=folderFor(area);
+      if(!area||!files.length||!f.querySelector("#u_phi").checked) return false;
+      if(!folder){ toast(`${area} has no Drive folder yet — set it in Settings.`); return false; }
+      setTimeout(()=>doUpload({area, folder, sub, files, note, meeting:m}));
+    });
+  const showDest=()=>{ const a=$("#u_area").value, fo=folderFor(a), s=$("#u_sub").value; $("#u_dest").textContent = !a ? "Pick a team to see where the files go." : fo ? `Saves to: ECW Team Workspaces / ${fo}${s==="meeting"?" / "+MEETING_SUB:""}` : `${a} has no Drive folder yet. Set one in Settings.`; };
+  $("#u_area").onchange=showDest; $("#u_sub").onchange=showDest; showDest();
+}
+async function doUpload({area, folder, sub, files, note, meeting}){
+  let ok=0;
+  for(const file of files){
+    if(file.size>MAX_UPLOAD){ toast(`${file.name} is over 25 MB and was skipped.`); continue; }
+    setSync(`Uploading ${file.name}…`);
+    try{
+      const data=await fileToBase64(file);
+      const r=await fetch(plan.uploadUrl,{method:"POST",body:JSON.stringify({key:ls.get(LS.key)||"",folder,sub,name:file.name,mimeType:file.type||"application/octet-stream",data,by:ls.get(LS.name)||"",note})});
+      const res=await r.json().catch(()=>({}));
+      if(!r.ok||res.status!==200) throw new Error(res.error||("HTTP "+r.status));
+      commit({type:"add",coll:"files",row:{id:uid("f"),driveId:res.id,name:res.name,url:res.url,area,folder:res.folder,path:res.path,meeting:meeting?meeting.id:"",meetingTitle:meeting?meeting.title:"",by:ls.get(LS.name)||"",at:new Date().toISOString(),note,size:file.size}});
+      ok++;
+    }catch(e){ toast(`Couldn’t upload ${file.name}: ${e.message||e}`); }
+  }
+  setSync(pending.length?"Saving…":"All changes saved");
+  if(ok) toast(`Uploaded ${ok} file${ok===1?"":"s"} to ${folder}.`);
+}
+async function testUploads(){
+  const out=$("#uptest"); if(!plan.uploadUrl){ out.textContent="Paste the address first."; return; }
+  out.textContent="Checking…";
+  try{ const r=await fetch(plan.uploadUrl,{cache:"no-store"}); const d=await r.json();
+    if(d.status!==200) throw new Error(d.error||d.status);
+    const missing=leads().map(l=>l.folder).filter(f=>f&&!d.folders.includes(f));
+    out.textContent=`Connected: ${d.folders.length} team folders found${d.keyRequired?", passcode on":" — no passcode set on the uploads script"}${missing.length?`. Not found: ${[...new Set(missing)].join(", ")}`:""}.`;
+  }catch(e){ out.textContent="Couldn’t reach it. Check the address and that the web app is deployed with access set to Anyone."; }
+}
+
 /* ---------- events ---------- */
 function bindFilters(){
   const set=(k,v)=>{ filters[k]=v; ls.set(LS.filt,JSON.stringify(filters)); render(); };
-  const fq=$("#fq"); if(fq){ fq.oninput=e=>{ filters.q=e.target.value; ls.set(LS.filt,JSON.stringify(filters)); clearTimeout(fq._t); fq._t=setTimeout(()=>{ const pos=e.target.selectionStart; render(); const n=$("#fq"); n.focus(); n.setSelectionRange(pos,pos); },200); }; }
-  [["#fws","ws"],["#fst","st"],["#fow","ow"]].forEach(([s,k])=>{ const el=$(s); if(el) el.onchange=e=>set(k,e.target.value); });
+  [["fq","q"],["mq","mq"],["dq","dq"],["oq","oq"]].forEach(([id,k])=>{ const el=$("#"+id); if(el) el.oninput=e=>{ filters[k]=e.target.value; ls.set(LS.filt,JSON.stringify(filters)); clearTimeout(el._t); el._t=setTimeout(()=>{ const pos=e.target.selectionStart; render(); const n=$("#"+id); if(n){ n.focus(); n.setSelectionRange(pos,pos); } },200); }; });
+  [["#fws","ws"],["#fst","st"],["#fow","ow"],["#fma","ma"],["#fda","da"],["#foc","oc"],["#fows","ows"]].forEach(([s,k])=>{ const el=$(s); if(el) el.onchange=e=>set(k,e.target.value); });
 }
 document.addEventListener("click", e=>{
-  const tb=e.target.closest("[data-tab]"); if(tb){ tab=tb.dataset.tab; ls.set(LS.tab,tab); render(); return; }
+  const tb=e.target.closest("[data-tab]"); if(tb){ e.preventDefault(); tab=tb.dataset.tab; ls.set(LS.tab,tab); render(); return; }
   if(e.target.closest("select.st")) return;
   const wr=e.target.closest("[data-ws]"); if(wr){ filters={ws:wr.dataset.ws}; ls.set(LS.filt,JSON.stringify(filters)); tab="tasks"; ls.set(LS.tab,tab); render(); window.scrollTo({top:0}); return; }
   const ed=e.target.closest("[data-edit]"); if(ed){ const [c,id]=ed.dataset.edit.split(":"); editRow(c,id); return; }
-  const ad=e.target.closest("[data-add]"); if(ad){ const c=ad.dataset.add; const preset={status:STATUS[c]?.[0]}; if(c==="tasks"&&filters.ws) preset.ws=filters.ws; editRow(c,null,preset); return; }
+  const ad=e.target.closest("[data-add]"); if(ad){ const c=ad.dataset.add; const preset={status:STATUS[c]?.[0]}; if(c==="tasks"&&filters.ws) preset.ws=filters.ws; if(c==="meetings"){ preset.date=todayISO(); if(filters.ma) preset.area=filters.ma; } editRow(c,null,preset); return; }
   const cv=e.target.closest("[data-csv]"); if(cv){ downloadCSV(cv.dataset.csv); return; }
+  const up=e.target.closest("[data-upload]"); if(up){ const [k,id]=up.dataset.upload.split(":"); openUpload(k==="meeting"?{meeting:id}:{}); return; }
+  const ma=e.target.closest("[data-mkaction]"); if(ma){ const m=(plan.meetings||[]).find(x=>x.id===ma.dataset.mkaction); if(m) editRow("actions",null,{status:"Open",owner:"",notes:`From meeting: ${m.title}${m.date?" ("+fmt(m.date)+")":""}`}); return; }
+  const rf=e.target.closest("[data-rmfile]"); if(rf){ const f=(plan.files||[]).find(x=>x.id===rf.dataset.rmfile); if(f&&confirm(`Remove “${f.name}” from this list? The file stays in Google Drive.`)) commit({type:"del",coll:"files",id:f.id,label:f.name}); return; }
+  const rl=e.target.closest("[data-rmlead]"); if(rl){ const l=leads().find(x=>x.id===rl.dataset.rmlead); if(l&&confirm(`Remove the area “${l.abbrev}”?`)) commit({type:"del",coll:"leads",id:l.id,label:l.abbrev}); return; }
+  const bk=e.target.closest("[data-bulk]"); if(bk){ const from=$("#bulkFrom").value, to=$("#bulkTo").value.trim(); if(!from||!to||from===to){ toast("Pick the owner to replace and type the new owner."); return; }
+    const ops=["tasks","actions","milestones"].flatMap(c=>(plan[c]||[]).filter(r=>r.owner===from).map(r=>({type:"set",coll:c,id:r.id,field:"owner",value:to,label:r[COLL[c].title]})));
+    if(ops.length&&confirm(`Change ${ops.length} item${ops.length===1?"":"s"} from “${from}” to “${to}”?`)) commit(ops); return; }
+  const tu=e.target.closest("[data-testup]"); if(tu){ testUploads(); return; }
+  const gm=e.target.closest("[data-gomtg]"); if(gm){ e.preventDefault(); tab="meetings"; ls.set(LS.tab,tab); filters.ma=""; filters.mq=""; render(); const el=document.getElementById("mtg-"+gm.dataset.gomtg); if(el) el.scrollIntoView({block:"start"}); return; }
 });
 document.addEventListener("change", e=>{
+  const x=e.target.closest(".sx");
+  if(x){ const v=x.value.trim();
+    if(x.dataset.meta){ if((plan[x.dataset.meta]||"")!==v) commit({type:"meta",field:x.dataset.meta,value:v}); return; }
+    const {coll,id,field}=x.dataset; const r=(coll==="leads"?leads():(plan[coll]||[])).find(y=>y.id===id);
+    if(r && (r[field]??"")!==v) commit({type:"set",coll,id,field,value:v,label:r[COLL[coll].title]||id}); return; }
   const s=e.target.closest("select.st"); if(!s) return;
   const {coll,id}=s.dataset; const r=plan[coll].find(x=>x.id===id);
   if(r && r.status!==s.value) commit({type:"set",coll,id,field:"status",value:s.value,label:r[COLL[coll].title]});
@@ -483,7 +711,7 @@ document.addEventListener("change", e=>{
 function dl(name, text, type){ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 function downloadCSV(coll){
   const f=COLL[coll].fields; const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
-  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).join(","), ...plan[coll].map(r=>f.map(x=>q(r[x.k])).join(","))].join("\r\n"), "text/csv");
+  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).join(","), ...(coll==="leads"?leads():(plan[coll]||[])).map(r=>f.map(x=>q(r[x.k])).join(","))].join("\r\n"), "text/csv");
 }
 $("#exportBtn").onclick=()=>dl(`ecw-plan-backup-${todayISO()}.json`, JSON.stringify(plan,null,1), "application/json");
 $("#importBtn").onclick=()=>$("#importFile").click();
