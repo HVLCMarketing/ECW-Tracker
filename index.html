@@ -134,7 +134,29 @@ a.btn{text-decoration:none;color:inherit;display:inline-block}
 .sbar>i{display:block;height:100%;background:var(--ok)}
 tr.subrow td{background:#f8fbfc;padding:6px 12px 12px 28px}
 .subs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
-.subs li{display:grid;grid-template-columns:22px minmax(0,1fr) 170px 140px 48px;gap:6px;align-items:center}
+.subs li{display:grid;grid-template-columns:22px minmax(0,1fr) 170px 140px 46px 48px;gap:6px;align-items:center}
+.subs li.sub-nt,.subs li.sub-last{display:block;margin:0 0 6px 28px}
+.subs li.sub-last{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.subs li.sub-last span{font-weight:600}
+.ntog{border:1px solid var(--line);background:var(--surface);border-radius:99px;font-size:12px;padding:3px 6px;cursor:pointer;white-space:nowrap}
+.ntog.on,.ntog:hover{border-color:var(--brand-2)}
+.sr-h{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:8px 0 6px}
+.nt{margin-bottom:6px}
+.nt-add{display:flex;gap:8px;align-items:flex-start}
+.nt-add textarea{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;resize:vertical;background:#fff}
+.nt-add textarea:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 3px rgba(14,116,144,.12)}
+.nt.compact .nt-add textarea{padding:5px 8px}
+.nt-list{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.nt-list li{border-left:3px solid var(--brand-2);background:#fff;border-radius:0 8px 8px 0;padding:6px 10px}
+.nt-meta{font-size:12px;color:var(--muted);display:flex;gap:4px;align-items:center}
+.nt-meta b{color:var(--ink);font-weight:600}
+.nt-x{margin-left:auto;border:0;background:none;color:var(--muted);cursor:pointer;font-size:12px;padding:0 4px}
+.nt-x:hover{color:var(--bad)}
+.nt-text{font-size:13.5px;margin-top:2px;overflow-wrap:anywhere}
+.lastupd{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:400}
+.lastupd span{font-weight:600}
+.uc{font-weight:600}.subtog .sep{opacity:.5}
+.mtg.flash{box-shadow:0 0 0 3px var(--brand-2)}
 .subs li.done .sbt{text-decoration:line-through;color:var(--muted)}
 .subs input.sb,.subs .subnew input{border:1px solid transparent;background:transparent;border-radius:6px;padding:5px 7px;width:100%;min-width:0}
 .subs input.sb:hover{border-color:var(--line)}
@@ -144,7 +166,7 @@ tr.subrow td{background:#f8fbfc;padding:6px 12px 12px 28px}
 .subs .plus{text-align:center;color:var(--muted);font-weight:700}
 .subs input.overdue{color:var(--bad);font-weight:600}
 .alldone{margin-top:8px;font-size:13px;color:var(--ok);display:flex;gap:8px;align-items:center}
-@media (max-width:700px){.subs li{grid-template-columns:22px minmax(0,1fr) 34px}.subs .sbo,.subs .sbd{grid-column:2}}
+@media (max-width:700px){.subs li{grid-template-columns:22px minmax(0,1fr) 46px 34px}.subs .sbo,.subs .sbd{grid-column:2}.subs li.sub-nt,.subs li.sub-last{margin-left:0}.nt-add{flex-direction:column;align-items:stretch}}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
 .seg button{border:0;background:var(--surface);padding:7px 13px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
 .seg button.on{background:var(--brand);color:#fff}
@@ -288,6 +310,8 @@ function applyOp(data, op){
   else if(op.type==="meta"){ data[op.field]=op.value; }
   else if(op.type==="subadd"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r){ r.subtasks=r.subtasks||[]; if(!r.subtasks.some(x=>x.id===op.sub.id)) r.subtasks.push(clone(op.sub)); } }
   else if(op.type==="subset"){ const s=data[op.coll]?.find(x=>x.id===op.id)?.subtasks?.find(x=>x.id===op.sid); if(s) s[op.field]=op.value; }
+  else if(op.type==="note"){ const r=data[op.coll]?.find(x=>x.id===op.id); const t=op.sid ? r?.subtasks?.find(x=>x.id===op.sid) : r; if(t){ t.updates=t.updates||[]; if(!t.updates.some(u=>u.id===op.n.id)) t.updates.push(clone(op.n)); } }
+  else if(op.type==="notedel"){ const r=data[op.coll]?.find(x=>x.id===op.id); const t=op.sid ? r?.subtasks?.find(x=>x.id===op.sid) : r; if(t&&t.updates) t.updates=t.updates.filter(u=>u.id!==op.nid); }
   else if(op.type==="subdel"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r&&r.subtasks) r.subtasks=r.subtasks.filter(x=>x.id!==op.sid); }
   else if(op.type==="replace"){ Object.keys(data).forEach(k=>delete data[k]); Object.assign(data, clone(op.data)); }
 }
@@ -299,6 +323,8 @@ function describe(op){
   if(op.type==="meta") return op.field==="goLive" ? `Go-live date → ${op.value}` : op.field==="uploadUrl" ? "Changed the document uploads address" : `${op.field} → ${op.value}`;
   if(op.type==="init") return "Set up the areas and leads list";
   if(op.type==="subadd") return `${COLL[op.coll].label} “${op.label}”: added subtask “${op.sub.text}”`;
+  if(op.type==="note"){ const short=op.n.text.length>80?op.n.text.slice(0,80)+"…":op.n.text; return `${COLL[op.coll].label} “${op.label}”${op.sid?`, subtask “${op.text}”`:""}: ${op.coll==="meetings"?"note":"update"} — ${short}`; }
+  if(op.type==="notedel") return `${COLL[op.coll].label} “${op.label}”${op.sid?`, subtask “${op.text}”`:""}: removed ${op.coll==="meetings"?"a note":"an update"}`;
   if(op.type==="subdel") return `${COLL[op.coll].label} “${op.label}”: removed subtask “${op.text}”`;
   if(op.type==="subset") return op.field==="done"
     ? `${COLL[op.coll].label} “${op.label}”: ${op.value?"checked off":"reopened"} subtask “${op.text}”`
@@ -573,6 +599,10 @@ function vActivity(){
 
 function render(){
   if(!plan) return;
+  const drafts={}; document.querySelectorAll("textarea[data-notekey]").forEach(t=>{ if(t.value) drafts[t.id]=t.value; });
+  const focused=document.activeElement&&document.activeElement.id;
+  queueMicrotask(()=>{ Object.entries(drafts).forEach(([id,v])=>{ const t=document.getElementById(id); if(t&&!t.value) t.value=v; }); });
+  void focused;
   renderKPIs(); renderTabs();
   const byDate=(a,b)=>(a.date||"9").localeCompare(b.date||"9");
   const v = {
@@ -611,7 +641,7 @@ Object.assign(COLL, {
     {k:"duration",l:"Length",t:"pick",opts:()=>["15","30","45","60","90","120"],labels:{"15":"15 min","30":"30 min","45":"45 min","60":"1 hour","90":"1½ hours","120":"2 hours"},half:1},{k:"area",l:"Team / area",t:"pick",opts:()=>areaNames(),half:1},
     {k:"repeat",l:"Repeat",t:"pick",opts:()=>["Weekly","Every 2 weeks"],empty:"Does not repeat",half:1,newOnly:1},{k:"until",l:"Repeat until",t:"date",half:1,newOnly:1},
     {k:"where",l:"Where / meeting link",t:"text"},{k:"attendees",l:"Attendees",t:"text"},
-    {k:"notes",l:"Agenda / notes",t:"area"},{k:"decisions",l:"Decisions",t:"area"},
+    {k:"notes",l:"Agenda",t:"area"},{k:"decisions",l:"Decisions",t:"area"},
     {k:"followups",l:"Follow-ups (who does what, by when)",t:"area"}]},
   leads:{label:"Area",title:"abbrev",fields:[
     {k:"group",l:"Group",t:"pick",opts:()=>GROUPS,half:1},{k:"abbrev",l:"Short name",t:"text",req:1,half:1},
@@ -648,7 +678,8 @@ function vMeetingList(){
      <div class="mtg-h"><div><div class="mtg-d">${m.date?esc(new Date(m.date+"T12:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})):"No date"}${m.time?` · ${esc(fmtTime(m.time))}`:""}${m.area?` · ${esc(m.area)}`:""}${m.seriesId?` · <span title="Part of a repeating series">↻</span>`:""}</div><h2>${esc(m.title)}</h2>
        ${m.where?`<div class="n">${/^https?:\/\//.test(m.where)?`<a href="${esc(m.where)}" target="_blank" rel="noopener">${esc(m.where)}</a>`:esc(m.where)}</div>`:""}${m.attendees?`<div class="n">Attendees: ${esc(m.attendees)}</div>`:""}</div>
        <div class="mtg-b"><button class="btn" data-ics="${esc(m.id)}" title="Download an invite for Outlook or Google Calendar">Add to my calendar</button><button class="btn" data-upload="meeting:${esc(m.id)}">Attach file</button><button class="btn" data-mkaction="${esc(m.id)}">+ Action item</button><button class="btn" data-edit="meetings:${esc(m.id)}">Edit</button></div></div>
-     ${m.notes?`<h4>Agenda / notes</h4><p>${multiline(m.notes)}</p>`:""}
+     ${m.notes?`<h4>Agenda</h4><p>${multiline(m.notes)}</p>`:""}
+     <h4>Meeting notes</h4>${noteThread("meetings",m,null,{rows:3,placeholder:"Type notes from this meeting… (your name and today’s date are added automatically)"})}
      ${m.decisions?`<h4>Decisions</h4><p>${multiline(m.decisions)}</p>`:""}
      ${m.followups?`<h4>Follow-ups</h4><p>${multiline(m.followups)}</p>`:""}
      ${att.length?`<h4>Files</h4><ul class="flist">${att.map(f=>`<li><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a> <span class="n">${esc(f.path||"")}</span></li>`).join("")}</ul>`:""}
@@ -793,16 +824,17 @@ function vActions(){
   const rows=plan.actions;
   const anyOpen=rows.some(r=>openSubs.has(r.id));
   return `<datalist id="ownerlist">${ownerSuggestions().map(o=>`<option value="${esc(o)}">`).join("")}</datalist>
-   <div class="toolbar"><span class="hint">Click an action item to edit it. Use the ▸ count to see and add its subtasks.</span><span class="spacer"></span>
-    <button class="btn" data-suball="${anyOpen?"close":"open"}">${anyOpen?"Hide all subtasks":"Show all subtasks"}</button>
+   <div class="toolbar"><span class="hint">Click an action item to edit it. Click <b>▸</b> to open its updates and subtasks.</span><span class="spacer"></span>
+    <button class="btn" data-suball="${anyOpen?"close":"open"}">${anyOpen?"Close all":"Open all"}</button>
     <button class="btn" data-csv="actions">Download CSV</button><button class="btn primary" data-add="actions">+ Add action item</button></div>
-   <div class="tablewrap"><table class="acts"><thead><tr><th>Action item</th><th>Subtasks</th><th>Status</th><th>Owner</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+   <div class="tablewrap"><table class="acts"><thead><tr><th>Action item</th><th>Updates &amp; subtasks</th><th>Status</th><th>Owner</th><th>Due</th><th>Notes</th></tr></thead><tbody>
    ${rows.length?rows.map(r=>{ const {n,done}=subStats(r), open=openSubs.has(r.id), allDone=n&&done===n&&!DONE.has(r.status);
-     return `<tr class="row" data-edit="actions:${esc(r.id)}"><td><b>${esc(r.item)}</b></td>
-      <td><button class="subtog ${open?"on":""}" data-subtog="${esc(r.id)}" aria-expanded="${open}" title="${open?"Hide":"Show"} subtasks">${open?"▾":"▸"} ${n?`${done}/${n}`:"Add"}${n?`<i class="sbar"><i style="width:${Math.round(done/n*100)}%"></i></i>`:""}</button></td>
+     const lu=lastUpdate(r), uc=updCount(r);
+     return `<tr class="row" data-edit="actions:${esc(r.id)}"><td><b>${esc(r.item)}</b>${lu?`<div class="lastupd"><span>${esc(stamp(lu.at))} · ${esc(lu.by)}:</span> ${esc(lu.text.length>110?lu.text.slice(0,110)+"…":lu.text)}</div>`:""}</td>
+      <td><button class="subtog ${open?"on":""}" data-subtog="${esc(r.id)}" aria-expanded="${open}" title="${open?"Close":"Open"} updates and subtasks">${open?"▾":"▸"} ${uc?`<span class="uc">💬 ${uc}</span>`:""}${uc&&n?'<span class="sep">·</span>':""}${n?`${done}/${n}`:(uc?"":"Open")}${n?`<i class="sbar"><i style="width:${Math.round(done/n*100)}%"></i></i>`:""}</button></td>
       <td>${stSelect("actions",r.id,r.status)}</td><td>${esc(r.owner)}</td>
       <td class="date ${isOverdue(r.due,r.status)?"overdue":""}">${r.due?fmt(r.due):'<span style="color:var(--muted)">—</span>'}</td><td class="notes">${esc(r.notes)}</td></tr>
-      ${open?`<tr class="subrow"><td colspan="6">${subList("actions",r)}${allDone?`<div class="alldone">All subtasks are done. <button class="btn sm" data-markdone="${esc(r.id)}">Mark action item Done</button></div>`:""}</td></tr>`:""}`; }).join("")
+      ${open?`<tr class="subrow"><td colspan="6"><div class="sr-h">Status updates</div>${noteThread("actions",r,null)}<div class="sr-h">Subtasks</div>${subList("actions",r)}${allDone?`<div class="alldone">All subtasks are done. <button class="btn sm" data-markdone="${esc(r.id)}">Mark action item Done</button></div>`:""}</td></tr>`:""}`; }).join("")
      :`<tr><td colspan="6" class="empty">Nothing here yet.</td></tr>`}
    </tbody></table></div>`;
 }
@@ -814,13 +846,15 @@ function subList(coll, r){
      <input class="sb sbt" ${a(x)} data-field="text" value="${esc(x.text)}" aria-label="Subtask">
      <select class="sb sbo" ${a(x)} data-field="owner" aria-label="Subtask owner">${ownerOptionsHTML(x.owner||"")}</select>
      <input class="sb sbd ${isOverdue(x.due,x.done?"Done":"")?"overdue":""}" type="date" ${a(x)} data-field="due" value="${esc(x.due)}" aria-label="Subtask due date">
-     <button class="btn sm danger" data-subdel="${coll}:${esc(r.id)}:${esc(x.id)}" title="Remove subtask">✕</button></li>`).join("")}
+     <button class="ntog ${openNotes.has(x.id)?"on":""}" data-ntog="${esc(x.id)}" title="Updates on this subtask">💬${(x.updates||[]).length?` ${(x.updates||[]).length}`:""}</button>
+     <button class="btn sm danger" data-subdel="${coll}:${esc(r.id)}:${esc(x.id)}" title="Remove subtask">✕</button></li>
+     ${openNotes.has(x.id)?`<li class="sub-nt">${noteThread(coll,r,x,{compact:1,rows:1,placeholder:"Add an update on this subtask…"})}</li>`:(()=>{const lu=lastUpdate(x); return lu?`<li class="sub-last"><span>${esc(stamp(lu.at))} · ${esc(lu.by)}:</span> ${esc(lu.text.length>100?lu.text.slice(0,100)+"…":lu.text)}</li>`:"";})()}`).join("")}
     <li class="subnew">
      <span class="plus">+</span>
      <input class="sbt" id="sa-t-${esc(r.id)}" data-subadd-key="${coll}:${esc(r.id)}" placeholder="Add a subtask and press Enter" aria-label="New subtask">
      <select class="sbo sbo-new" id="sa-o-${esc(r.id)}" aria-label="New subtask owner">${ownerOptionsHTML("").replace(">Unassigned<",">Owner…<")}</select>
      <input class="sbd" id="sa-d-${esc(r.id)}" type="date" aria-label="New subtask due date">
-     <button class="btn sm" data-subadd="${coll}:${esc(r.id)}">Add</button></li></ul>`;
+     <span></span><button class="btn sm" data-subadd="${coll}:${esc(r.id)}">Add</button></li></ul>`;
 }
 function addSub(coll, id){
   const r=(plan[coll]||[]).find(x=>x.id===id); if(!r) return;
@@ -897,7 +931,7 @@ function vCalendar(){
         ${list.slice(0,4).map(chip).join("")}${list.length>4?`<button class="ev more" data-calday="${iso}">+${list.length-4} more</button>`:""}</div>`; }).join("")}
    </div>
    <div class="cal-agenda">${monthEv.length?[...new Set(monthEv.map(e=>e.d))].map(d=>`<div class="ag-d ${d===today?"today":""}"><div class="ag-date">${esc(new Date(d+"T12:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}))}</div><div class="ag-ev">${monthEv.filter(e=>e.d===d).map(chip).join("")}</div></div>`).join(""):`<div class="empty">Nothing scheduled this month.</div>`}</div>
-   <p class="hint" style="margin:10px 0 0">Click a day to add a meeting. Click a meeting to add its notes.</p>
+   <p class="hint" style="margin:10px 0 0">Click a day to add a meeting. Click a meeting to open it and type your notes.</p>
   </div>`;
 }
 
@@ -918,6 +952,33 @@ function icsFor(m){
     document.documentElement.style.setProperty("--pinH", (pin.offsetHeight+12)+"px"); };
   addEventListener("scroll",()=>{ if(!raf) raf=requestAnimationFrame(set); },{passive:true}); addEventListener("resize",set); set(); })();
 
+
+/* ---------- dated updates (action items, subtasks, meetings) ---------- */
+let openNotes = new Set(JSON.parse(ls.get("ecwt.notes")||"[]"));
+const saveOpenNotes = () => ls.set("ecwt.notes", JSON.stringify([...openNotes]));
+const stamp = iso => { const d=new Date(iso); return d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:d.getFullYear()!==new Date().getFullYear()?"numeric":undefined})+", "+d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}); };
+const noteKey = (coll,id,sid) => `${coll}-${id}-${sid||"x"}`;
+function noteThread(coll, r, sub, opts={}){
+  const t=sub||r, ups=(t.updates||[]).slice().sort((a,b)=>b.at.localeCompare(a.at)), k=noteKey(coll,r.id,sub&&sub.id);
+  const ref=`${coll}:${r.id}:${sub?sub.id:""}`;
+  const word = coll==="meetings" ? "note" : "update";
+  return `<div class="nt ${opts.compact?"compact":""}">
+    <div class="nt-add"><textarea id="nt-${k}" rows="${opts.rows||2}" data-notekey="${ref}" placeholder="${esc(opts.placeholder||`Add ${word==="update"?"an":"a"} ${word}… (your name and today’s date are added automatically)`)}"></textarea>
+     <button class="btn ${opts.compact?"sm":""} primary" data-notepost="${ref}">Post ${word}</button></div>
+    ${ups.length?`<ul class="nt-list">${ups.map(u=>`<li><div class="nt-meta"><b>${esc(stamp(u.at))}</b> · ${esc(u.by||"Unknown")}${u.by&&u.by===ls.get(LS.name)?`<button class="nt-x" data-notedel="${ref}:${esc(u.id)}" title="Remove this ${word}">✕</button>`:""}</div><div class="nt-text">${multiline(u.text)}</div></li>`).join("")}</ul>`:""}
+  </div>`;
+}
+function postNote(ref){
+  const [coll,id,sid]=ref.split(":"); const ta=$("#nt-"+noteKey(coll,id,sid)); if(!ta) return;
+  const text=ta.value.trim(); if(!text){ ta.focus(); return; }
+  if(!ensureName(()=>postNote(ref))) return;
+  ta.value="";
+  const r=(plan[coll]||[]).find(x=>x.id===id); if(!r) return; const sub=sid?(r.subtasks||[]).find(x=>x.id===sid):null;
+  commit({type:"note",coll,id,sid:sid||"",label:r[COLL[coll].title],text:sub?sub.text:"",n:{id:uid("u"),at:new Date().toISOString(),by:ls.get(LS.name)||"",text:text.slice(0,4000)}});
+}
+const lastUpdate = t => (t.updates||[]).slice().sort((a,b)=>b.at.localeCompare(a.at))[0];
+const updCount = r => (r.updates||[]).length + (r.subtasks||[]).reduce((n,x)=>n+(x.updates||[]).length,0);
+
 /* ---------- events ---------- */
 function bindFilters(){
   const set=(k,v)=>{ filters[k]=v; ls.set(LS.filt,JSON.stringify(filters)); render(); };
@@ -927,7 +988,13 @@ function bindFilters(){
 document.addEventListener("click", e=>{
   const tb=e.target.closest("[data-tab]"); if(tb){ e.preventDefault(); tab=tb.dataset.tab; ls.set(LS.tab,tab); render(); return; }
   if(e.target.closest("select.st")) return;
-  const ce=e.target.closest("[data-calev]"); if(ce){ const [c,id]=ce.dataset.calev.split(":"); editRow(c,id); return; }
+  const ce=e.target.closest("[data-calev]"); if(ce){ const [c,id]=ce.dataset.calev.split(":");
+    if(c==="meetings"){ filters.mv="list"; filters.ma=""; filters.mq=""; ls.set(LS.filt,JSON.stringify(filters)); render(); const el=document.getElementById("mtg-"+id); if(el){ el.scrollIntoView({block:"start"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1600); const ta=$("#nt-"+noteKey("meetings",id)); if(ta) ta.focus({preventScroll:true}); } return; }
+    editRow(c,id); return; }
+  const np=e.target.closest("[data-notepost]"); if(np){ postNote(np.dataset.notepost); return; }
+  const nd=e.target.closest("[data-notedel]"); if(nd){ const [c,id,sid,nid]=nd.dataset.notedel.split(":"); const r=(plan[c]||[]).find(x=>x.id===id); const sub=sid?(r?.subtasks||[]).find(x=>x.id===sid):null;
+    if(r&&confirm("Remove this entry?")) commit({type:"notedel",coll:c,id,sid:sid||"",nid,label:r[COLL[c].title],text:sub?sub.text:""}); return; }
+  const nt=e.target.closest("[data-ntog]"); if(nt){ const sid=nt.dataset.ntog; openNotes.has(sid)?openNotes.delete(sid):openNotes.add(sid); saveOpenNotes(); render(); const ta=document.querySelector(`[id^="nt-"][id$="-${CSS.escape(sid)}"]`); if(ta&&openNotes.has(sid)) ta.focus(); return; }
   const cn=e.target.closest("[data-calnav]"); if(cn){ const k=+cn.dataset.calnav; if(!k) filters.mm=todayISO().slice(0,7); else { const [y,m]=(filters.mm||todayISO().slice(0,7)).split("-").map(Number); const d=new Date(y,m-1+k,1); filters.mm=isoOf(d).slice(0,7); } ls.set(LS.filt,JSON.stringify(filters)); render(); return; }
   const cm=e.target.closest("[data-calday]"); if(cm){ filters.mv="list"; ls.set(LS.filt,JSON.stringify(filters)); render(); const el=[...document.querySelectorAll(".mtg")].find(x=>x.querySelector(".mtg-d")); if(el) el.scrollIntoView({block:"start"}); return; }
   const nm=e.target.closest("[data-newmtg]"); if(nm){ const preset={date:nm.dataset.newmtg, duration:"60"}; if(filters.ma) preset.area=filters.ma; editRow("meetings",null,preset); return; }
@@ -957,6 +1024,7 @@ document.addEventListener("click", e=>{
 });
 document.addEventListener("keydown", e=>{
   if(e.key!=="Enter") return;
+  const ta=e.target.closest("textarea[data-notekey]"); if(ta){ if(e.ctrlKey||e.metaKey){ e.preventDefault(); postNote(ta.dataset.notekey); } return; }
   const k=e.target.closest("[data-subadd-key], .subnew input"); if(!k) return;
   const li=k.closest(".subnew"); const key=li && li.querySelector("[data-subadd-key]").dataset.subaddKey; if(!key) return;
   e.preventDefault(); const [c,id]=key.split(":"); addSub(c,id);
@@ -986,9 +1054,10 @@ document.addEventListener("change", e=>{
 function dl(name, text, type){ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 function downloadCSV(coll){
   const f=COLL[coll].fields; const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
-  const subs = coll==="actions";
+  const subs = coll==="actions", upd = coll==="actions"||coll==="meetings";
+  const updTxt = r => (r.updates||[]).slice().sort((a,b)=>a.at.localeCompare(b.at)).map(u=>`${stamp(u.at)} ${u.by}: ${u.text}`).concat((r.subtasks||[]).flatMap(x=>(x.updates||[]).map(u=>`${stamp(u.at)} ${u.by} [${x.text}]: ${u.text}`))).join(" | ");
   const subTxt = r => (r.subtasks||[]).map(x=>`[${x.done?"x":" "}] ${x.text}${x.owner||x.due?` (${[x.owner,x.due].filter(Boolean).join(", ")})`:""}`).join("; ");
-  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).concat(subs?[q("Subtasks")]:[]).join(","), ...(coll==="leads"?leads():(plan[coll]||[])).map(r=>f.map(x=>q(r[x.k])).concat(subs?[q(subTxt(r))]:[]).join(","))].join("\r\n"), "text/csv");
+  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).concat(subs?[q("Subtasks")]:[]).concat(upd?[q(coll==="meetings"?"Meeting notes":"Updates")]:[]).join(","), ...(coll==="leads"?leads():(plan[coll]||[])).map(r=>f.map(x=>q(r[x.k])).concat(subs?[q(subTxt(r))]:[]).concat(upd?[q(updTxt(r))]:[]).join(","))].join("\r\n"), "text/csv");
 }
 $("#exportBtn").onclick=()=>dl(`ecw-plan-backup-${todayISO()}.json`, JSON.stringify(plan,null,1), "application/json");
 $("#importBtn").onclick=()=>$("#importFile").click();
