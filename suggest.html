@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>eCW suggestions · Vascular Health Partners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#0f4c5c;--brand-2:#13798c;--bg:#f4f6f8;--surface:#fff;--ink:#14212b;--muted:#5b6b78;--line:#dfe5ea;--soft:#eef2f5;--ok:#1e7a4c;--ok-bg:#e5f4ec;--bad:#b42318;--bad-bg:#fde8e6;--warn:#9a5b00;--warn-bg:#fdf1dc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--brand);color:#fff;padding:22px 16px 26px}
+header .in,main{max-width:640px;margin:0 auto}
+header h1{margin:0;font-size:21px}
+header p{margin:6px 0 0;opacity:.85;font-size:14px}
+main{padding:0 16px 48px}
+.card{background:var(--surface);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 6px 20px -12px rgba(0,0,0,.25);padding:20px;margin-top:-14px}
+.fld{margin-bottom:16px}
+label,.lbl{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.opt{font-weight:400;color:var(--muted)}
+input[type=text],select,textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 3px rgba(19,121,140,.15)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{font-weight:500;font-size:14px;margin:0;border:1px solid var(--line);border-radius:99px;padding:7px 13px;cursor:pointer;background:#fff;display:flex;gap:6px;align-items:center}
+.chips input{accent-color:var(--brand-2);margin:0}
+.chips label:has(input:checked){border-color:var(--brand-2);background:#e8f3f5;color:var(--brand)}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;color:var(--muted);cursor:pointer;background:#fafbfc}
+.drop.over{border-color:var(--brand-2);background:#e8f3f5}
+.drop b{color:var(--brand-2)}
+.files{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.files li{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:#fff;font-size:14px}
+.files img{width:44px;height:44px;object-fit:cover;border-radius:6px;flex:none;background:var(--soft)}
+.files .ic{width:44px;height:44px;border-radius:6px;background:var(--soft);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--muted);flex:none}
+.files .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.files .sz{color:var(--muted);font-size:12.5px}
+.files button{border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer;padding:2px 6px}
+.files li.err{border-color:#f3b4ae;background:var(--bad-bg)}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:500;background:var(--warn-bg);color:#5c3a00;border-radius:10px;padding:12px;font-size:14px}
+.check input{margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--brand-2)}
+.btn{display:block;width:100%;border:0;border-radius:12px;background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:16px;padding:14px;cursor:pointer;margin-top:18px}
+.btn:disabled{opacity:.6;cursor:default}
+.msg{margin-top:12px;font-size:14px;border-radius:10px;padding:10px 12px}
+.msg.err{background:var(--bad-bg);color:var(--bad)}
+.msg.info{background:#e8f3f5;color:var(--brand)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.done{text-align:center;padding:24px 8px}
+.done .big{font-size:44px}
+.done h2{margin:6px 0}
+.done p{color:var(--muted)}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<header><div class="in"><h1>Share your input on eClinicalWorks</h1><p>Vascular Health Partners · what should the new system do for your team? Your department lead reviews every entry.</p></div></header>
+<main>
+<div class="card" id="card">
+<form id="f" novalidate>
+  <div class="two">
+    <div class="fld"><label for="name">Your name</label><input type="text" id="name" autocomplete="name" required maxlength="80"></div>
+    <div class="fld"><label for="dept">Your department</label><select id="dept" required><option value="">Choose…</option></select></div>
+  </div>
+  <div class="fld"><span class="lbl">This is…</span>
+    <div class="chips" role="radiogroup" aria-label="Type">
+      <label><input type="radio" name="kind" value="Wish" checked> Something I need eCW to do</label>
+      <label><input type="radio" name="kind" value="Problem"> A problem or concern</label>
+      <label><input type="radio" name="kind" value="Idea"> An idea to work better</label>
+    </div></div>
+  <div class="fld"><label for="title">Your suggestion in one line</label><input type="text" id="title" required maxlength="200" placeholder="e.g. See the authorization expiry date on the appointment"></div>
+  <div class="fld"><label for="details">Details <span class="opt">(optional)</span></label><textarea id="details" maxlength="5000" placeholder="What do you do today? What gets in the way? What would help?"></textarea></div>
+  <div class="fld"><span class="lbl">How important is it?</span>
+    <div class="chips" role="radiogroup" aria-label="Priority">
+      <label><input type="radio" name="priority" value="Must-have for go-live"> Need it by go-live</label>
+      <label><input type="radio" name="priority" value="Soon after go-live" checked> Soon after</label>
+      <label><input type="radio" name="priority" value="Later"> Later</label>
+    </div></div>
+  <div class="fld"><label for="site">Site <span class="opt">(optional)</span></label><input type="text" id="site" maxlength="80" placeholder="e.g. Main clinic A, a satellite, all sites"></div>
+  <div class="fld"><span class="lbl">Screenshots or documents <span class="opt">(optional, up to 5 files, 4 MB each)</span></span>
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Add files"><b>Choose files</b> or drop them here<br><span class="hint">Pictures, PDF, Word, Excel, PowerPoint</span></div>
+    <input type="file" id="file" multiple hidden accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv">
+    <ul class="files" id="files"></ul></div>
+  <label class="check"><input type="checkbox" id="phi" required> My text and files contain no patient information (no names, dates of birth, MRNs or screenshots that show a patient).</label>
+  <div class="hp" aria-hidden="true"><label for="website">Leave empty</label><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
+  <button class="btn" id="send" type="submit">Send</button>
+  <div class="msg" id="msg" hidden></div>
+</form>
+</div>
+</main>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const CODE=new URLSearchParams(location.search).get("code")||"";
+const MAX=4*1024*1024, MAXN=5;
+const FALLBACK=[["Appointments","Pt Access","Patient access and call centers"],["Appointments","Call Ctr 1","Call center 1"],["Appointments","Call Ctr 2","Call center 2"],["Appointments","IV/Auth","Insurance verification and authorizations"],["Clinical","Clinical","Clinical"],["Clinical","Clinical 2","Clinical 2"],["Clinical","MAs","Medical assistants"],["Clinical","Scribes","Scribes"],["Clinical","Chart Prep","Chart prep"],["Clinical","Clinic A","Main clinic A"],["Clinical","Clinic B+Sat","Main clinic B and satellites"],["Clinical","Wound","Wound center and HBOT"],["Testing","Dx Testing","Diagnostic testing"],["OBL","OBL","OBL"],["ASC","ASC 1 Endo","ASC 1 - Endoscopy"],["ASC","ASC 2 Vasc","ASC 2 - Vascular"],["Billing","Billing 1 PAD","Billing team 1 - PAD billing"],["Billing","Billing 2 Reg","Billing team 2 - Regular billing"],["Billing","Coding","Coding"],["Billing","Charge Entry","Charge entry"],["Billing","Pmt Posting","Payment posting"],["Billing","Denials","Denials"],["Billing","A/R","A/R follow-up"],["Billing","PAD Desk","PAD desk"],["Billing","RCM","Revenue cycle"],["Billing","India BO","India back office"],["Support","COO","Leadership"],["Support","Impl.","Implementation"],["Support","IT/Data","IT and data"],["Support","eCW PM","eCW"]];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function fillDepts(list){
+  const groups=[...new Set(list.map(x=>x[0]))];
+  $("#dept").innerHTML='<option value="">Choose…</option>'+groups.map(g=>`<optgroup label="${esc(g)}">${list.filter(x=>x[0]===g).map(x=>`<option value="${esc(x[1])}">${esc(x[2]&&x[2]!==x[1]?`${x[2]} (${x[1]})`:x[1])}</option>`).join("")}</optgroup>`).join("");
+  try{ const d=localStorage.getItem("ecws.dept"); if(d) $("#dept").value=d; }catch{}
+}
+fillDepts(FALLBACK);
+fetch("/api/plan",{cache:"no-store"}).then(r=>r.json()).then(d=>{ const L=d&&d.data&&d.data.leads; if(Array.isArray(L)&&L.length) fillDepts(L.map(l=>[l.group||"",l.abbrev,l.area])); }).catch(()=>{});
+try{ const n=localStorage.getItem("ecws.name"); if(n) $("#name").value=n; }catch{}
+
+let picked=[];
+const fmtSize=b=>b<1024*1024?Math.max(1,Math.round(b/1024))+" KB":(b/1024/1024).toFixed(1)+" MB";
+function drawFiles(){
+  $("#files").innerHTML=picked.map((f,i)=>{ const big=f.size>MAX; const img=/^image\/(png|jpe?g|gif|webp)$/.test(f.type);
+    return `<li class="${big?"err":""}">${img?`<img alt="" data-i="${i}">`:`<span class="ic">${esc((f.name.split(".").pop()||"FILE").slice(0,4).toUpperCase())}</span>`}
+      <span class="nm">${esc(f.name)}<br><span class="sz">${fmtSize(f.size)}${big?" · too large (4 MB max)":""}</span></span><button type="button" data-rm="${i}" aria-label="Remove ${esc(f.name)}">×</button></li>`; }).join("");
+  $("#files").querySelectorAll("img[data-i]").forEach(im=>{ const u=URL.createObjectURL(picked[+im.dataset.i]); im.src=u; im.onload=()=>URL.revokeObjectURL(u); });
+}
+function addFiles(list){ for(const f of list){ if(picked.length>=MAXN){ say(`Up to ${MAXN} files.`,"err"); break; } picked.push(f); } drawFiles(); }
+$("#drop").onclick=()=>$("#file").click();
+$("#drop").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); $("#file").click(); } };
+$("#file").onchange=e=>{ addFiles(e.target.files); e.target.value=""; };
+["dragover","dragenter"].forEach(ev=>$("#drop").addEventListener(ev,e=>{ e.preventDefault(); $("#drop").classList.add("over"); }));
+["dragleave","drop"].forEach(ev=>$("#drop").addEventListener(ev,e=>{ e.preventDefault(); $("#drop").classList.remove("over"); }));
+$("#drop").addEventListener("drop",e=>addFiles(e.dataTransfer.files));
+document.addEventListener("paste",e=>{ const fs=[...(e.clipboardData?.files||[])]; if(fs.length){ addFiles(fs.map((f,i)=>f.name&&f.name!=="image.png"?f:new File([f],`screenshot-${Date.now()}-${i}.png`,{type:f.type}))); } });
+$("#files").onclick=e=>{ const b=e.target.closest("[data-rm]"); if(b){ picked.splice(+b.dataset.rm,1); drawFiles(); } };
+
+function say(t,kind){ const m=$("#msg"); m.hidden=!t; m.textContent=t||""; m.className="msg "+(kind||"info"); }
+$("#f").onsubmit=async e=>{
+  e.preventDefault();
+  const name=$("#name").value.trim(), dept=$("#dept").value, title=$("#title").value.trim();
+  if(!name){ say("Please enter your name.","err"); $("#name").focus(); return; }
+  if(!dept){ say("Please choose your department.","err"); $("#dept").focus(); return; }
+  if(!title){ say("Please write your suggestion in one line.","err"); $("#title").focus(); return; }
+  if(picked.some(f=>f.size>MAX)){ say("Remove the files over 4 MB first.","err"); return; }
+  if(!$("#phi").checked){ say("Please confirm there’s no patient information.","err"); $("#phi").focus(); return; }
+  const btn=$("#send"); btn.disabled=true;
+  try{
+    const ids=[];
+    for(let i=0;i<picked.length;i++){
+      const f=picked[i]; say(`Uploading ${i+1} of ${picked.length}: ${f.name}…`);
+      const r=await fetch("/api/suggest/file",{method:"POST",headers:{"content-type":f.type||"application/octet-stream","x-filename":encodeURIComponent(f.name),"x-code":CODE},body:f});
+      const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||`Upload failed (${r.status})`); ids.push(d.id);
+    }
+    say("Sending…");
+    const r=await fetch("/api/suggest",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({
+      name, dept, title, details:$("#details").value.trim(), kind:document.querySelector("input[name=kind]:checked").value,
+      priority:document.querySelector("input[name=priority]:checked").value, site:$("#site").value.trim(), files:ids, noPhi:true, code:CODE, website:$("#website").value })});
+    const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||`Could not send (${r.status})`);
+    try{ localStorage.setItem("ecws.name",name); localStorage.setItem("ecws.dept",dept); }catch{}
+    $("#card").innerHTML=`<div class="done"><div class="big">✓</div><h2>Thank you, ${esc(name.split(" ")[0])}!</h2><p>Your input went to the ${esc(dept)} list. Your department lead will review it.</p><button class="btn" onclick="location.reload()">Send another</button></div>`;
+  }catch(err){ say(err.message||String(err),"err"); btn.disabled=false; }
+};
+</script>
+</body>
+</html>

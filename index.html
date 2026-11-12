@@ -131,11 +131,18 @@ a.btn{text-decoration:none;color:inherit;display:inline-block}
 .subtog{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:2px 10px;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
 .subtog:hover,.subtog.on{border-color:var(--brand-2);color:var(--brand)}
 .sbar{display:inline-block;width:34px;height:5px;background:var(--soft);border-radius:99px;overflow:hidden}
+.sbar2{display:inline-flex;width:46px;height:6px;background:var(--soft);border-radius:99px;overflow:hidden;vertical-align:middle}
+.sbar2.wide{width:140px;height:8px}
+.sbar2 i{display:block;height:100%}
+.sbar2 .d{background:var(--ok)}.sbar2 .p{background:#3b82f6}.sbar2 .b{background:var(--bad)}
+.sr-prog{text-transform:none;letter-spacing:0;font-weight:400;font-size:12.5px;margin-left:10px;display:inline-flex;gap:6px;align-items:center;color:var(--muted)}
+.sr-prog b{color:var(--ink)}.sr-prog .bad{color:var(--bad);font-weight:600}
+.subs select.sbst{width:100%;text-align:left;padding:4px 8px}
 .sbar>i{display:block;height:100%;background:var(--ok)}
 tr.subrow td{background:#f8fbfc;padding:6px 12px 12px 28px}
 .subs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
-.subs li{display:grid;grid-template-columns:22px minmax(0,1fr) 170px 140px 46px 48px;gap:6px;align-items:center}
-.subs li.sub-nt,.subs li.sub-last{display:block;margin:0 0 6px 28px}
+.subs li{display:grid;grid-template-columns:112px minmax(0,1fr) 170px 140px 46px 48px;gap:6px;align-items:center}
+.subs li.sub-nt,.subs li.sub-last{display:block;margin:0 0 6px 118px}
 .subs li.sub-last{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .subs li.sub-last span{font-weight:600}
 .ntog{border:1px solid var(--line);background:var(--surface);border-radius:99px;font-size:12px;padding:3px 6px;cursor:pointer;white-space:nowrap}
@@ -157,6 +164,58 @@ tr.subrow td{background:#f8fbfc;padding:6px 12px 12px 28px}
 .lastupd span{font-weight:600}
 .uc{font-weight:600}.subtog .sep{opacity:.5}
 .mtg.flash{box-shadow:0 0 0 3px var(--brand-2)}
+.kpis.mini{grid-template-columns:repeat(4,minmax(0,1fr));margin:10px 0 12px}
+.kpis.mini .kpi{padding:10px 14px}.kpis.mini .val{font-size:22px}
+@media (max-width:700px){.kpis.mini{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tag{display:inline-block;font-size:11px;font-weight:700;background:#e0f2fe;color:#075985;border-radius:5px;padding:1px 6px;vertical-align:middle}
+.wfiles{font-size:12.5px;margin-top:3px}
+.linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--brand-2);text-decoration:underline;cursor:pointer}
+tr.grp .grp-add{float:right;margin:-3px 0}
+table.wl td .n{margin-top:2px}
+.lanes{margin-bottom:16px}
+.lanes h2{display:block}
+.seg.sm button{padding:4px 10px;font-size:12px}
+.lane-scroll{overflow-x:auto}
+.lane-grid{display:grid;grid-template-columns:190px repeat(4,minmax(170px,1fr));min-width:880px;border-top:1px solid var(--line)}
+.lane-grid>div{border-bottom:1px solid var(--soft);padding:6px}
+.lh{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);position:sticky;top:0;background:var(--surface)}
+.lh span{color:var(--ink);margin-left:4px}
+.ln{display:flex;flex-direction:column;gap:3px;cursor:pointer}
+.ln b{font-size:13px}.ln span{font-size:11.5px;color:var(--muted)}
+.ln:hover b{color:var(--brand-2)}
+.lc{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lc-inprogress{background:#f5f9ff}.lc-blocked{background:#fff7f7}
+.lchip{display:block;width:100%;text-align:left;border:1px solid var(--line);border-left:3px solid #f59e0b;background:#fff;border-radius:6px;padding:4px 7px;font:inherit;font-size:12.5px;line-height:1.3;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lchip small{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis}
+.lc-inprogress .lchip{border-left-color:#3b82f6}.lchip.blk{border-left-color:var(--bad)}
+.lchip.done{border-left-color:var(--ok);color:var(--muted);background:#fafcfb}
+.lchip.late{box-shadow:inset 0 0 0 1px #fca5a5}
+.lchip:hover{border-color:var(--brand-2)}
+.lmore{border:0;background:none;color:var(--brand-2);font:inherit;font-size:12px;font-weight:600;text-align:left;cursor:pointer;padding:2px 4px}
+.ver-sum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px;font-size:13px;color:var(--muted)}
+.ver-sum b{color:var(--ink)}.ver-sum .bad{color:var(--bad);font-weight:600}
+.roster{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.roster li{display:grid;grid-template-columns:minmax(120px,1.2fr) 150px 150px minmax(0,1.6fr) 34px;gap:8px;align-items:center}
+.roster .rn{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.roster select{border:1px solid var(--line);border-radius:7px;padding:4px 6px;font:inherit;font-size:12.5px;background:var(--surface);min-width:0}
+.roster select.pill{border:0;padding:4px 8px}
+.rstamp{font-size:12px;color:var(--muted)}
+.roster li.rnew{grid-template-columns:minmax(0,1fr) 150px 60px;margin-top:4px}
+.roster li.rnew input{border:1px solid var(--line);border-radius:7px;padding:6px 9px;font:inherit;min-width:0}
+@media (max-width:700px){.roster li{grid-template-columns:minmax(0,1fr) 130px 34px}.roster li>select:first-of-type{display:none}.roster .rstamp{grid-column:1/-1}.roster li.rnew{grid-template-columns:minmax(0,1fr) 60px}.roster li.rnew select{display:none}}
+.memo{margin-bottom:12px}
+.memo.new{border-top:3px solid var(--brand-2)}
+.memo .memo-title{width:100%;border:0;border-bottom:1px solid var(--soft);font:inherit;font-size:16px;font-weight:600;padding:4px 2px 8px;margin-bottom:8px;background:transparent}
+.memo .memo-title:focus{outline:none;border-bottom-color:var(--brand-2)}
+.memo textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;resize:vertical;line-height:1.5}
+.memo textarea:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 3px rgba(14,116,144,.12)}
+.memo-foot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.memo-foot select{border:1px solid var(--line);border-radius:8px;padding:6px 9px;max-width:200px}
+.memo-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.memo-h h2{margin:0 0 2px;font-size:16px}
+.memo-b{display:flex;gap:6px}
+.memo.pinned{border-left:4px solid #d97706}
+.memo-body{margin-top:8px;font-size:14px;line-height:1.55;overflow-wrap:anywhere}
 .subs li.done .sbt{text-decoration:line-through;color:var(--muted)}
 .subs input.sb,.subs .subnew input{border:1px solid transparent;background:transparent;border-radius:6px;padding:5px 7px;width:100%;min-width:0}
 .subs input.sb:hover{border-color:var(--line)}
@@ -166,7 +225,7 @@ tr.subrow td{background:#f8fbfc;padding:6px 12px 12px 28px}
 .subs .plus{text-align:center;color:var(--muted);font-weight:700}
 .subs input.overdue{color:var(--bad);font-weight:600}
 .alldone{margin-top:8px;font-size:13px;color:var(--ok);display:flex;gap:8px;align-items:center}
-@media (max-width:700px){.subs li{grid-template-columns:22px minmax(0,1fr) 46px 34px}.subs .sbo,.subs .sbd{grid-column:2}.subs li.sub-nt,.subs li.sub-last{margin-left:0}.nt-add{flex-direction:column;align-items:stretch}}
+@media (max-width:700px){.subs li{grid-template-columns:104px minmax(0,1fr) 46px 34px}.subs .sbo,.subs .sbd{grid-column:2}.subs li.sub-nt,.subs li.sub-last{margin-left:0}.nt-add{flex-direction:column;align-items:stretch}}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
 .seg button{border:0;background:var(--surface);padding:7px 13px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
 .seg button.on{background:var(--brand);color:#fff}
@@ -260,11 +319,12 @@ const ls = {
 const STATUS = {
   tasks:["Pending","In progress","Blocked","Complete","N/A"],
   actions:["Open","In progress","Done"],
+  wishes:["New","Under review","Planned","Asked eCW","In build","Done","Not possible"],
   milestones:["Not started","In progress","At risk","Done"],
   training:["Not scheduled","Scheduled","Completed"]
 };
-const TONE = {"Complete":"s-ok","Done":"s-ok","Completed":"s-ok","In progress":"s-info","Scheduled":"s-info","Blocked":"s-bad","At risk":"s-bad","Pending":"s-warn","Open":"s-warn","Not scheduled":"s-warn","Not started":"","N/A":""};
-const DONE = new Set(["Complete","Done","Completed","N/A"]);
+const TONE = {"Complete":"s-ok","Done":"s-ok","Completed":"s-ok","In progress":"s-info","Scheduled":"s-info","Blocked":"s-bad","At risk":"s-bad","Pending":"s-warn","Open":"s-warn","Not scheduled":"s-warn","Not started":"","N/A":"","New":"s-warn","Under review":"s-info","Planned":"s-info","Asked eCW":"s-info","In build":"s-info","Not possible":""};
+const DONE = new Set(["Complete","Done","Completed","N/A","Not possible"]);
 const COLL = {
   tasks:{label:"Task",title:"name",fields:[
     {k:"ws",l:"Workstream",t:"list"},{k:"name",l:"Task",t:"text",req:1},
@@ -309,9 +369,15 @@ function applyOp(data, op){
   else if(op.type==="del"){ data[op.coll]=data[op.coll].filter(x=>x.id!==op.id); }
   else if(op.type==="meta"){ data[op.field]=op.value; }
   else if(op.type==="subadd"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r){ r.subtasks=r.subtasks||[]; if(!r.subtasks.some(x=>x.id===op.sub.id)) r.subtasks.push(clone(op.sub)); } }
-  else if(op.type==="subset"){ const s=data[op.coll]?.find(x=>x.id===op.id)?.subtasks?.find(x=>x.id===op.sid); if(s) s[op.field]=op.value; }
+  else if(op.type==="subset"){ const s=data[op.coll]?.find(x=>x.id===op.id)?.subtasks?.find(x=>x.id===op.sid); if(s){ s[op.field]=op.value; if(op.field==="status") s.done=op.value==="Done"; if(op.field==="done") s.status=op.value?"Done":(s.status==="Done"?"Not started":s.status); } }
   else if(op.type==="note"){ const r=data[op.coll]?.find(x=>x.id===op.id); const t=op.sid ? r?.subtasks?.find(x=>x.id===op.sid) : r; if(t){ t.updates=t.updates||[]; if(!t.updates.some(u=>u.id===op.n.id)) t.updates.push(clone(op.n)); } }
   else if(op.type==="notedel"){ const r=data[op.coll]?.find(x=>x.id===op.id); const t=op.sid ? r?.subtasks?.find(x=>x.id===op.sid) : r; if(t&&t.updates) t.updates=t.updates.filter(u=>u.id!==op.nid); }
+  else if(op.type==="rosteradd"){ const t=data.training?.find(x=>x.id===op.id); if(t){ t.roster=t.roster||[]; op.people.forEach(pp=>{ if(!t.roster.some(x=>x.id===pp.id)) t.roster.push(clone(pp)); }); } }
+  else if(op.type==="rosterset"){ const pp=data.training?.find(x=>x.id===op.id)?.roster?.find(x=>x.id===op.pid); if(pp){ pp[op.field]=op.value; if(op.field==="status"){ pp.statusBy=op.by; pp.statusAt=op.at; } } }
+  else if(op.type==="rosterdel"){ const t=data.training?.find(x=>x.id===op.id); if(t&&t.roster) t.roster=t.roster.filter(x=>x.id!==op.pid); }
+  else if(op.type==="wishseed"){ if(!data.wishSeeded){ data.wishes=data.wishes||[]; op.rows.forEach(r=>{ if(!data.wishes.some(w=>w.id===r.id)) data.wishes.push(clone(r)); }); data.wishSeeded=true; } }
+  else if(op.type==="wsinit"){ if(!data.tasks.some(t=>t.ws===op.ws)) data.tasks.push(...clone(op.rows)); }
+  else if(op.type==="memoedit"){ const m=data.memos?.find(x=>x.id===op.id); if(m) Object.assign(m,{title:op.title,body:op.body,area:op.area,editedBy:op.by,editedAt:op.at}); }
   else if(op.type==="subdel"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r&&r.subtasks) r.subtasks=r.subtasks.filter(x=>x.id!==op.sid); }
   else if(op.type==="replace"){ Object.keys(data).forEach(k=>delete data[k]); Object.assign(data, clone(op.data)); }
 }
@@ -325,10 +391,17 @@ function describe(op){
   if(op.type==="subadd") return `${COLL[op.coll].label} “${op.label}”: added subtask “${op.sub.text}”`;
   if(op.type==="note"){ const short=op.n.text.length>80?op.n.text.slice(0,80)+"…":op.n.text; return `${COLL[op.coll].label} “${op.label}”${op.sid?`, subtask “${op.text}”`:""}: ${op.coll==="meetings"?"note":"update"} — ${short}`; }
   if(op.type==="notedel") return `${COLL[op.coll].label} “${op.label}”${op.sid?`, subtask “${op.text}”`:""}: removed ${op.coll==="meetings"?"a note":"an update"}`;
+  if(op.type==="rosteradd") return `Training “${op.label}”: added ${op.people.length===1?op.people[0].name:op.people.length+" people"} to the roster`;
+  if(op.type==="rosterdel") return `Training “${op.label}”: removed ${op.name} from the roster`;
+  if(op.type==="rosterset") return op.field==="status" ? `Training “${op.label}”: ${op.name} → ${op.value}` : `Training “${op.label}”: ${op.name} department → ${op.value||"(blank)"}`;
+  if(op.type==="wishseed") return `Brought in ${op.rows.length} inputs from the ECW Wish List sheet`;
+  if(op.type==="wsinit") return `Added the “${op.ws}” workstream (${op.rows.length} tasks)`;
+  if(op.type==="memoedit") return `Edited note “${op.title||"Untitled"}”`;
+  if(op.type==="set" && op.coll==="memos" && op.field==="pinned") return `${op.value?"Pinned":"Unpinned"} note “${op.label||"Untitled"}”`;
   if(op.type==="subdel") return `${COLL[op.coll].label} “${op.label}”: removed subtask “${op.text}”`;
   if(op.type==="subset") return op.field==="done"
     ? `${COLL[op.coll].label} “${op.label}”: ${op.value?"checked off":"reopened"} subtask “${op.text}”`
-    : `${COLL[op.coll].label} “${op.label}”: subtask “${op.text}” ${({text:"renamed to",owner:"owner →",due:"due →"})[op.field]||op.field+" →"} ${op.value===""?"(blank)":op.value}`;
+    : `${COLL[op.coll].label} “${op.label}”: subtask “${op.text}” ${({text:"renamed to",owner:"owner →",due:"due →",status:"status →"})[op.field]||op.field+" →"} ${op.value===""?"(blank)":op.value}`;
   if(op.type==="replace") return "Imported a full plan backup";
   return "Edit";
 }
@@ -340,6 +413,17 @@ function commit(ops){
   ops.forEach(op=>{ applyOp(plan, op); op.desc = describe(op); pending.push(op); });
   render();
   scheduleSave();
+}
+
+const WISH_SEED = [{"id": "W-001", "dept": "IV/Auth", "wish": "Navneet builds his own eligibility and authorization reports and dashboards from any data point, without an eCW ticket", "problem": "Reports today need vendor help and arrive late", "category": "Report or dashboard", "priority": "Must-have for go-live", "status": "New", "owner": "Navneet", "target": "2026-12-18", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-002", "dept": "COO", "wish": "KPI dashboard: % referrals and leads scheduled, % provider schedule filled, % no-show, % escalated with drill-down", "problem": "No single view of access performance across 10 sites", "category": "Report or dashboard", "priority": "Must-have for go-live", "status": "New", "owner": "Patient Access lead", "target": "2026-12-18", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-003", "dept": "COO", "wish": "Turnaround-time alerts for results, referrals, authorizations, call-backs and complaints", "problem": "Items age without anyone noticing", "category": "Alert or work queue", "priority": "Must-have for go-live", "status": "New", "owner": "IT and data lead", "target": "2026-12-18", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-004", "dept": "COO", "wish": "Complaint log with owner and escalation", "problem": "Complaints are not tracked to resolution", "category": "Alert or work queue", "priority": "Must-have for go-live", "status": "New", "owner": "COO", "target": "2026-12-18", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-005", "dept": "COO", "wish": "Suggestions playbook that staff can add to and leads approve", "problem": "Good ideas are lost", "category": "Other", "priority": "Soon after go-live", "status": "New", "owner": "COO", "target": "", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-006", "dept": "Pt Access", "wish": "Provider referral tracking from intake to scheduled with closed loop back to the referring office", "problem": "Referrals fall through the cracks", "category": "Scheduling", "priority": "Must-have for go-live", "status": "New", "owner": "Referral coordinator", "target": "2026-12-04", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-007", "dept": "Pt Access", "wish": "Digital marketing leads pushed from the CRM into scheduling with follow-up tracking", "problem": "Leads are not followed up consistently", "category": "Scheduling", "priority": "Soon after go-live", "status": "New", "owner": "Patient Access lead", "target": "", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-008", "dept": "Pt Access", "wish": "Patient transport booking linked to the appointment", "problem": "Patients miss visits for lack of a ride", "category": "Scheduling", "priority": "Soon after go-live", "status": "New", "owner": "Transport coordinator", "target": "", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-009", "dept": "RCM", "wish": "Work queues for the India back office: coding, charges, posting, A/R, denials, statements", "problem": "Remote team needs clear assigned work on its shift", "category": "Alert or work queue", "priority": "Must-have for go-live", "status": "New", "owner": "Revenue Cycle lead", "target": "2026-12-11", "site": "India", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-010", "dept": "Clinical", "wish": "Staff can build and edit templates for diagnoses, testing and procedures without eCW services", "problem": "Every template change waits on the vendor", "category": "Template", "priority": "Must-have for go-live", "status": "New", "owner": "Clinical lead", "target": "2026-12-11", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-011", "dept": "COO", "wish": "AI options: ambient scribe, AI call answering, AI prior authorization, AI billing", "problem": "Staffing pressure across clinical and front office", "category": "AI", "priority": "Later", "status": "New", "owner": "COO", "target": "", "site": "All sites", "notes": "", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-012", "dept": "IV/Auth", "wish": "Automate eligibility and prior authorization as far as eCW allows: batch eligibility before every visit, authorization status and expiry tracked on the appointment, payer-portal work reduced (ask eCW about AI Workbench)", "problem": "Eligibility and authorizations are not fully automated in eCW, so staff check payer portals by hand", "category": "Eligibility and authorization", "priority": "Must-have for go-live", "status": "New", "owner": "Navneet", "target": "2026-12-04", "site": "All sites", "notes": "Confirm with eCW what is automated today and what needs manual steps or an add-on", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}, {"id": "W-013", "dept": "COO", "wish": "Capture notes and screenshots during build meetings and link them to the wish they support", "problem": "Suggestions raised in meetings are lost without notes and screenshots", "category": "Other", "priority": "Must-have for go-live", "status": "Done", "owner": "Each lead", "target": "2026-10-28", "site": "All sites", "notes": "Meeting notes template and a \"Meeting notes and screenshots\" folder added to every team folder on Oct 28; paste the file link in the Notes or screenshot link column", "by": "Planning (COO)", "at": "2026-10-28", "source": "Wish List sheet"}];
+const REPORTS_WS = "Reports";
+const REPORTS_TASKS = [{"id": "rp1", "ws": "Reports", "name": "Inventory current Centricity reports: who runs each one, how often, and what it is used for", "status": "Pending", "duration": "", "start": "", "finish": "2026-11-20", "owner": "Melissa", "notes": "Start from the Current Inventory list in the Separation of Duties doc."}, {"id": "rp2", "ws": "Reports", "name": "eBO report-building access for Navneet and the leads", "status": "Pending", "duration": "", "start": "", "finish": "2026-11-20", "owner": "Rasmeen Ali", "notes": "Same as the open action item “EBO Reporting Access for Navneet”."}, {"id": "rp3", "ws": "Reports", "name": "Agree KPI definitions: % referrals and leads scheduled, % provider schedule filled, no-show %, escalations", "status": "Pending", "duration": "", "start": "", "finish": "2026-11-25", "owner": "Melissa", "notes": ""}, {"id": "rp4", "ws": "Reports", "name": "Eligibility and authorization reports and dashboards Navneet can build himself", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-11", "owner": "Navneet", "notes": ""}, {"id": "rp5", "ws": "Reports", "name": "Front desk and call center reports: appointments booked, no-shows, cancellations, call-backs", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-11", "owner": "Patient Access lead", "notes": ""}, {"id": "rp6", "ws": "Reports", "name": "Clinical reports: open orders, unsigned notes, results turnaround", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-11", "owner": "Sandra", "notes": ""}, {"id": "rp7", "ws": "Reports", "name": "Procedure volume reports for the ASC, OBL and testing", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-11", "owner": "Julie, Chanda", "notes": ""}, {"id": "rp8", "ws": "Reports", "name": "Billing reports: charge lag, A/R aging, denials, payment posting", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-11", "owner": "Ishan", "notes": ""}, {"id": "rp9", "ws": "Reports", "name": "India back-office work queue and productivity reports", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-11", "owner": "Ishan", "notes": ""}, {"id": "rp10", "ws": "Reports", "name": "Turnaround-time and complaint alert reports", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-18", "owner": "IT and data lead", "notes": ""}, {"id": "rp11", "ws": "Reports", "name": "Schedule automatic report delivery to each lead", "status": "Pending", "duration": "", "start": "", "finish": "2026-12-18", "owner": "Rasmeen Ali", "notes": ""}, {"id": "rp12", "ws": "Reports", "name": "Compare eCW reports with Centricity during the parallel run", "status": "Pending", "duration": "", "start": "2027-01-04", "finish": "2027-01-29", "owner": "Melissa", "notes": ""}];
+const hasReports = () => plan && plan.tasks.some(t=>t.ws===REPORTS_WS);
+function addReportsWorkstream(){ if(!hasReports()) commit({type:"wsinit",ws:REPORTS_WS,rows:REPORTS_TASKS}); }
+function maybeAddReports(){
+  if(mode!=="shared" || !ls.get(LS.name) || (editKeyRequired && !ls.get(LS.key))) return;
+  const ops=[]; if(!hasReports()) ops.push({type:"wsinit",ws:REPORTS_WS,rows:REPORTS_TASKS}); if(!plan.wishSeeded) ops.push({type:"wishseed",rows:WISH_SEED});
+  if(ops.length) commit(ops);
 }
 
 /* ---------- sync ---------- */
@@ -355,12 +439,13 @@ async function load(){
       plan = clone(SEED); version = doc.version || 0; log = doc.log || [];
       pending.push({type:"replace", data:clone(SEED), desc:"Loaded the implementation plan (initial setup)"});
       render(); setSync("Setting up…");
-      if(!editKeyRequired || ls.get(LS.key)) scheduleSave(0);
+      if(!editKeyRequired || ls.get(LS.key)){ scheduleSave(0); setTimeout(maybeAddReports, 0); }
       else { setSync("Not saved yet"); showBanner("First-time setup: make any edit and enter the edit passcode to save this plan for everyone."); }
       return;
     }
     plan = doc.data; version = doc.version; log = doc.log || [];
     setSync("All changes saved");
+    setTimeout(maybeAddReports, 0);
   }catch(e){
     mode = "local";
     let saved=null; try{ saved=JSON.parse(ls.get(LS.local)); }catch{}
@@ -519,13 +604,13 @@ function renderKPIs(){
    <div class="kpi"><div class="lbl">Tasks complete</div><div class="val">${pct}%</div><div class="sub">${done} of ${t.length}</div><div class="bar"><i style="width:${pct}%"></i></div></div>
    <div class="kpi"><div class="lbl">Blocked tasks</div><div class="val" style="color:${blocked?"var(--bad)":"inherit"}">${blocked}</div><div class="sub">waiting on a decision or document</div></div>
    <div class="kpi"><div class="lbl">Open action items</div><div class="val" style="color:${openA?"var(--warn)":"inherit"}">${openA}</div><div class="sub">of ${plan.actions.length}</div></div>
-   <div class="kpi"><div class="lbl">Training</div><div class="val">${trSched}/${plan.training.length}</div><div class="sub">scheduled · ${trDone} completed</div></div>`;
+   <div class="kpi"><div class="lbl">Training</div><div class="val">${trSched}/${plan.training.length}</div><div class="sub">scheduled · ${trDone} completed${(()=>{const r=plan.training.flatMap(t=>t.roster||[]); return r.length?` · ${r.filter(x=>x.status==="Verified").length}/${r.length} staff verified`:"";})()}</div></div>`;
   $("#goLive").onchange = e => commit({type:"meta",field:"goLive",value:e.target.value});
 }
 
-const TABS = [["overview","Overview"],["tasks","Project plan"],["actions","Action items"],["milestones","Road to go-live"],["training","Training"],["meetings","Meetings"],["documents","Documents"],["contacts","Contacts"],["settings","Settings"],["activity","Activity"]];
+const TABS = [["overview","Overview"],["tasks","Project plan"],["actions","Action items"],["milestones","Road to go-live"],["training","Training"],["meetings","Meetings"],["wishes","Inputs by department"],["memos","Notes"],["documents","Documents"],["contacts","Contacts"],["settings","Settings"],["activity","Activity"]];
 function renderTabs(){
-  const cnt = {tasks:plan.tasks.filter(t=>!DONE.has(t.status)).length, actions:plan.actions.filter(a=>!DONE.has(a.status)).length};
+  const cnt = {tasks:plan.tasks.filter(t=>!DONE.has(t.status)).length, actions:plan.actions.filter(a=>!DONE.has(a.status)).length, wishes:(plan.wishes||[]).filter(w=>w.status==="New").length};
   $("#tabs").innerHTML = TABS.map(([k,l])=>`<button role="tab" data-tab="${k}" aria-selected="${tab===k}">${l}${cnt[k]?`<span class="count">${cnt[k]}</span>`:""}</button>`).join("");
 }
 
@@ -538,7 +623,7 @@ function vOverview(){
   const overdue = [...plan.tasks.filter(t=>isOverdue(t.finish,t.status)).map(t=>({t:t.name,ws:t.ws,d:t.finish,coll:"tasks",id:t.id})),
                    ...plan.milestones.filter(m=>isOverdue(m.date,m.status)).map(m=>({t:m.name,ws:"Road to go-live",d:m.date,coll:"milestones",id:m.id})),
                    ...plan.actions.filter(a=>isOverdue(a.due,a.status)).map(a=>({t:a.item,ws:"Action item",d:a.due,coll:"actions",id:a.id}))].sort((a,b)=>a.d.localeCompare(b.d));
-  return `<div class="grid2">
+  return `${swimLanes()}<div class="grid2">
    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
     <div class="card"><h2>Workstreams <span class="hint">click one to open its tasks</span></h2>
      ${ws.map(s=>{const p=Math.round(s.done/s.total*100);return `<div class="ws-row" data-ws="${esc(s.ws)}"><div class="ws-name">${esc(s.ws)}${s.blocked?`<small>${s.blocked} blocked</small>`:""}${s.overdue?`<small>${s.overdue} overdue</small>`:""}</div><div class="bar"><i style="width:${p}%;background:${p===100?"var(--ok)":"var(--brand-2)"}"></i></div><div class="pct">${s.done}/${s.total}</div></div>`;}).join("")}
@@ -572,6 +657,7 @@ function vTasks(){
     <select id="fst"><option value="">All statuses</option><option value="open" ${filters.st==="open"?"selected":""}>Not done</option>${STATUS.tasks.map(s=>`<option ${filters.st===s?"selected":""}>${s}</option>`).join("")}</select>
     <select id="fow"><option value="">All owners</option>${owners.map(o=>`<option ${filters.ow===o?"selected":""}>${esc(o)}</option>`).join("")}</select>
     <span class="spacer"></span><button class="btn" data-csv="tasks">Download CSV</button><button class="btn primary" data-add="tasks">+ Add task</button></div>
+   ${hasReports()?"":`<div class="callout">The <b>Reports</b> workstream isn’t in the shared plan yet. <button class="btn sm primary" data-addreports="1">Add Reports workstream (12 starter tasks)</button></div>`}
    <div class="tablewrap"><table><thead><tr><th style="width:34%">Task</th><th>Status</th><th>Start</th><th>Finish</th><th>Owner</th><th>Notes</th></tr></thead><tbody>
    ${groups.length?groups.map(([w,rs])=>{const all=plan.tasks.filter(t=>t.ws===w),d=all.filter(t=>DONE.has(t.status)).length;return `<tr class="grp"><td colspan="6">${esc(w)}<span class="gp">${d}/${all.length} done</span></td></tr>`+rs.map(t=>`<tr class="row" data-edit="tasks:${t.id}"><td>${esc(t.name)}${t.duration?`<div class="n" style="color:var(--muted);font-size:12px">${esc(t.duration)}</div>`:""}</td><td>${stSelect("tasks",t.id,t.status)}</td><td class="date">${t.start?fmt(t.start):'<span style="color:var(--muted)">TBD</span>'}</td><td class="date ${isOverdue(t.finish,t.status)?"overdue":""}">${t.finish?fmt(t.finish):'<span style="color:var(--muted)">TBD</span>'}</td><td>${esc(t.owner)}</td><td class="notes">${esc(t.notes)}</td></tr>`).join("");}).join(""):`<tr><td colspan="6" class="empty">No tasks match these filters.</td></tr>`}
    </tbody></table></div>`;
@@ -599,7 +685,7 @@ function vActivity(){
 
 function render(){
   if(!plan) return;
-  const drafts={}; document.querySelectorAll("textarea[data-notekey]").forEach(t=>{ if(t.value) drafts[t.id]=t.value; });
+  const drafts={}; document.querySelectorAll("textarea[data-notekey],[data-draft]").forEach(t=>{ if(t.value) drafts[t.id]=t.value; });
   const focused=document.activeElement&&document.activeElement.id;
   queueMicrotask(()=>{ Object.entries(drafts).forEach(([id,v])=>{ const t=document.getElementById(id); if(t&&!t.value) t.value=v; }); });
   void focused;
@@ -610,8 +696,10 @@ function render(){
     tasks: vTasks,
     actions: vActions,
     milestones: ()=>vSimple("milestones",[["date","Target"],["name","Milestone"],["status","Status"],["owner","Owner"],["notes","Notes"]],{sort:byDate,intro:`<div class="callout">A working schedule counted back from the target go-live. These dates are proposals to confirm with the eCW project manager — edit them as dates are agreed.</div>`}),
-    training: ()=>vSimple("training",[["session","Session"],["audience","Audience"],["date","Date"],["status","Status"],["trainer","Trainer"],["attendees","Attendees"],["notes","Notes"]],{sort:byDate,intro:`<div class="callout">Plan role-based training for the two weeks before go-live, with super users trained first. Add dates and headcounts as eCW confirms trainers.</div>`}),
+    training: vTraining,
     meetings: vMeetings,
+    memos: vMemos,
+    wishes: vWishes,
     documents: vDocuments,
     settings: vSettings,
     contacts: ()=>vSimple("contacts",[["role","Role"],["name","Name"],["email","Email"],["phone","Phone"],["notes","Notes"]]),
@@ -677,7 +765,7 @@ function vMeetingList(){
   const card=m=>{const att=files.filter(f=>f.meeting===m.id);return `<article class="card mtg" id="mtg-${esc(m.id)}" style="--c:${mtgColor(m)}">
      <div class="mtg-h"><div><div class="mtg-d">${m.date?esc(new Date(m.date+"T12:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})):"No date"}${m.time?` · ${esc(fmtTime(m.time))}`:""}${m.area?` · ${esc(m.area)}`:""}${m.seriesId?` · <span title="Part of a repeating series">↻</span>`:""}</div><h2>${esc(m.title)}</h2>
        ${m.where?`<div class="n">${/^https?:\/\//.test(m.where)?`<a href="${esc(m.where)}" target="_blank" rel="noopener">${esc(m.where)}</a>`:esc(m.where)}</div>`:""}${m.attendees?`<div class="n">Attendees: ${esc(m.attendees)}</div>`:""}</div>
-       <div class="mtg-b"><button class="btn" data-ics="${esc(m.id)}" title="Download an invite for Outlook or Google Calendar">Add to my calendar</button><button class="btn" data-upload="meeting:${esc(m.id)}">Attach file</button><button class="btn" data-mkaction="${esc(m.id)}">+ Action item</button><button class="btn" data-edit="meetings:${esc(m.id)}">Edit</button></div></div>
+       <div class="mtg-b"><button class="btn" data-ics="${esc(m.id)}" title="Download an invite for Outlook or Google Calendar">Add to my calendar</button><button class="btn" data-upload="meeting:${esc(m.id)}">Attach file</button><button class="btn" data-mkaction="${esc(m.id)}">+ Action item</button><button class="btn" data-mkwish="${esc(m.id)}">+ Input</button><button class="btn" data-edit="meetings:${esc(m.id)}">Edit</button></div></div>
      ${m.notes?`<h4>Agenda</h4><p>${multiline(m.notes)}</p>`:""}
      <h4>Meeting notes</h4>${noteThread("meetings",m,null,{rows:3,placeholder:"Type notes from this meeting… (your name and today’s date are added automatically)"})}
      ${m.decisions?`<h4>Decisions</h4><p>${multiline(m.decisions)}</p>`:""}
@@ -754,6 +842,11 @@ function vSettings(){
     <span class="hint">Changes every task, action item, subtask and milestone with that exact owner.</span></div>
   </div>
 
+  <div class="card set-card" id="set-form"><h2>Suggestion form</h2>
+   <p class="hint" style="margin:0 0 10px">Share this link with staff who don’t use the tracker. What they send shows up under <a href="#" data-tab="wishes">Inputs by department</a>. Screenshots and documents they attach are stored with the site.</p>
+   <div class="toolbar" style="margin:0"><input class="sx grow" readonly value="${esc(location.origin+"/suggest.html")}" onclick="this.select()" aria-label="Form link"><button class="btn" data-copyform="1">Copy link</button><a class="btn" href="/suggest.html" target="_blank" rel="noopener">Open form</a></div>
+   <p class="hint" style="margin:8px 0 0">Optional: to stop strangers using the form, set <code>SUGGEST_CODE</code> in Netlify’s environment variables and share the link as <code>…/suggest.html?code=YOURCODE</code>.</p></div>
+
   <div class="card set-card" id="set-uploads"><h2>Document uploads</h2>
    <p class="hint" style="margin:0 0 10px">Files go to the team folders under <a href="${DRIVE_ROOT}" target="_blank" rel="noopener">ECW Team Workspaces</a>, using each area’s Drive folder above. Paste the address of the <b>ECW Uploads</b> Google Apps Script web app (it ends in <code>/exec</code>).</p>
    <div class="toolbar" style="margin:0"><input class="sx grow" data-meta="uploadUrl" value="${esc(plan.uploadUrl||"")}" placeholder="https://script.google.com/macros/s/…/exec" aria-label="Uploads address">
@@ -819,7 +912,10 @@ async function testUploads(){
 /* ---------- action items with subtasks ---------- */
 let openSubs = new Set(JSON.parse(ls.get("ecwt.subs")||"[]"));
 const saveOpenSubs = () => ls.set("ecwt.subs", JSON.stringify([...openSubs]));
-const subStats = r => { const s=r.subtasks||[]; return {n:s.length, done:s.filter(x=>x.done).length}; };
+const SUB_ST = ["Not started","In progress","Blocked","Done"];
+const subSt = x => x.status || (x.done ? "Done" : "Not started");
+const subStats = r => { const s=r.subtasks||[]; const c=st=>s.filter(x=>subSt(x)===st).length; return {n:s.length, done:c("Done"), prog:c("In progress"), blocked:c("Blocked"), todo:c("Not started")}; };
+const subBar = (st, wide) => { const w=k=>st.n?Math.round(st[k]/st.n*1000)/10:0; return `<span class="sbar2 ${wide?"wide":""}" role="img" aria-label="${st.done} of ${st.n} subtasks done"><i class="d" style="width:${w("done")}%"></i><i class="p" style="width:${w("prog")}%"></i><i class="b" style="width:${w("blocked")}%"></i></span>`; };
 function vActions(){
   const rows=plan.actions;
   const anyOpen=rows.some(r=>openSubs.has(r.id));
@@ -831,24 +927,24 @@ function vActions(){
    ${rows.length?rows.map(r=>{ const {n,done}=subStats(r), open=openSubs.has(r.id), allDone=n&&done===n&&!DONE.has(r.status);
      const lu=lastUpdate(r), uc=updCount(r);
      return `<tr class="row" data-edit="actions:${esc(r.id)}"><td><b>${esc(r.item)}</b>${lu?`<div class="lastupd"><span>${esc(stamp(lu.at))} · ${esc(lu.by)}:</span> ${esc(lu.text.length>110?lu.text.slice(0,110)+"…":lu.text)}</div>`:""}</td>
-      <td><button class="subtog ${open?"on":""}" data-subtog="${esc(r.id)}" aria-expanded="${open}" title="${open?"Close":"Open"} updates and subtasks">${open?"▾":"▸"} ${uc?`<span class="uc">💬 ${uc}</span>`:""}${uc&&n?'<span class="sep">·</span>':""}${n?`${done}/${n}`:(uc?"":"Open")}${n?`<i class="sbar"><i style="width:${Math.round(done/n*100)}%"></i></i>`:""}</button></td>
+      <td><button class="subtog ${open?"on":""}" data-subtog="${esc(r.id)}" aria-expanded="${open}" title="${open?"Close":"Open"} updates and subtasks">${open?"▾":"▸"} ${uc?`<span class="uc">💬 ${uc}</span>`:""}${uc&&n?'<span class="sep">·</span>':""}${n?`${done}/${n}`:(uc?"":"Open")}${n?subBar(subStats(r)):""}</button></td>
       <td>${stSelect("actions",r.id,r.status)}</td><td>${esc(r.owner)}</td>
       <td class="date ${isOverdue(r.due,r.status)?"overdue":""}">${r.due?fmt(r.due):'<span style="color:var(--muted)">—</span>'}</td><td class="notes">${esc(r.notes)}</td></tr>
-      ${open?`<tr class="subrow"><td colspan="6"><div class="sr-h">Status updates</div>${noteThread("actions",r,null)}<div class="sr-h">Subtasks</div>${subList("actions",r)}${allDone?`<div class="alldone">All subtasks are done. <button class="btn sm" data-markdone="${esc(r.id)}">Mark action item Done</button></div>`:""}</td></tr>`:""}`; }).join("")
+      ${open?`<tr class="subrow"><td colspan="6"><div class="sr-h">Status updates</div>${noteThread("actions",r,null)}<div class="sr-h">Subtasks${(()=>{const t=subStats(r); return t.n?` <span class="sr-prog">${subBar(t,1)} <b>${t.done} of ${t.n} done</b>${t.prog?` · ${t.prog} in progress`:""}${t.blocked?` · <span class="bad">${t.blocked} blocked</span>`:""}</span>`:"";})()}</div>${subList("actions",r)}${allDone?`<div class="alldone">All subtasks are done. <button class="btn sm" data-markdone="${esc(r.id)}">Mark action item Done</button></div>`:""}</td></tr>`:""}`; }).join("")
      :`<tr><td colspan="6" class="empty">Nothing here yet.</td></tr>`}
    </tbody></table></div>`;
 }
 function subList(coll, r){
   const subs=r.subtasks||[];
   const a=x=>`data-coll="${coll}" data-id="${esc(r.id)}" data-sid="${esc(x.id)}"`;
-  return `<ul class="subs">${subs.map(x=>`<li class="${x.done?"done":""}">
-     <input type="checkbox" class="sbchk" ${a(x)} ${x.done?"checked":""} aria-label="Done: ${esc(x.text)}">
+  return `<ul class="subs">${subs.map(x=>{ const st=subSt(x); return `<li class="${st==="Done"?"done":""}">
+     <select class="sb sbst pill ${TONE[st]||""}" ${a(x)} data-field="status" aria-label="Status: ${esc(x.text)}">${SUB_ST.map(v=>`<option ${v===st?"selected":""}>${v}</option>`).join("")}</select>
      <input class="sb sbt" ${a(x)} data-field="text" value="${esc(x.text)}" aria-label="Subtask">
      <select class="sb sbo" ${a(x)} data-field="owner" aria-label="Subtask owner">${ownerOptionsHTML(x.owner||"")}</select>
-     <input class="sb sbd ${isOverdue(x.due,x.done?"Done":"")?"overdue":""}" type="date" ${a(x)} data-field="due" value="${esc(x.due)}" aria-label="Subtask due date">
+     <input class="sb sbd ${isOverdue(x.due,st==="Done"?"Done":"")?"overdue":""}" type="date" ${a(x)} data-field="due" value="${esc(x.due)}" aria-label="Subtask due date">
      <button class="ntog ${openNotes.has(x.id)?"on":""}" data-ntog="${esc(x.id)}" title="Updates on this subtask">💬${(x.updates||[]).length?` ${(x.updates||[]).length}`:""}</button>
      <button class="btn sm danger" data-subdel="${coll}:${esc(r.id)}:${esc(x.id)}" title="Remove subtask">✕</button></li>
-     ${openNotes.has(x.id)?`<li class="sub-nt">${noteThread(coll,r,x,{compact:1,rows:1,placeholder:"Add an update on this subtask…"})}</li>`:(()=>{const lu=lastUpdate(x); return lu?`<li class="sub-last"><span>${esc(stamp(lu.at))} · ${esc(lu.by)}:</span> ${esc(lu.text.length>100?lu.text.slice(0,100)+"…":lu.text)}</li>`:"";})()}`).join("")}
+     ${openNotes.has(x.id)?`<li class="sub-nt">${noteThread(coll,r,x,{compact:1,rows:1,placeholder:"Add an update on this subtask…"})}</li>`:(()=>{const lu=lastUpdate(x); return lu?`<li class="sub-last"><span>${esc(stamp(lu.at))} · ${esc(lu.by)}:</span> ${esc(lu.text.length>100?lu.text.slice(0,100)+"…":lu.text)}</li>`:"";})()}`;}).join("")}
     <li class="subnew">
      <span class="plus">+</span>
      <input class="sbt" id="sa-t-${esc(r.id)}" data-subadd-key="${coll}:${esc(r.id)}" placeholder="Add a subtask and press Enter" aria-label="New subtask">
@@ -860,7 +956,7 @@ function addSub(coll, id){
   const r=(plan[coll]||[]).find(x=>x.id===id); if(!r) return;
   const t=$("#sa-t-"+id), o=$("#sa-o-"+id), d=$("#sa-d-"+id);
   const text=t.value.trim(); if(!text){ t.focus(); return; }
-  commit({type:"subadd",coll,id,label:r[COLL[coll].title],sub:{id:uid("s"),text,owner:o.value.trim(),due:d.value,done:false}});
+  commit({type:"subadd",coll,id,label:r[COLL[coll].title],sub:{id:uid("s"),text,owner:o.value.trim(),due:d.value,done:false,status:"Not started"}});
   const n=$("#sa-t-"+id); if(n) n.focus();
 }
 
@@ -979,11 +1075,173 @@ function postNote(ref){
 const lastUpdate = t => (t.updates||[]).slice().sort((a,b)=>b.at.localeCompare(a.at))[0];
 const updCount = r => (r.updates||[]).length + (r.subtasks||[]).reduce((n,x)=>n+(x.updates||[]).length,0);
 
+
+/* ---------- free-text notes ---------- */
+COLL.memos = {label:"Note", title:"title", fields:[{k:"title",l:"Title"},{k:"area",l:"Team"},{k:"body",l:"Note"},{k:"by",l:"Written by"},{k:"at",l:"Written"},{k:"editedBy",l:"Last edited by"},{k:"editedAt",l:"Last edited"}]};
+let editingMemo = null;
+function vMemos(){
+  const q=(filters.nq||"").toLowerCase();
+  const all=(plan.memos||[]);
+  const rows=all.filter(m=>(!filters.na||m.area===filters.na)&&(!q||[m.title,m.body,m.by,m.area].join(" ").toLowerCase().includes(q)))
+    .sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0) || (b.editedAt||b.at||"").localeCompare(a.editedAt||a.at||""));
+  const teamSel=(id,cur)=>`<select id="${id}" aria-label="Team"><option value="">No team</option>${areaNames().map(a=>opt(a,cur)).join("")}</select>`;
+  const card=m=> editingMemo===m.id
+    ? `<article class="card memo editing" id="memo-${esc(m.id)}">
+        <input class="memo-title" id="me-t" value="${esc(m.title)}" placeholder="Title (optional)" data-draft="1">
+        <textarea id="me-b" rows="8" data-draft="1">${esc(m.body)}</textarea>
+        <div class="memo-foot">${teamSel("me-a",m.area)}<span class="spacer"></span><button class="btn" data-memocancel="1">Cancel</button><button class="btn primary" data-memosave="${esc(m.id)}">Save</button></div></article>`
+    : `<article class="card memo ${m.pinned?"pinned":""}" id="memo-${esc(m.id)}">
+        <div class="memo-h"><h2>${m.pinned?'<span title="Pinned">📌</span> ':""}${esc(m.title||"Untitled note")}</h2>
+          <div class="memo-b"><button class="btn sm" data-memopin="${esc(m.id)}">${m.pinned?"Unpin":"Pin"}</button><button class="btn sm" data-memoedit="${esc(m.id)}">Edit</button><button class="btn sm danger" data-memodel="${esc(m.id)}">Delete</button></div></div>
+        <div class="n">${esc(m.by||"Unknown")} · ${m.at?esc(stamp(m.at)):""}${m.area?` · ${esc(m.area)}`:""}${m.editedAt?` · edited by ${esc(m.editedBy||"")} ${esc(stamp(m.editedAt))}`:""}</div>
+        <div class="memo-body">${multiline(m.body)}</div></article>`;
+  return `<div class="card memo new">
+     <input class="memo-title" id="mn-t" placeholder="Title (optional)" data-draft="1">
+     <textarea id="mn-b" rows="4" placeholder="Write anything: ideas, decisions, reminders, phone call notes… (your name and the date are added automatically)" data-draft="1"></textarea>
+     <div class="memo-foot">${teamSel("mn-a",filters.na||"")}<span class="hint">Ctrl+Enter to save</span><span class="spacer"></span><button class="btn primary" data-memonew="1">Save note</button></div></div>
+   <div class="toolbar"><input type="search" id="nq" placeholder="Search notes" value="${esc(filters.nq||"")}">
+     <select id="fna"><option value="">All teams</option>${areaNames().map(a=>opt(a,filters.na)).join("")}</select>
+     <span class="spacer"></span><button class="btn" data-csv="memos">Download CSV</button></div>
+   ${rows.length?`<div class="memos">${rows.map(card).join("")}</div>`:`<div class="card empty">${all.length?"No notes match.":"No notes yet."}</div>`}`;
+}
+function saveNewMemo(){
+  const t=$("#mn-t"), b=$("#mn-b"), a=$("#mn-a"); if(!b) return;
+  const body=b.value.trim(), title=t.value.trim(); if(!body&&!title){ b.focus(); return; }
+  if(!ensureName(saveNewMemo)) return;
+  const row={id:uid("n"),title,body,area:a.value,by:ls.get(LS.name)||"",at:new Date().toISOString(),pinned:false};
+  t.value=""; b.value="";
+  commit({type:"add",coll:"memos",row});
+}
+function saveMemoEdit(id){
+  const m=(plan.memos||[]).find(x=>x.id===id); if(!m) return;
+  const title=$("#me-t").value.trim(), body=$("#me-b").value.trim(), area=$("#me-a").value;
+  if(!ensureName(()=>saveMemoEdit(id))) return;
+  editingMemo=null;
+  if(title===(m.title||"")&&body===(m.body||"")&&area===(m.area||"")){ render(); return; }
+  commit({type:"memoedit",id,title,body,area,by:ls.get(LS.name)||"",at:new Date().toISOString()});
+}
+
+
+/* ---------- inputs by department (wish list + suggestion form) ---------- */
+const WISH_CATS = ["Report or dashboard","Alert or work queue","Template","Scheduling","Eligibility and authorization","Billing","Interface","Training","AI","Other"];
+const WISH_PRI = ["Must-have for go-live","Soon after go-live","Later"];
+COLL.wishes = {label:"Input", title:"wish", fields:[
+  {k:"dept",l:"Department",t:"pick",opts:()=>areaNames(),half:1,req:1},{k:"category",l:"Category",t:"pick",opts:()=>WISH_CATS,half:1},
+  {k:"wish",l:"Input / wish",t:"text",req:1},{k:"problem",l:"What problem it solves",t:"area"},
+  {k:"priority",l:"Priority",t:"pick",opts:()=>WISH_PRI,half:1},{k:"status",l:"Status",t:"status",half:1},
+  {k:"owner",l:"Owner",t:"owner",half:1},{k:"target",l:"Target date",t:"date",half:1},
+  {k:"site",l:"Site",t:"text",half:1},{k:"by",l:"Raised by",t:"text",half:1},
+  {k:"notes",l:"Notes / decision",t:"area"}]};
+const fileLink = f => `<a href="/api/file?id=${encodeURIComponent(f.id)}" target="_blank" rel="noopener">${esc(f.name)}</a>`;
+const PRI_TONE = {"Must-have for go-live":"s-bad","Soon after go-live":"s-warn","Later":""};
+function vWishes(){
+  const q=(filters.wq||"").toLowerCase(), all=plan.wishes||[];
+  const rows=all.filter(w=>(!filters.wd||w.dept===filters.wd)&&(!filters.wp||w.priority===filters.wp)
+    &&(!filters.wst||(filters.wst==="open"?!DONE.has(w.status):w.status===filters.wst))
+    &&(!q||[w.wish,w.problem,w.notes,w.by,w.owner,w.category].join(" ").toLowerCase().includes(q)));
+  const L=leads(); const order=L.map(l=>l.abbrev); const depts=[...new Set(order.concat(all.map(w=>w.dept).filter(Boolean)))];
+  const groups=depts.map(d=>[d,rows.filter(w=>w.dept===d)]).filter(g=>g[1].length);
+  const none=all.filter(w=>!w.dept&&rows.includes(w)); if(none.length) groups.push(["(no department)",none]);
+  const quiet=order.filter(d=>!all.some(w=>w.dept===d));
+  const formUrl=location.origin+"/suggest.html";
+  const n=k=>all.filter(k).length;
+  return `<div class="callout"><b>Staff without a tracker login</b> can send inputs, with screenshots and documents, through the <a href="${esc(formUrl)}" target="_blank" rel="noopener">suggestion form</a>. They land here as <b>New</b>, under the department they pick. <button class="btn sm" data-copyform="1">Copy form link</button></div>
+   <div class="kpis mini"><div class="kpi"><div class="lbl">Inputs</div><div class="val">${all.length}</div></div><div class="kpi"><div class="lbl">New</div><div class="val">${n(w=>w.status==="New")}</div></div><div class="kpi"><div class="lbl">Must-have for go-live</div><div class="val">${n(w=>w.priority==="Must-have for go-live"&&!DONE.has(w.status))}</div></div><div class="kpi"><div class="lbl">From the form</div><div class="val">${n(w=>w.source==="Form")}</div></div></div>
+   <div class="toolbar"><input type="search" id="wq" placeholder="Search inputs" value="${esc(filters.wq||"")}">
+    <select id="fwd"><option value="">All departments</option>${order.map(a=>opt(a,filters.wd)).join("")}</select>
+    <select id="fwst"><option value="">All statuses</option>${opt("open",filters.wst,"Still open")}${STATUS.wishes.map(x=>opt(x,filters.wst)).join("")}</select>
+    <select id="fwp"><option value="">All priorities</option>${WISH_PRI.map(x=>opt(x,filters.wp)).join("")}</select>
+    <span class="spacer"></span><button class="btn" data-csv="wishes">Download CSV</button><button class="btn primary" data-add="wishes">+ Add input</button></div>
+   <div class="tablewrap"><table class="wl"><thead><tr><th style="width:42%">Input</th><th>Category</th><th>Priority</th><th>Status</th><th>Owner</th><th>Added</th></tr></thead><tbody>
+   ${groups.length?groups.map(([d,rs])=>{ const l=leadFor(d); return `<tr class="grp"><td colspan="6">${esc(d)}${l&&l.lead?` <span class="gp">· ${esc(l.lead)}</span>`:""}<span class="gp">${rs.length} input${rs.length===1?"":"s"}${rs.filter(w=>w.status==="New").length?` · ${rs.filter(w=>w.status==="New").length} new`:""}</span>
+       <button class="btn sm grp-add" data-addwish="${esc(d)}">+ Add</button></td></tr>
+     ${rs.map(w=>`<tr class="row" data-edit="wishes:${esc(w.id)}"><td><b>${esc(w.wish)}</b>${w.source==="Form"?' <span class="tag">From form</span>':""}
+        ${w.problem?`<div class="n">${esc(w.problem)}</div>`:""}
+        ${(w.files||[]).length?`<div class="wfiles" onclick="event.stopPropagation()">📎 ${w.files.map(fileLink).join(", ")}</div>`:""}
+        ${w.notes?`<div class="n"><i>${esc(w.notes)}</i></div>`:""}</td>
+       <td class="notes">${esc(w.category)}</td><td>${w.priority?`<span class="pill ${PRI_TONE[w.priority]||""}">${esc(w.priority)}</span>`:""}</td>
+       <td>${stSelect("wishes",w.id,w.status||"New")}</td><td>${esc(w.owner)}</td>
+       <td class="date">${w.at?esc(fmt(w.at.slice(0,10))):""}<div class="n">${esc(w.by||"")}</div></td></tr>`).join("")}`; }).join("")
+     :`<tr><td colspan="6" class="empty">${all.length?"No inputs match.":"No inputs yet."}</td></tr>`}
+   </tbody></table></div>
+   ${quiet.length&&!filters.wd&&!q?`<p class="hint" style="margin-top:10px">No inputs yet from: ${quiet.map(d=>`<button class="linkbtn" data-addwish="${esc(d)}" title="Add an input for ${esc(d)}">${esc(d)}</button>`).join(", ")}. Click one to add its first input.</p>`:""}`;
+}
+function addWish(preset={}){
+  if(!ensureName(()=>addWish(preset))) return;
+  editRow("wishes",null,{status:"New",priority:"",by:ls.get(LS.name)||"",at:todayISO(),source:"Tracker",...preset});
+}
+
+
+/* ---------- training with verification roster ---------- */
+const VER_ST = ["Not yet","Attended","Verified","Needs retraining"];
+const VER_TONE = {"Not yet":"","Attended":"s-info","Verified":"s-ok","Needs retraining":"s-bad"};
+let openRoster = new Set(JSON.parse(ls.get("ecwt.roster")||"[]"));
+const rosterStats = t => { const r=t.roster||[]; const c=k=>r.filter(x=>(x.status||"Not yet")===k).length; return {n:r.length, done:c("Verified"), prog:c("Attended"), blocked:c("Needs retraining")}; };
+function vTraining(){
+  const rows=plan.training.slice().sort((a,b)=>(a.date||"9").localeCompare(b.date||"9"));
+  const all=plan.training.flatMap(t=>t.roster||[]); const tot=rosterStats({roster:all});
+  return `<div class="callout">Plan role-based training for the two weeks before go-live, with super users trained first. Use <b>▸ Verify</b> on each session to list who should attend, then mark each person <b>Attended</b> and, once they show they can do their work in eCW, <b>Verified</b>. Your name and the date are recorded automatically.</div>
+   ${tot.n?`<div class="ver-sum">${subBar(tot,1)} <b>${tot.done} of ${tot.n} verified</b>${tot.prog?` · ${tot.prog} attended, not yet verified`:""}${tot.blocked?` · <span class="bad">${tot.blocked} need retraining</span>`:""}</div>`:""}
+   <div class="toolbar"><span class="spacer"></span><button class="btn" data-csv="roster">Download verification CSV</button><button class="btn" data-csv="training">Download CSV</button><button class="btn primary" data-add="training">+ Add training session</button></div>
+   <div class="tablewrap"><table><thead><tr><th>Session</th><th>Verification</th><th>Audience</th><th>Date</th><th>Status</th><th>Trainer</th><th>Notes</th></tr></thead><tbody>
+   ${rows.length?rows.map(t=>{ const st=rosterStats(t), open=openRoster.has(t.id);
+     return `<tr class="row" data-edit="training:${esc(t.id)}"><td><b>${esc(t.session)}</b>${t.attendees?`<div class="n">${esc(t.attendees)}</div>`:""}</td>
+      <td><button class="subtog ${open?"on":""}" data-rostertog="${esc(t.id)}" aria-expanded="${open}">${open?"▾":"▸"} ${st.n?`${st.done}/${st.n} verified ${subBar(st)}`:"Verify"}</button></td>
+      <td>${esc(t.audience)}</td><td class="date">${t.date?fmt(t.date):'<span style="color:var(--muted)">—</span>'}</td><td>${stSelect("training",t.id,t.status)}</td><td>${esc(t.trainer)}</td><td class="notes">${esc(t.notes)}</td></tr>
+      ${open?`<tr class="subrow"><td colspan="7">${rosterList(t)}</td></tr>`:""}`; }).join(""):`<tr><td colspan="7" class="empty">Nothing here yet.</td></tr>`}
+   </tbody></table></div>`;
+}
+function rosterList(t){
+  const r=t.roster||[]; const st=rosterStats(t);
+  const deptSel=(cur,attrs)=>`<select ${attrs}><option value="">Department…</option>${areaNames().concat(cur&&!areaNames().includes(cur)?[cur]:[]).map(a=>opt(a,cur)).join("")}</select>`;
+  return `<div class="sr-h">Verification${st.n?` <span class="sr-prog">${subBar(st,1)} <b>${st.done} of ${st.n} verified</b>${st.prog?` · ${st.prog} attended`:""}${st.blocked?` · <span class="bad">${st.blocked} need retraining</span>`:""}</span>`:""}</div>
+   <ul class="roster">${r.map(x=>{ const v=x.status||"Not yet"; const a=`data-tid="${esc(t.id)}" data-pid="${esc(x.id)}"`; return `<li>
+     <b class="rn">${esc(x.name)}</b>
+     ${deptSel(x.dept||"",`class="rsel" ${a} data-field="dept" aria-label="Department for ${esc(x.name)}"`)}
+     <select class="rsel pill ${VER_TONE[v]||""}" ${a} data-field="status" aria-label="Verification for ${esc(x.name)}">${VER_ST.map(s=>`<option ${s===v?"selected":""}>${s}</option>`).join("")}</select>
+     <span class="rstamp">${x.statusAt&&v!=="Not yet"?`${esc(v==="Verified"?"Verified":v==="Attended"?"Marked attended":"Flagged")} by ${esc(x.statusBy||"")} · ${esc(stamp(x.statusAt))}`:""}</span>
+     <button class="btn sm danger" data-rosterdel="${esc(t.id)}:${esc(x.id)}" title="Remove from roster">✕</button></li>`; }).join("")}
+    <li class="rnew"><input id="ra-n-${esc(t.id)}" data-rosteradd-key="${esc(t.id)}" placeholder="Add people: type names separated by commas, then Enter" aria-label="Names to add">
+     ${deptSel("",`id="ra-d-${esc(t.id)}" aria-label="Department for new people"`)}
+     <button class="btn sm" data-rosteradd="${esc(t.id)}">Add</button></li></ul>`;
+}
+function addRoster(tid){
+  const t=plan.training.find(x=>x.id===tid); if(!t) return;
+  const inp=$("#ra-n-"+tid), dept=$("#ra-d-"+tid).value;
+  const names=inp.value.split(/[,\n;]+/).map(x=>x.trim()).filter(Boolean);
+  if(!names.length){ inp.focus(); return; }
+  const have=new Set((t.roster||[]).map(x=>x.name.toLowerCase()));
+  const people=names.filter(n=>!have.has(n.toLowerCase())).map(n=>({id:uid("p"),name:n.slice(0,80),dept,status:"Not yet"}));
+  if(!people.length){ toast("Already on the roster."); return; }
+  inp.value="";
+  commit({type:"rosteradd",id:tid,people,label:t.session});
+}
+
+
+/* ---------- swim lanes ---------- */
+function swimLanes(){
+  const by=filters.lanes||"ws";
+  const cols=[["Pending","Not started"],["In progress","In progress"],["Blocked","Blocked"],["done","Complete"]];
+  const colOf=t=>DONE.has(t.status)?"done":(cols.some(c=>c[0]===t.status)?t.status:"Pending");
+  const keyOf=t=>by==="owner"?(t.owner||"Unassigned"):t.ws;
+  const keys=[...new Set(plan.tasks.map(keyOf))]; if(by==="owner") keys.sort((a,b)=>a==="Unassigned"?1:b==="Unassigned"?-1:a.localeCompare(b));
+  const chip=t=>`<button class="lchip ${colOf(t)==="done"?"done":""} ${t.status==="Blocked"?"blk":""} ${isOverdue(t.finish,t.status)?"late":""}" data-calev="tasks:${esc(t.id)}" title="${esc(t.name)}${t.owner?" · "+esc(t.owner):""}${t.finish?" · due "+esc(fmt(t.finish)):""}">${esc(t.name)}${by==="owner"?`<small>${esc(t.ws)}</small>`:(t.owner?`<small>${esc(t.owner)}</small>`:"")}</button>`;
+  return `<div class="card lanes"><h2>Swim lanes <span class="hint">every task by status; click a task to open it</span>
+     <span class="seg sm" role="group" aria-label="Lanes by" style="float:right"><button class="${by==="ws"?"on":""}" data-lanes="ws">By workstream</button><button class="${by==="owner"?"on":""}" data-lanes="owner">By owner</button></span></h2>
+   <div class="lane-scroll"><div class="lane-grid">
+    <div class="lh"></div>${cols.map(c=>`<div class="lh">${c[1]} <span>${plan.tasks.filter(t=>colOf(t)===c[0]).length}</span></div>`).join("")}
+    ${keys.map(k=>{ const ts=plan.tasks.filter(t=>keyOf(t)===k), d=ts.filter(t=>colOf(t)==="done").length;
+      return `<div class="ln" ${by==="ws"?`data-ws="${esc(k)}" title="Open ${esc(k)} in the Project plan"`:""}><b>${esc(k)}</b><span>${d}/${ts.length} done</span>${subBar({n:ts.length,done:d,prog:ts.filter(t=>t.status==="In progress").length,blocked:ts.filter(t=>t.status==="Blocked").length})}</div>
+       ${cols.map(c=>{ const cs=ts.filter(t=>colOf(t)===c[0]); const lim=c[0]==="done"?3:6;
+         return `<div class="lc lc-${c[0]==="done"?"done":c[0].replace(/\s/g,"").toLowerCase()}">${cs.slice(0,lim).map(chip).join("")}${cs.length>lim?`<button class="lmore" ${by==="ws"?`data-ws="${esc(k)}"`:""}>+${cs.length-lim} more</button>`:""}</div>`; }).join("")}`; }).join("")}
+   </div></div></div>`;
+}
+
 /* ---------- events ---------- */
 function bindFilters(){
   const set=(k,v)=>{ filters[k]=v; ls.set(LS.filt,JSON.stringify(filters)); render(); };
-  [["fq","q"],["mq","mq"],["dq","dq"],["oq","oq"]].forEach(([id,k])=>{ const el=$("#"+id); if(el) el.oninput=e=>{ filters[k]=e.target.value; ls.set(LS.filt,JSON.stringify(filters)); clearTimeout(el._t); el._t=setTimeout(()=>{ const pos=e.target.selectionStart; render(); const n=$("#"+id); if(n){ n.focus(); n.setSelectionRange(pos,pos); } },200); }; });
-  [["#fws","ws"],["#fst","st"],["#fow","ow"],["#fma","ma"],["#fda","da"],["#foc","oc"],["#fows","ows"]].forEach(([s,k])=>{ const el=$(s); if(el) el.onchange=e=>set(k,e.target.value); });
+  [["fq","q"],["mq","mq"],["dq","dq"],["oq","oq"],["nq","nq"],["wq","wq"]].forEach(([id,k])=>{ const el=$("#"+id); if(el) el.oninput=e=>{ filters[k]=e.target.value; ls.set(LS.filt,JSON.stringify(filters)); clearTimeout(el._t); el._t=setTimeout(()=>{ const pos=e.target.selectionStart; render(); const n=$("#"+id); if(n){ n.focus(); n.setSelectionRange(pos,pos); } },200); }; });
+  [["#fws","ws"],["#fst","st"],["#fow","ow"],["#fma","ma"],["#fna","na"],["#fwd","wd"],["#fwst","wst"],["#fwp","wp"],["#fda","da"],["#foc","oc"],["#fows","ows"]].forEach(([s,k])=>{ const el=$(s); if(el) el.onchange=e=>set(k,e.target.value); });
 }
 document.addEventListener("click", e=>{
   const tb=e.target.closest("[data-tab]"); if(tb){ e.preventDefault(); tab=tb.dataset.tab; ls.set(LS.tab,tab); render(); return; }
@@ -991,6 +1249,20 @@ document.addEventListener("click", e=>{
   const ce=e.target.closest("[data-calev]"); if(ce){ const [c,id]=ce.dataset.calev.split(":");
     if(c==="meetings"){ filters.mv="list"; filters.ma=""; filters.mq=""; ls.set(LS.filt,JSON.stringify(filters)); render(); const el=document.getElementById("mtg-"+id); if(el){ el.scrollIntoView({block:"start"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1600); const ta=$("#nt-"+noteKey("meetings",id)); if(ta) ta.focus({preventScroll:true}); } return; }
     editRow(c,id); return; }
+  const rt=e.target.closest("[data-rostertog]"); if(rt){ const id=rt.dataset.rostertog; openRoster.has(id)?openRoster.delete(id):openRoster.add(id); ls.set("ecwt.roster",JSON.stringify([...openRoster])); render(); const n=$("#ra-n-"+id); if(n&&openRoster.has(id)&&!(plan.training.find(x=>x.id===id)?.roster||[]).length) n.focus(); return; }
+  const ra=e.target.closest("[data-rosteradd]"); if(ra){ addRoster(ra.dataset.rosteradd); return; }
+  const rd=e.target.closest("[data-rosterdel]"); if(rd){ const [tid,pid]=rd.dataset.rosterdel.split(":"); const t=plan.training.find(x=>x.id===tid); const x=t?.roster?.find(y=>y.id===pid); if(x&&confirm(`Remove ${x.name} from this roster?`)) commit({type:"rosterdel",id:tid,pid,label:t.session,name:x.name}); return; }
+  const sl=e.target.closest("[data-lanes]"); if(sl){ filters.lanes=sl.dataset.lanes; ls.set(LS.filt,JSON.stringify(filters)); render(); return; }
+  const aw=e.target.closest("[data-addwish]"); if(aw){ addWish({dept:aw.dataset.addwish}); return; }
+  const mw=e.target.closest("[data-mkwish]"); if(mw){ const m=(plan.meetings||[]).find(x=>x.id===mw.dataset.mkwish); if(m) addWish({dept:m.area||"",source:"Meeting",notes:`From meeting: ${m.title}${m.date?" ("+fmt(m.date)+")":""}`}); return; }
+  if(e.target.closest("[data-copyform]")){ const u=location.origin+"/suggest.html"; (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast("Form link copied: "+u),()=>prompt("Copy the form link:",u)); return; }
+  const ar=e.target.closest("[data-addreports]"); if(ar){ addReportsWorkstream(); return; }
+  if(e.target.closest("[data-memonew]")){ saveNewMemo(); return; }
+  const mse=e.target.closest("[data-memoedit]"); if(mse){ editingMemo=mse.dataset.memoedit; render(); const b=$("#me-b"); if(b){ b.focus(); b.setSelectionRange(b.value.length,b.value.length); } return; }
+  if(e.target.closest("[data-memocancel]")){ editingMemo=null; render(); return; }
+  const msv=e.target.closest("[data-memosave]"); if(msv){ saveMemoEdit(msv.dataset.memosave); return; }
+  const mpn=e.target.closest("[data-memopin]"); if(mpn){ const m=(plan.memos||[]).find(x=>x.id===mpn.dataset.memopin); if(m) commit({type:"set",coll:"memos",id:m.id,field:"pinned",value:!m.pinned,label:m.title||"Untitled"}); return; }
+  const mdl=e.target.closest("[data-memodel]"); if(mdl){ const m=(plan.memos||[]).find(x=>x.id===mdl.dataset.memodel); if(m&&confirm(`Delete the note “${m.title||"Untitled"}”?`)) commit({type:"del",coll:"memos",id:m.id,label:m.title||"Untitled"}); return; }
   const np=e.target.closest("[data-notepost]"); if(np){ postNote(np.dataset.notepost); return; }
   const nd=e.target.closest("[data-notedel]"); if(nd){ const [c,id,sid,nid]=nd.dataset.notedel.split(":"); const r=(plan[c]||[]).find(x=>x.id===id); const sub=sid?(r?.subtasks||[]).find(x=>x.id===sid):null;
     if(r&&confirm("Remove this entry?")) commit({type:"notedel",coll:c,id,sid:sid||"",nid,label:r[COLL[c].title],text:sub?sub.text:""}); return; }
@@ -1007,9 +1279,10 @@ document.addEventListener("click", e=>{
     if(x&&confirm(`Remove the subtask “${x.text}”?`)) commit({type:"subdel",coll:c,id,sid,label:r[COLL[c].title],text:x.text}); return; }
   const mdn=e.target.closest("[data-markdone]"); if(mdn){ const r=plan.actions.find(x=>x.id===mdn.dataset.markdone); if(r) commit({type:"set",coll:"actions",id:r.id,field:"status",value:"Done",label:r.item}); return; }
   if(e.target.closest(".subrow")) return;
-  const wr=e.target.closest("[data-ws]"); if(wr){ filters={ws:wr.dataset.ws}; ls.set(LS.filt,JSON.stringify(filters)); tab="tasks"; ls.set(LS.tab,tab); render(); window.scrollTo({top:0}); return; }
+  const wr=e.target.closest("[data-ws]"); if(wr){ filters={ws:wr.dataset.ws,lanes:filters.lanes,mv:filters.mv,mm:filters.mm}; ls.set(LS.filt,JSON.stringify(filters)); tab="tasks"; ls.set(LS.tab,tab); render(); window.scrollTo({top:0}); return; }
   const ed=e.target.closest("[data-edit]"); if(ed){ const [c,id]=ed.dataset.edit.split(":"); editRow(c,id); return; }
-  const ad=e.target.closest("[data-add]"); if(ad){ const c=ad.dataset.add; const preset={status:STATUS[c]?.[0]}; if(c==="tasks"&&filters.ws) preset.ws=filters.ws; if(c==="meetings"){ preset.date=todayISO(); preset.duration="60"; if(filters.ma) preset.area=filters.ma; } editRow(c,null,preset); return; }
+  const ad=e.target.closest("[data-add]"); if(ad){ const c=ad.dataset.add; const preset={status:STATUS[c]?.[0]}; if(c==="tasks"&&filters.ws) preset.ws=filters.ws; if(c==="meetings"){ preset.date=todayISO(); preset.duration="60"; if(filters.ma) preset.area=filters.ma; }
+      if(c==="wishes"){ addWish(filters.wd?{dept:filters.wd}:{}); return; } editRow(c,null,preset); return; }
   const cv=e.target.closest("[data-csv]"); if(cv){ downloadCSV(cv.dataset.csv); return; }
   const up=e.target.closest("[data-upload]"); if(up){ const [k,id]=up.dataset.upload.split(":"); openUpload(k==="meeting"?{meeting:id}:{}); return; }
   const ma=e.target.closest("[data-mkaction]"); if(ma){ const m=(plan.meetings||[]).find(x=>x.id===ma.dataset.mkaction); if(m) editRow("actions",null,{status:"Open",owner:"",notes:`From meeting: ${m.title}${m.date?" ("+fmt(m.date)+")":""}`}); return; }
@@ -1024,18 +1297,26 @@ document.addEventListener("click", e=>{
 });
 document.addEventListener("keydown", e=>{
   if(e.key!=="Enter") return;
+  if((e.ctrlKey||e.metaKey) && e.target.id==="mn-b"){ e.preventDefault(); saveNewMemo(); return; }
+  if((e.ctrlKey||e.metaKey) && e.target.id==="me-b"){ e.preventDefault(); saveMemoEdit(editingMemo); return; }
+  const rk=e.target.closest("[data-rosteradd-key]"); if(rk){ e.preventDefault(); addRoster(rk.dataset.rosteraddKey); return; }
   const ta=e.target.closest("textarea[data-notekey]"); if(ta){ if(e.ctrlKey||e.metaKey){ e.preventDefault(); postNote(ta.dataset.notekey); } return; }
   const k=e.target.closest("[data-subadd-key], .subnew input"); if(!k) return;
   const li=k.closest(".subnew"); const key=li && li.querySelector("[data-subadd-key]").dataset.subaddKey; if(!key) return;
   e.preventDefault(); const [c,id]=key.split(":"); addSub(c,id);
 });
 document.addEventListener("change", e=>{
+  const rs=e.target.closest(".rsel"); if(rs && rs.dataset.pid){ const t=plan.training.find(x=>x.id===rs.dataset.tid); const x=t?.roster?.find(y=>y.id===rs.dataset.pid); if(!x) return;
+    const f=rs.dataset.field, v=rs.value; if((f==="status"?(x.status||"Not yet"):(x[f]||""))===v) return;
+    if(!ensureName(()=>{})){ rs.value=f==="status"?(x.status||"Not yet"):(x[f]||""); return; }
+    commit({type:"rosterset",id:t.id,pid:x.id,field:f,value:v,label:t.session,name:x.name,by:ls.get(LS.name)||"",at:new Date().toISOString()}); return; }
   const cf=e.target.closest("[data-calf]"); if(cf){ filters[cf.dataset.calf]=cf.checked; ls.set(LS.filt,JSON.stringify(filters)); render(); return; }
   const sn=e.target.closest(".sbo-new"); if(sn){ if(sn.value==="__other") askOtherOwner(sn,""); return; }
   const sb=e.target.closest(".sb,.sbchk");
   if(sb && sb.dataset.sid){ const {coll,id,sid}=sb.dataset; const r=(plan[coll]||[]).find(y=>y.id===id); const x=r?.subtasks?.find(y=>y.id===sid); if(!x) return;
     if(sb.value==="__other" && !askOtherOwner(sb, x.owner||"")) return;
     const field = sb.classList.contains("sbchk") ? "done" : sb.dataset.field;
+    if(field==="status"){ if(subSt(x)!==sb.value) commit({type:"subset",coll,id,sid,field:"status",value:sb.value,label:r[COLL[coll].title],text:x.text}); return; }
     const value = field==="done" ? sb.checked : sb.value.trim();
     if(field==="text" && !value){ sb.value=x.text; return; }
     if((x[field]??"")!==value) commit({type:"subset",coll,id,sid,field,value,label:r[COLL[coll].title],text:field==="text"?x.text:x.text});
@@ -1053,11 +1334,14 @@ document.addEventListener("change", e=>{
 /* ---------- export / import ---------- */
 function dl(name, text, type){ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 function downloadCSV(coll){
+  if(coll==="roster"){ const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+    const rows=plan.training.flatMap(t=>(t.roster||[]).map(x=>[t.session,t.date,x.name,x.dept,x.status||"Not yet",x.statusBy,x.statusAt?stamp(x.statusAt):""]));
+    dl(`ecw-training-verification-${todayISO()}.csv`, [["Session","Session date","Person","Department","Verification","Recorded by","Recorded"].map(q).join(","), ...rows.map(r=>r.map(q).join(","))].join("\r\n"), "text/csv"); return; }
   const f=COLL[coll].fields; const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
-  const subs = coll==="actions", upd = coll==="actions"||coll==="meetings";
+  const subs = coll==="actions", upd = coll==="actions"||coll==="meetings", wf = coll==="wishes";
   const updTxt = r => (r.updates||[]).slice().sort((a,b)=>a.at.localeCompare(b.at)).map(u=>`${stamp(u.at)} ${u.by}: ${u.text}`).concat((r.subtasks||[]).flatMap(x=>(x.updates||[]).map(u=>`${stamp(u.at)} ${u.by} [${x.text}]: ${u.text}`))).join(" | ");
-  const subTxt = r => (r.subtasks||[]).map(x=>`[${x.done?"x":" "}] ${x.text}${x.owner||x.due?` (${[x.owner,x.due].filter(Boolean).join(", ")})`:""}`).join("; ");
-  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).concat(subs?[q("Subtasks")]:[]).concat(upd?[q(coll==="meetings"?"Meeting notes":"Updates")]:[]).join(","), ...(coll==="leads"?leads():(plan[coll]||[])).map(r=>f.map(x=>q(r[x.k])).concat(subs?[q(subTxt(r))]:[]).concat(upd?[q(updTxt(r))]:[]).join(","))].join("\r\n"), "text/csv");
+  const subTxt = r => (r.subtasks||[]).map(x=>`[${subSt(x)}] ${x.text}${x.owner||x.due?` (${[x.owner,x.due].filter(Boolean).join(", ")})`:""}`).join("; ");
+  dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).concat(subs?[q("Subtasks")]:[]).concat(upd?[q(coll==="meetings"?"Meeting notes":"Updates")]:[]).concat(wf?[q("Date added"),q("Source"),q("Attachments")]:[]).join(","), ...(coll==="leads"?leads():(plan[coll]||[])).map(r=>f.map(x=>q(r[x.k])).concat(subs?[q(subTxt(r))]:[]).concat(upd?[q(updTxt(r))]:[]).concat(wf?[q(r.at),q(r.source),q((r.files||[]).map(f=>`${f.name} ${location.origin}/api/file?id=${f.id}`).join("; "))]:[]).join(","))].join("\r\n"), "text/csv");
 }
 $("#exportBtn").onclick=()=>dl(`ecw-plan-backup-${todayISO()}.json`, JSON.stringify(plan,null,1), "application/json");
 $("#importBtn").onclick=()=>$("#importFile").click();
