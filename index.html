@@ -141,7 +141,14 @@ a.btn{text-decoration:none;color:inherit;display:inline-block}
 .sbar>i{display:block;height:100%;background:var(--ok)}
 tr.subrow td{background:#f8fbfc;padding:6px 12px 12px 28px}
 .subs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
-.subs li{display:grid;grid-template-columns:112px minmax(0,1fr) 170px 140px 46px 48px;gap:6px;align-items:center}
+.subs li{display:grid;grid-template-columns:112px minmax(0,1fr) 170px 140px 44px 46px 48px;gap:6px;align-items:center}
+.subs li.sub-files{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px 118px}
+.sub-files img{width:72px;height:54px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block;background:var(--soft)}
+.sub-files a:hover img{border-color:var(--brand-2)}
+.sub-files .fchip{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:3px 8px}
+.imgdrop{margin-top:10px;border:2px dashed var(--line);border-radius:10px;padding:12px;text-align:center;font-size:13px;color:var(--muted);cursor:pointer;background:#fff}
+.imgdrop b{color:var(--brand-2)}
+.imgdrop.over,.imgdrop:hover{border-color:var(--brand-2);background:#f0f8fa}
 .subs li.sub-nt,.subs li.sub-last{display:block;margin:0 0 6px 118px}
 .subs li.sub-last{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .subs li.sub-last span{font-weight:600}
@@ -225,7 +232,7 @@ table.wl td .n{margin-top:2px}
 .subs .plus{text-align:center;color:var(--muted);font-weight:700}
 .subs input.overdue{color:var(--bad);font-weight:600}
 .alldone{margin-top:8px;font-size:13px;color:var(--ok);display:flex;gap:8px;align-items:center}
-@media (max-width:700px){.subs li{grid-template-columns:104px minmax(0,1fr) 46px 34px}.subs .sbo,.subs .sbd{grid-column:2}.subs li.sub-nt,.subs li.sub-last{margin-left:0}.nt-add{flex-direction:column;align-items:stretch}}
+@media (max-width:700px){.subs li{grid-template-columns:104px minmax(0,1fr) 40px 40px 34px}.subs li.sub-files{margin-left:0}.subs .sbo,.subs .sbd{grid-column:2}.subs li.sub-nt,.subs li.sub-last{margin-left:0}.nt-add{flex-direction:column;align-items:stretch}}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
 .seg button{border:0;background:var(--surface);padding:7px 13px;font:inherit;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
 .seg button.on{background:var(--brand);color:#fff}
@@ -378,6 +385,8 @@ function applyOp(data, op){
   else if(op.type==="wishseed"){ if(!data.wishSeeded){ data.wishes=data.wishes||[]; op.rows.forEach(r=>{ if(!data.wishes.some(w=>w.id===r.id)) data.wishes.push(clone(r)); }); data.wishSeeded=true; } }
   else if(op.type==="wsinit"){ if(!data.tasks.some(t=>t.ws===op.ws)) data.tasks.push(...clone(op.rows)); }
   else if(op.type==="memoedit"){ const m=data.memos?.find(x=>x.id===op.id); if(m) Object.assign(m,{title:op.title,body:op.body,area:op.area,editedBy:op.by,editedAt:op.at}); }
+  else if(op.type==="subaddmany"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r){ r.subtasks=r.subtasks||[]; op.subs.forEach(sb=>{ if(!r.subtasks.some(x=>x.id===sb.id)) r.subtasks.push(clone(sb)); }); } }
+  else if(op.type==="subfileadd"){ const sb=data[op.coll]?.find(x=>x.id===op.id)?.subtasks?.find(x=>x.id===op.sid); if(sb){ sb.files=sb.files||[]; op.files.forEach(f=>{ if(!sb.files.some(x=>x.id===f.id)) sb.files.push(clone(f)); }); } }
   else if(op.type==="subdel"){ const r=data[op.coll]?.find(x=>x.id===op.id); if(r&&r.subtasks) r.subtasks=r.subtasks.filter(x=>x.id!==op.sid); }
   else if(op.type==="replace"){ Object.keys(data).forEach(k=>delete data[k]); Object.assign(data, clone(op.data)); }
 }
@@ -398,6 +407,8 @@ function describe(op){
   if(op.type==="wsinit") return `Added the “${op.ws}” workstream (${op.rows.length} tasks)`;
   if(op.type==="memoedit") return `Edited note “${op.title||"Untitled"}”`;
   if(op.type==="set" && op.coll==="memos" && op.field==="pinned") return `${op.value?"Pinned":"Unpinned"} note “${op.label||"Untitled"}”`;
+  if(op.type==="subaddmany") return `${COLL[op.coll].label} “${op.label}”: added ${op.subs.length} subtask${op.subs.length===1?"":"s"} from images${op.source?` (${op.source})`:""}`;
+  if(op.type==="subfileadd") return `${COLL[op.coll].label} “${op.label}”: attached ${op.files.length===1?op.files[0].name:op.files.length+" images"} to subtask “${op.text}”`;
   if(op.type==="subdel") return `${COLL[op.coll].label} “${op.label}”: removed subtask “${op.text}”`;
   if(op.type==="subset") return op.field==="done"
     ? `${COLL[op.coll].label} “${op.label}”: ${op.value?"checked off":"reopened"} subtask “${op.text}”`
@@ -942,15 +953,18 @@ function subList(coll, r){
      <input class="sb sbt" ${a(x)} data-field="text" value="${esc(x.text)}" aria-label="Subtask">
      <select class="sb sbo" ${a(x)} data-field="owner" aria-label="Subtask owner">${ownerOptionsHTML(x.owner||"")}</select>
      <input class="sb sbd ${isOverdue(x.due,st==="Done"?"Done":"")?"overdue":""}" type="date" ${a(x)} data-field="due" value="${esc(x.due)}" aria-label="Subtask due date">
+     <button class="ntog" data-subattach="${coll}:${esc(r.id)}:${esc(x.id)}" title="Attach images to this subtask">📎${(x.files||[]).length?` ${(x.files||[]).length}`:""}</button>
      <button class="ntog ${openNotes.has(x.id)?"on":""}" data-ntog="${esc(x.id)}" title="Updates on this subtask">💬${(x.updates||[]).length?` ${(x.updates||[]).length}`:""}</button>
      <button class="btn sm danger" data-subdel="${coll}:${esc(r.id)}:${esc(x.id)}" title="Remove subtask">✕</button></li>
+     ${(x.files||[]).length?`<li class="sub-files">${x.files.map(f=>/^image\/(png|jpe?g|gif|webp)$/.test(f.type||"")?`<a href="/api/file?id=${encodeURIComponent(f.id)}" target="_blank" rel="noopener" title="${esc(f.name)}"><img src="/api/file?id=${encodeURIComponent(f.id)}" alt="${esc(f.name)}" loading="lazy"></a>`:`<a class="fchip" href="/api/file?id=${encodeURIComponent(f.id)}" target="_blank" rel="noopener">${esc(f.name)}</a>`).join("")}</li>`:""}
      ${openNotes.has(x.id)?`<li class="sub-nt">${noteThread(coll,r,x,{compact:1,rows:1,placeholder:"Add an update on this subtask…"})}</li>`:(()=>{const lu=lastUpdate(x); return lu?`<li class="sub-last"><span>${esc(stamp(lu.at))} · ${esc(lu.by)}:</span> ${esc(lu.text.length>100?lu.text.slice(0,100)+"…":lu.text)}</li>`:"";})()}`;}).join("")}
     <li class="subnew">
      <span class="plus">+</span>
      <input class="sbt" id="sa-t-${esc(r.id)}" data-subadd-key="${coll}:${esc(r.id)}" placeholder="Add a subtask and press Enter" aria-label="New subtask">
      <select class="sbo sbo-new" id="sa-o-${esc(r.id)}" aria-label="New subtask owner">${ownerOptionsHTML("").replace(">Unassigned<",">Owner…<")}</select>
      <input class="sbd" id="sa-d-${esc(r.id)}" type="date" aria-label="New subtask due date">
-     <span></span><button class="btn sm" data-subadd="${coll}:${esc(r.id)}">Add</button></li></ul>`;
+     <span></span><span></span><button class="btn sm" data-subadd="${coll}:${esc(r.id)}">Add</button></li></ul>
+    <div class="imgdrop" data-imgdrop="${coll}:${esc(r.id)}" tabindex="0" role="button">🖼 <b>Add subtasks from images</b> — drop a zip or images here, or click to choose. Each image becomes a subtask named after the file.</div>`;
 }
 function addSub(coll, id){
   const r=(plan[coll]||[]).find(x=>x.id===id); if(!r) return;
@@ -1237,7 +1251,91 @@ function swimLanes(){
    </div></div></div>`;
 }
 
+
+/* ---------- images → subtasks ---------- */
+const IMG_RE = /\.(png|jpe?g|gif|webp|heic|heif)$/i;
+const MAX_IMG = 4 * 1024 * 1024;
+let jszipP = null;
+function loadJSZip(){
+  if(window.JSZip) return Promise.resolve(window.JSZip);
+  return jszipP || (jszipP = new Promise((res, rej)=>{ const sc=document.createElement("script"); sc.src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"; sc.onload=()=>res(window.JSZip); sc.onerror=()=>{ jszipP=null; rej(new Error("Couldn’t load the zip reader. Check your internet connection and try again.")); }; document.head.appendChild(sc); }));
+}
+const mimeOf = n => ({png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg",gif:"image/gif",webp:"image/webp",heic:"image/heic",heif:"image/heif"})[(n.split(".").pop()||"").toLowerCase()] || "application/octet-stream";
+const baseName = n => n.split("/").pop();
+const subName = n => baseName(n).replace(/\.[^.]+$/,"").trim() || baseName(n);
+async function collectImages(fileList){
+  const out=[], skipped=[];
+  for(const f of fileList){
+    if(/\.zip$/i.test(f.name) || f.type==="application/zip" || f.type==="application/x-zip-compressed"){
+      const JSZip=await loadJSZip(); const z=await JSZip.loadAsync(f);
+      const entries=Object.values(z.files).filter(e=>!e.dir && !/(^|\/)(__MACOSX|\.)/.test(e.name));
+      for(const e of entries){ if(!IMG_RE.test(e.name)){ skipped.push(baseName(e.name)); continue; }
+        const blob=await e.async("blob"); out.push(new File([blob], baseName(e.name), {type:mimeOf(e.name)})); }
+    } else if(IMG_RE.test(f.name) || /^image\//.test(f.type)) out.push(f);
+    else skipped.push(f.name);
+  }
+  out.sort((a,b)=>a.name.localeCompare(b.name, undefined, {numeric:true, sensitivity:"base"}));
+  return {images: out, skipped};
+}
+async function shrinkImage(f){
+  if(f.size<=MAX_IMG || !/^image\/(png|jpeg|webp)$/.test(f.type)) return f;
+  const bmp=await createImageBitmap(f); let w=bmp.width, h=bmp.height, q=0.85;
+  for(let i=0;i<6;i++){
+    const sc=Math.min(1, 2400/Math.max(w,h)); const c=document.createElement("canvas"); c.width=Math.round(w*sc); c.height=Math.round(h*sc);
+    c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    const b=await new Promise(r=>c.toBlob(r,"image/jpeg",q)); if(b && b.size<=MAX_IMG) return new File([b], f.name.replace(/\.[^.]+$/,"")+".jpg", {type:"image/jpeg"});
+    w*=0.8; h*=0.8; q-=0.1;
+  }
+  return f;
+}
+async function uploadImage(f){
+  const r=await fetch("/api/suggest/file",{method:"POST",headers:{"content-type":f.type||"application/octet-stream","x-filename":encodeURIComponent(f.name),"x-edit-key":ls.get(LS.key)||""},body:f});
+  const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||`Upload failed (${r.status})`);
+  return {id:d.id, name:d.name, type:d.type, size:d.size};
+}
+async function importImages(coll, id, fileList, sid){
+  if(mode!=="shared"){ toast("Images can only be added on the live site."); return; }
+  if(!ensureName(()=>importImages(coll,id,fileList,sid))) return;
+  const r=(plan[coll]||[]).find(x=>x.id===id); if(!r) return;
+  const label=r[COLL[coll].title];
+  let images, skipped;
+  try{ setSync("Reading files…"); ({images, skipped}=await collectImages([...fileList])); }catch(e){ setSync("All changes saved"); toast(e.message||String(e)); return; }
+  if(!images.length){ setSync("All changes saved"); toast(skipped.length?`No images found (${skipped.length} other file${skipped.length===1?"":"s"} skipped).`:"No images found."); return; }
+  const target = sid ? (r.subtasks||[]).find(x=>x.id===sid) : null;
+  let todo=images;
+  if(!target){
+    const have=new Set((r.subtasks||[]).map(x=>(x.text||"").toLowerCase()));
+    const dup=images.filter(f=>have.has(subName(f.name).toLowerCase()));
+    if(dup.length && !confirm(`${dup.length} of ${images.length} image${images.length===1?"":"s"} match subtasks that already exist (for example “${subName(dup[0].name)}”). Skip those?\n\nOK = skip them · Cancel = add them anyway`)) {} else todo=images.filter(f=>!dup.includes(f));
+    if(!todo.length){ setSync("All changes saved"); toast("Nothing new to add."); return; }
+    if(todo.length>5 && !confirm(`Add ${todo.length} subtasks to “${label}”, one per image?`)){ setSync("All changes saved"); return; }
+  }
+  const done=[], failed=[];
+  for(let i=0;i<todo.length;i++){
+    const f=todo[i]; setSync(`Uploading image ${i+1} of ${todo.length}…`);
+    try{ const small=await shrinkImage(f); const meta=await uploadImage(small); done.push({f, meta}); }
+    catch(e){ failed.push(`${f.name}: ${e.message||e}`); }
+  }
+  if(done.length){
+    if(target) commit({type:"subfileadd",coll,id,sid,label,text:target.text,files:done.map(d=>d.meta)});
+    else commit({type:"subaddmany",coll,id,label,source:[...new Set([...fileList].filter(f=>/\.zip$/i.test(f.name)).map(f=>f.name))].join(", "),
+      subs:done.map(d=>({id:uid("s"),text:subName(d.f.name).slice(0,300),owner:"",due:"",done:false,status:"Not started",files:[d.meta]}))});
+    openSubs.add(id); saveOpenSubs();
+  } else setSync("All changes saved");
+  const msg=[done.length?`${target?"Attached":"Added"} ${done.length} image${done.length===1?"":"s"}${target?"":" as subtasks"}.`:"", failed.length?`${failed.length} failed: ${failed.slice(0,2).join("; ")}${failed.length>2?"…":""}`:"", skipped.length?`${skipped.length} non-image file${skipped.length===1?"":"s"} skipped.`:""].filter(Boolean).join(" ");
+  toast(msg);
+}
+let imgPick=null;
+function pickImages(coll, id, sid){
+  const inp=document.createElement("input"); inp.type="file"; inp.multiple=true; inp.accept=sid?"image/*":"image/*,.zip,application/zip";
+  inp.onchange=()=>{ if(inp.files.length) importImages(coll,id,inp.files,sid); };
+  imgPick=inp; inp.click();
+}
+
 /* ---------- events ---------- */
+document.addEventListener("dragover", e=>{ const z=e.target.closest&&e.target.closest("[data-imgdrop]"); if(z){ e.preventDefault(); z.classList.add("over"); } });
+document.addEventListener("dragleave", e=>{ const z=e.target.closest&&e.target.closest("[data-imgdrop]"); if(z) z.classList.remove("over"); });
+document.addEventListener("drop", e=>{ const z=e.target.closest&&e.target.closest("[data-imgdrop]"); if(!z) return; e.preventDefault(); z.classList.remove("over"); const [c,id]=z.dataset.imgdrop.split(":"); importImages(c,id,e.dataTransfer.files); });
 function bindFilters(){
   const set=(k,v)=>{ filters[k]=v; ls.set(LS.filt,JSON.stringify(filters)); render(); };
   [["fq","q"],["mq","mq"],["dq","dq"],["oq","oq"],["nq","nq"],["wq","wq"]].forEach(([id,k])=>{ const el=$("#"+id); if(el) el.oninput=e=>{ filters[k]=e.target.value; ls.set(LS.filt,JSON.stringify(filters)); clearTimeout(el._t); el._t=setTimeout(()=>{ const pos=e.target.selectionStart; render(); const n=$("#"+id); if(n){ n.focus(); n.setSelectionRange(pos,pos); } },200); }; });
@@ -1272,6 +1370,8 @@ document.addEventListener("click", e=>{
   const nm=e.target.closest("[data-newmtg]"); if(nm){ const preset={date:nm.dataset.newmtg, duration:"60"}; if(filters.ma) preset.area=filters.ma; editRow("meetings",null,preset); return; }
   const mv=e.target.closest("[data-mview]"); if(mv){ filters.mv=mv.dataset.mview; ls.set(LS.filt,JSON.stringify(filters)); render(); return; }
   const ic=e.target.closest("[data-ics]"); if(ic){ const m=(plan.meetings||[]).find(x=>x.id===ic.dataset.ics); if(m&&m.date) dl(`${(m.title||"meeting").replace(/[^\w\- ]+/g,"").slice(0,60)} ${m.date}.ics`, icsFor(m), "text/calendar"); else toast("Give the meeting a date first."); return; }
+  const idp=e.target.closest("[data-imgdrop]"); if(idp){ const [c,id]=idp.dataset.imgdrop.split(":"); pickImages(c,id); return; }
+  const sat=e.target.closest("[data-subattach]"); if(sat){ const [c,id,sid]=sat.dataset.subattach.split(":"); pickImages(c,id,sid); return; }
   const sg=e.target.closest("[data-subtog]"); if(sg){ const id=sg.dataset.subtog; openSubs.has(id)?openSubs.delete(id):openSubs.add(id); saveOpenSubs(); render(); if(openSubs.has(id)){ const n=$("#sa-t-"+id); if(n&&!(plan.actions.find(a=>a.id===id)?.subtasks||[]).length) n.focus(); } return; }
   const sall=e.target.closest("[data-suball]"); if(sall){ openSubs = sall.dataset.suball==="open" ? new Set(plan.actions.map(a=>a.id)) : new Set(); saveOpenSubs(); render(); return; }
   const sad=e.target.closest("[data-subadd]"); if(sad){ const [c,id]=sad.dataset.subadd.split(":"); addSub(c,id); return; }
@@ -1340,7 +1440,7 @@ function downloadCSV(coll){
   const f=COLL[coll].fields; const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
   const subs = coll==="actions", upd = coll==="actions"||coll==="meetings", wf = coll==="wishes";
   const updTxt = r => (r.updates||[]).slice().sort((a,b)=>a.at.localeCompare(b.at)).map(u=>`${stamp(u.at)} ${u.by}: ${u.text}`).concat((r.subtasks||[]).flatMap(x=>(x.updates||[]).map(u=>`${stamp(u.at)} ${u.by} [${x.text}]: ${u.text}`))).join(" | ");
-  const subTxt = r => (r.subtasks||[]).map(x=>`[${subSt(x)}] ${x.text}${x.owner||x.due?` (${[x.owner,x.due].filter(Boolean).join(", ")})`:""}`).join("; ");
+  const subTxt = r => (r.subtasks||[]).map(x=>`[${subSt(x)}] ${x.text}${(x.files||[]).length?` {${x.files.map(f=>f.name).join(", ")}}`:""}${x.owner||x.due?` (${[x.owner,x.due].filter(Boolean).join(", ")})`:""}`).join("; ");
   dl(`ecw-${coll}-${todayISO()}.csv`, [f.map(x=>q(x.l)).concat(subs?[q("Subtasks")]:[]).concat(upd?[q(coll==="meetings"?"Meeting notes":"Updates")]:[]).concat(wf?[q("Date added"),q("Source"),q("Attachments")]:[]).join(","), ...(coll==="leads"?leads():(plan[coll]||[])).map(r=>f.map(x=>q(r[x.k])).concat(subs?[q(subTxt(r))]:[]).concat(upd?[q(updTxt(r))]:[]).concat(wf?[q(r.at),q(r.source),q((r.files||[]).map(f=>`${f.name} ${location.origin}/api/file?id=${f.id}`).join("; "))]:[]).join(","))].join("\r\n"), "text/csv");
 }
 $("#exportBtn").onclick=()=>dl(`ecw-plan-backup-${todayISO()}.json`, JSON.stringify(plan,null,1), "application/json");
