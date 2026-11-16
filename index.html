@@ -210,6 +210,12 @@ table.wl td .n{margin-top:2px}
 .roster li.rnew{grid-template-columns:minmax(0,1fr) 150px 60px;margin-top:4px}
 .roster li.rnew input{border:1px solid var(--line);border-radius:7px;padding:6px 9px;font:inherit;min-width:0}
 @media (max-width:700px){.roster li{grid-template-columns:minmax(0,1fr) 130px 34px}.roster li>select:first-of-type{display:none}.roster .rstamp{grid-column:1/-1}.roster li.rnew{grid-template-columns:minmax(0,1fr) 60px}.roster li.rnew select{display:none}}
+.ppl{border:1px solid var(--line);border-radius:8px;padding:6px;background:#fff}
+.ppl-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;min-height:22px;align-items:center}
+.pchip{display:inline-flex;align-items:center;gap:2px;background:#e8f3f5;color:var(--brand);border-radius:99px;padding:2px 4px 2px 10px;font-size:13px;font-weight:600}
+.pchip button{border:0;background:none;color:var(--brand);cursor:pointer;font-size:15px;line-height:1;padding:0 5px}
+.pchip button:hover{color:var(--bad)}
+.ppl-add{width:100%}
 .memo{margin-bottom:12px}
 .memo.new{border-top:3px solid var(--brand-2)}
 .memo .memo-title{width:100%;border:0;border-bottom:1px solid var(--soft);font:inherit;font-size:16px;font-weight:600;padding:4px 2px 8px;margin-bottom:8px;background:transparent}
@@ -554,13 +560,14 @@ function editRow(coll, id, preset){
     else if(f.t==="area") inp = `<textarea id="f_${f.k}">${esc(v)}</textarea>`;
     else if(f.t==="date") inp = `<input type="date" id="f_${f.k}" value="${esc(v)}" ${f.req?"required":""}>`;
     else if(f.t==="time") inp = `<input type="time" id="f_${f.k}" value="${esc(v)}" step="300">`;
+    else if(f.t==="people") inp = `<div class="ppl" data-ppl="f_${f.k}"><input type="hidden" id="f_${f.k}" value="${esc(v)}"><div class="ppl-chips"></div><select class="ppl-add" aria-label="Add attendee">${peopleOptionsHTML()}</select></div>`;
     else if(f.t==="owner") inp = `<select id="f_${f.k}" data-owner="1">${ownerOptionsHTML(v)}</select>`;
     else if(f.t==="pick"){ const o=f.opts(); inp = `<select id="f_${f.k}"><option value="">${esc(f.empty||"")}</option>${o.concat(v&&!o.includes(v)?[v]:[]).map(x=>`<option value="${esc(x)}" ${x===v?"selected":""}>${esc(f.labels?.[x]||x)}</option>`).join("")}</select>`; }
     else if(f.t==="list") inp = `<input id="f_${f.k}" list="wsl" value="${esc(v)}"><datalist id="wsl">${wsList.map(w=>`<option value="${esc(w)}">`).join("")}</datalist>`;
     else inp = `<input id="f_${f.k}" value="${esc(v)}" ${f.req?"required":""}>`;
-    return `<div class="fld"><label for="f_${f.k}">${esc(f.l)}</label>${inp}</div>`;
+    return `<div class="fld"><label for="f_${f.k}">${esc(f.l)}</label>${inp}${f.k==="until"?`<div class="hint" style="margin-top:4px">Blank = repeats until go-live (${esc(fmt(plan.goLive))})</div>`:""}</div>`;
   };
-  const fl = def.fields.filter(x=>isNew||!x.newOnly);
+  const fl = def.fields.filter(x=>(isNew||!x.newOnly) && (!x.repeatField || isNew || !row.seriesId));
   let body="", buf=[];
   fl.forEach(f=>{ if(f.half){ buf.push(field(f)); if(buf.length===2){ body+=`<div class="fld2">${buf.join("")}</div>`; buf=[]; } } else { if(buf.length){ body+=`<div class="fld2">${buf.join("")}</div>`; buf=[]; } body+=field(f); } });
   if(buf.length) body+=`<div class="fld2">${buf.join("")}</div>`;
@@ -570,14 +577,24 @@ function editRow(coll, id, preset){
     f=>{
       const vals={}; fl.forEach(x=>vals[x.k]=f.querySelector("#f_"+x.k).value.trim());
       if(vals.owner==="__other") vals.owner=(f.querySelector("#f_owner").dataset.typed||"").trim();
-      if(isNew && coll==="meetings"){
-        const {repeat,until,...m}=vals; const base={...row,...m};
-        if(repeat && until && m.date && until>m.date){
-          const step=repeat==="Weekly"?7:14, sid=uid("ser"), ops=[]; const d=new Date(m.date+"T12:00");
-          while(isoOf(d)<=until && ops.length<52){ ops.push({type:"add",coll,row:{...base,id:uid("m"),date:isoOf(d),seriesId:sid}}); d.setDate(d.getDate()+step); }
-          setTimeout(()=>commit(ops)); return;
+      if(coll==="meetings"){
+        const {repeat,until,...m}=vals; delete vals.repeat; delete vals.until;
+        if(repeat && !m.date){ toast("Pick a date for the first meeting."); return false; }
+        const end = until || (plan.goLive && plan.goLive>m.date ? plan.goLive : isoOf(new Date(new Date(m.date+"T12:00").getTime()+84*864e5)));
+        if(repeat && end<=m.date){ toast("“Repeat until” must be after the meeting date."); return false; }
+        const dates = repeat ? repeatDates(m.date, repeat, end) : [];
+        if(isNew){
+          const base={...row,...m};
+          if(dates.length>1){ const sid=uid("ser"); setTimeout(()=>commit(dates.map(d=>({type:"add",coll,row:{...base,id:uid("m"),date:d,seriesId:sid}})))); }
+          else setTimeout(()=>commit({type:"add",coll,row:base}));
+          return;
         }
-        setTimeout(()=>commit({type:"add",coll,row:base})); return;
+        const ops=fl.filter(x=>!x.repeatField && (row[x.k]??"")!==vals[x.k]).map(x=>({type:"set",coll,id,field:x.k,value:vals[x.k],label:row[def.title]||vals[def.title]}));
+        if(dates.length>1){ const sid=uid("ser"); const keep={title:m.title,time:m.time,duration:m.duration,area:m.area,where:m.where,attendees:m.attendees,notes:m.notes};
+          ops.push({type:"set",coll,id,field:"seriesId",value:sid,label:m.title});
+          dates.slice(1).forEach(d=>ops.push({type:"add",coll,row:{id:uid("m"),...keep,date:d,seriesId:sid}})); }
+        if(ops.length) setTimeout(()=>commit(ops));
+        return;
       }
       if(isNew){ setTimeout(()=>commit({type:"add",coll,row:{...row,...vals}})); return; }
       const ops=fl.filter(x=>(row[x.k]??"")!==vals[x.k]).map(x=>({type:"set",coll,id,field:x.k,value:vals[x.k],label:row[def.title]||vals[def.title]}));
@@ -588,6 +605,7 @@ function editRow(coll, id, preset){
     if(coll==="meetings" && row.seriesId){ const later=(plan.meetings||[]).filter(m=>m.seriesId===row.seriesId&&m.id!==id&&(m.date||"")>(row.date||""));
       if(later.length && confirm(`Also delete the ${later.length} later meeting${later.length===1?"":"s"} in this series?`)) later.forEach(m=>ops.push({type:"del",coll,id:m.id,label:`${m.title} (${fmt(m.date)})`})); }
     setTimeout(()=>commit(ops)); };
+  initPeople($("#dlgForm"));
   const os=$("#f_owner"); if(os&&os.dataset.owner){ let prev=os.value; os.onchange=()=>{ if(os.value==="__other"){ const n=askOtherOwner(os,prev); if(n) os.dataset.typed=n; } prev=os.value; }; }
 }
 
@@ -738,8 +756,8 @@ Object.assign(COLL, {
     {k:"title",l:"Meeting",t:"text",req:1},
     {k:"date",l:"Date",t:"date",half:1,req:1},{k:"time",l:"Start time",t:"time",half:1},
     {k:"duration",l:"Length",t:"pick",opts:()=>["15","30","45","60","90","120"],labels:{"15":"15 min","30":"30 min","45":"45 min","60":"1 hour","90":"1½ hours","120":"2 hours"},half:1},{k:"area",l:"Team / area",t:"pick",opts:()=>areaNames(),half:1},
-    {k:"repeat",l:"Repeat",t:"pick",opts:()=>["Weekly","Every 2 weeks"],empty:"Does not repeat",half:1,newOnly:1},{k:"until",l:"Repeat until",t:"date",half:1,newOnly:1},
-    {k:"where",l:"Where / meeting link",t:"text"},{k:"attendees",l:"Attendees",t:"text"},
+    {k:"repeat",l:"Repeat",t:"pick",opts:()=>REPEATS,empty:"Does not repeat",half:1,repeatField:1},{k:"until",l:"Repeat until",t:"date",half:1,repeatField:1},
+    {k:"where",l:"Where / meeting link",t:"text"},{k:"attendees",l:"Attendees",t:"people"},
     {k:"notes",l:"Agenda",t:"area"},{k:"decisions",l:"Decisions",t:"area"},
     {k:"followups",l:"Follow-ups (who does what, by when)",t:"area"}]},
   leads:{label:"Area",title:"abbrev",fields:[
@@ -997,6 +1015,51 @@ function askOtherOwner(sel, prev){
   if(!n){ sel.value=prev||""; return null; }
   if(![...sel.options].some(o=>o.value===n)){ const o=document.createElement("option"); o.value=n; o.textContent=n; sel.insertBefore(o, sel.querySelector('option[value="__other"]')); }
   sel.value=n; return n;
+}
+
+/* ---------- repeating meetings + attendee picker ---------- */
+const REPEATS = ["Weekly","Every 2 weeks","Every weekday (Mon–Fri)","Monthly (same date)"];
+function repeatDates(start, repeat, until){
+  const out=[], d=new Date(start+"T12:00"), day=d.getDate();
+  for(let i=0; out.length<60 && i<400; i++){
+    const iso=isoOf(d); if(iso>until) break;
+    if(repeat.startsWith("Every weekday")){ if(d.getDay()!==0&&d.getDay()!==6) out.push(iso); d.setDate(d.getDate()+1); continue; }
+    out.push(iso);
+    if(repeat==="Weekly") d.setDate(d.getDate()+7);
+    else if(repeat==="Every 2 weeks") d.setDate(d.getDate()+14);
+    else { const m=d.getMonth()+1; d.setDate(1); d.setMonth(m); d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth()+1, 0).getDate())); }
+  }
+  return out;
+}
+const splitPeople = v => String(v||"").split(/\s*[,;]\s*/).map(x=>x.trim()).filter(Boolean);
+function peopleOptionsHTML(){
+  const L=leads(); const byName=new Map();
+  L.forEach(l=>{ if(l.lead){ const e=byName.get(l.lead)||{group:l.group,areas:[]}; e.areas.push(l.abbrev); byName.set(l.lead,e); } });
+  const groups=[...new Set(L.map(l=>l.group))];
+  let h=`<option value="" selected>＋ Add attendee…</option>`;
+  groups.forEach(g=>{ const names=[...byName].filter(([,e])=>e.group===g); if(names.length) h+=`<optgroup label="${esc(g)} leads">${names.map(([n,e])=>`<option value="${esc(n)}">${esc(n)} — ${esc(e.areas.join(", "))}</option>`).join("")}</optgroup>`; });
+  const JUNK=/^(all|tbd|n\/a|task owners?|owner|vendor|practice|ecw|-)$/i;
+  const others=new Map();
+  const addTok=t=>{ t=t.replace(/\s+/g," ").trim(); if(t.length<2||t.length>40||JUNK.test(t)) return; const k=t.toLowerCase(); if([...byName.keys()].some(n=>n.toLowerCase()===k)) return; if(!others.has(k)) others.set(k,t); };
+  ["tasks","actions","milestones"].forEach(c=>(plan[c]||[]).forEach(r=>[r.owner,...(r.subtasks||[]).map(x=>x.owner)].forEach(o=>String(o||"").split(/\s*(?:\/|,|;|&)\s*/).forEach(addTok))));
+  (plan.meetings||[]).forEach(m=>splitPeople(m.attendees).forEach(addTok));
+  const list=[...others.values()].sort((a,b)=>a.localeCompare(b));
+  if(list.length) h+=`<optgroup label="Other people in the plan">${list.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join("")}</optgroup>`;
+  if(byName.size) h+=`<option value="__allleads">All ${byName.size} named leads</option>`;
+  return h+`<option value="__other">Someone else (type a name)…</option>`;
+}
+function initPeople(root){
+  root.querySelectorAll(".ppl").forEach(w=>{
+    const hid=w.querySelector("input[type=hidden]"), chips=w.querySelector(".ppl-chips"), sel=w.querySelector(".ppl-add");
+    const draw=()=>{ const ps=splitPeople(hid.value); chips.innerHTML = ps.length ? ps.map((p,i)=>`<span class="pchip">${esc(p)}<button type="button" data-prm="${i}" aria-label="Remove ${esc(p)}">×</button></span>`).join("") : '<span class="hint">No attendees yet</span>'; };
+    const add=names=>{ const ps=splitPeople(hid.value); names.forEach(n=>{ if(n && !ps.some(x=>x.toLowerCase()===n.toLowerCase())) ps.push(n); }); hid.value=ps.join(", "); draw(); };
+    sel.onchange=()=>{ const v=sel.value; sel.value="";
+      if(v==="__other"){ const n=(prompt("Attendee name (separate several with commas)")||"").trim(); if(n) add(splitPeople(n)); }
+      else if(v==="__allleads") add([...new Set(leads().filter(l=>l.lead).map(l=>l.lead))]);
+      else if(v) add([v]); };
+    chips.onclick=e=>{ const b=e.target.closest("[data-prm]"); if(!b) return; const ps=splitPeople(hid.value); ps.splice(+b.dataset.prm,1); hid.value=ps.join(", "); draw(); };
+    draw();
+  });
 }
 
 /* ---------- meetings calendar ---------- */
